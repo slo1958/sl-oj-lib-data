@@ -2,8 +2,6 @@ Class Window1 Inherits Window
 
     Sub Button1_Pressed()
 
-    Var tbl As New clDataTable("MyTable")
-
-    tbl.addd  
+    Var tbl As New clDataTable("MyTable")  
     End Sub
 End Class

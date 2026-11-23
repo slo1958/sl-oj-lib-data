@@ -52,7 +52,7 @@ Public Abstract Class clAbstractDataSerie
     Public Abstract Sub AppendItem()
     Public Abstract Sub ClearDataStore()
     Public Property SerieDataType As String
-    Public Function GetType() As string
+    Public Function GetDataType() As string
 
     Return clDataField.cstTypeUndefined
     End Function

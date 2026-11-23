@@ -44,7 +44,7 @@ Public Class clNumberDataSerie Inherits clAbstractDataSerie
 
     return
     End Sub
-    Public Function GetType() As string
+    Public Override Function GetDataType() As string
 
     Return clDataField.cstTypeNumber
     End Function
