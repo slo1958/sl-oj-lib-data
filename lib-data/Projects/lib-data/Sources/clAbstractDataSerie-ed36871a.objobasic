@@ -3,7 +3,7 @@ Public Abstract Class clAbstractDataSerie
     Public Property Name As String
     Public Property DisplayName As String
     ## Add an entry to the metadata associated with the dataSerie
-    Public Sub AddMetaData(prmWho As string, prmWhat As string)
+    Public Sub AppendMetadata(prmWho As string, prmWhat As string)
 
     If Self.MetaData <> Nothing Then
       Self.MetaData.Add(prmWho, prmWhat)
@@ -28,7 +28,7 @@ Public Abstract Class clAbstractDataSerie
     Public Sub SetDisplayName(prmDisplayName As string)
 
     Self.DisplayName = prmDisplayName
-    Self.MetaData.Add("", mdHelpers.ReplaceItems("Update display name of %0 to %1", Self.Name, prmDisplayName))
+    Self.MetaData.Add(CurrentMethodName(), mdHelpers.ReplaceItems("Update display name of %0 to %1", Self.Name, prmDisplayName))
     Return
 
 
@@ -38,7 +38,7 @@ Public Abstract Class clAbstractDataSerie
     If Self.Count() > prmTargetSize Then Return Self.Count()
 
     While Self.Count() < prmTargetSize
-      Self.AddDefaultItem()
+      Self.AppendDefaultItem()
 
     Wend
 
@@ -48,8 +48,12 @@ Public Abstract Class clAbstractDataSerie
 
     End Function
     Public Abstract Function Count() As integer
-    Public Abstract Sub AddDefaultItem()
-    Public Abstract Sub AddItem()
+    Public Abstract Sub AppendDefaultItem()
+    Public Abstract Sub AppendItem()
     Public Abstract Sub ClearDataStore()
     Public Property SerieDataType As String
+    Public Function GetType() As string
+
+    Return clDataField.cstTypeUndefined
+    End Function
 End Class

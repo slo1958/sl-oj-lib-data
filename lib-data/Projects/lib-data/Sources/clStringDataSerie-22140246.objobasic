@@ -13,7 +13,7 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
     Public Property DefaultValue As String
     Public Property DataStore() As String
     ## Add one entry set to default value
-    Public Sub AddDefaultItem()
+    Public Sub AppendDefaultItem()
 
     Self.DataStore.Append(Self.DefaultValue)
 
@@ -22,7 +22,7 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
   End Sub
  
 
-    Public Sub AddItem(prmValue As String)
+    Public Sub AppendItem(prmValue As String)
 
     Self.DataStore.Append(prmValue)
 
@@ -46,4 +46,8 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
 
     return
     End Sub
+    Public Function GetType() As string
+
+    Return clDataField.cstTypeString
+    End Function
 End Class

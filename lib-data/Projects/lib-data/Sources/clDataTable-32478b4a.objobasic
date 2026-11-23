@@ -2,7 +2,7 @@ Public Class clDataTable
 
     Public Property DataSeries() As clAbstractDataSerie
     ## Add an entry to the metadata associated with the dataSerie
-    Public Sub AddMetaData(prmWho As string, prmWhat As string)
+    Public Sub AppendMetaData(prmWho As string, prmWhat As string)
 
     If Self.MetaData <> Nothing Then
       Self.MetaData.Add(prmWho, prmWhat)
@@ -19,10 +19,10 @@ Public Class clDataTable
     Self.DisplayName = prmTableName
 
     Self.IndexDataSerie = New clIntegerDataSerie("Index")
-    Self.AddDataSerie(Self.IndexDataSerie)
+    Self.AppendDataSerie(Self.IndexDataSerie)
 
     Self.DeletedFlagDataSerie = New clBooleanDataSerie("Deleted")
-    Self.AddDataserie(Self.DeletedFlagDataSerie)
+    Self.AppendDataserie(Self.DeletedFlagDataSerie)
 
     Return
 
@@ -31,7 +31,7 @@ Public Class clDataTable
     Public Property Name As String
     Public Property MetaData As clMetaData
     ## Add an entry to the metadata associated with the dataSerie
-    Public Sub AddDataSerie(prmDataSerie As clAbstractDataSerie)
+    Public Sub AppendDataSerie(prmDataSerie As clAbstractDataSerie)
 
     Self.DataSeries.Append(prmDataSerie)
 
@@ -87,4 +87,16 @@ Public Class clDataTable
     End Function
     Public Property IndexDataSerie As clIntegerDataSerie
     Public Property DeletedFlagDataSerie As clBooleanDataSerie
+    Public Sub SetDisplayName(prmDisplayName As string)
+
+    Self.DisplayName = prmDisplayName
+    Self.MetaData.Add(CurrentMethodName(), mdHelpers.ReplaceItems("Update display name of %0 to %1", Self.Name, prmDisplayName))
+    Return
+
+
+    End Sub
+    Public Sub AppendRow(prmRow As clDataRow)
+    End Sub
+  Public Const cstIndexSerieName As string = "SYS$Index"
+  Public Const cstMaskSerieName As string = "SYS$RowMask"
 End Class

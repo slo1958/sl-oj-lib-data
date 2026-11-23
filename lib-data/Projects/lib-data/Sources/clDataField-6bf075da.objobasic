@@ -1,6 +1,6 @@
 Public Class clDataField
 
-    Public Property Name As String
+    Private Property mName As String
     Public Property DisplayName As String
     Public Property DataType As string
   Public Const cstTypeNumber As String = "Number"
@@ -11,8 +11,17 @@ Public Class clDataField
     Public Property DefaultValue As Object
     Public Function Clone() As clDataField
 
-    Var temp As clDataField
+    Var temp As New clDataField
 
+    temp.DataType = Self.DataType
+    temp.DefaultValue = Self.DefaultValue
+    temp.DisplayName = Self.DisplayName
+    temp.mName = Self.mName
 
+    Return temp
+    End Function
+    Public Function Name() As String
+
+    return self.mName
     End Function
 End Class

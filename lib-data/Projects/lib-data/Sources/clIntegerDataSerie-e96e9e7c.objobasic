@@ -16,7 +16,7 @@ Public Class clIntegerDataSerie Inherits clAbstractDataSerie
     return
     End Constructor
     ## Add one entry set to default value
-    Public Sub AddDefaultItem()
+    Public Sub AppendDefaultItem()
 
     Self.DataStore.Append(Self.DefaultValue)
 
@@ -30,7 +30,7 @@ Public Class clIntegerDataSerie Inherits clAbstractDataSerie
     Return
 
     End Sub
-    Public Sub AddItem(prmValue As Integer)
+    Public Sub AppendItem(prmValue As Integer)
 
     Self.DataStore.Append(prmValue)
 
@@ -43,4 +43,8 @@ Public Class clIntegerDataSerie Inherits clAbstractDataSerie
 
     return
     End Sub
+    Public Function GetType() As string
+
+    Return clDataField.cstTypeInteger
+    End Function
 End Class

@@ -17,7 +17,7 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     End Constructor
     ## Add one entry set to default value
-    Public Sub AddDefaultItem()
+    Public Sub AppendDefaultItem()
 
     Self.DataStore.Append(Self.DefaultValue)
 
@@ -31,7 +31,7 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
     Return
 
     End Sub
-    Public Sub AddItem(prmValue As Boolean)
+    Public Sub AppendItem(prmValue As Boolean)
 
     Self.DataStore.Append(prmValue)
 
@@ -44,4 +44,8 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     return
     End Sub
+    Public Function GetType() As string
+
+    Return clDataField.cstTypeBoolean
+    End Function
 End Class
