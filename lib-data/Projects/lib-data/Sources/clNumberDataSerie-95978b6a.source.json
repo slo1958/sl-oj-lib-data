@@ -1,0 +1,16 @@
+{
+  "Version": 6,
+  "Name": "clNumberDataSerie",
+  "Id": "95978b6a-0c78-4e6f-b4cd-f5128c9f3824",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clNumberDataSerie-95978b6a.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

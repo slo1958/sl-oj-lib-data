@@ -1,0 +1,16 @@
+{
+  "Version": 6,
+  "Name": "clStringDataSerie",
+  "Id": "22140246-5ad1-4dfa-a7f0-7c85f0f0ee9e",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clStringDataSerie-22140246.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

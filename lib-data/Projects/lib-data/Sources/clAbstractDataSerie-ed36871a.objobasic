@@ -1,0 +1,51 @@
+Public Abstract Class clAbstractDataSerie
+
+    Public Property Name As String
+    Public Property DisplayName As String
+    ## Add an entry to the metadata associated with the dataSerie
+    Public Sub AddMetaData(prmWho As string, prmWhat As string)
+
+    If Self.MetaData <> Nothing Then
+      Self.MetaData.Add(prmWho, prmWhat)
+
+    End If
+
+    Return
+
+    End Sub
+    Public Constructor(prmSerieName As string)
+
+    Self.MetaData = New clMetaData
+    Self.Name = prmSerieName
+    Self.DisplayName = prmSerieName
+
+    Return
+
+    End Constructor
+    Public Property MetaData As clMetaData
+    Public Sub SetDisplayName(prmDisplayName As string)
+
+    Self.DisplayName = prmDisplayName
+    Self.MetaData.Add("", mdHelpers.ReplaceItems("Update display name of %0 to %1", Self.Name, prmDisplayName))
+    Return
+
+
+    End Sub
+    Public Function ResizeTo(prmTargetSize As integer) As integer
+
+    If Self.Count() > prmTargetSize Then Return Self.Count()
+
+    While Self.Count() < prmTargetSize
+      Self.AddDefaultItem()
+
+    Wend
+
+    Return Self.Count()
+
+
+
+    End Function
+    Public Abstract Function Count() As integer
+    Public Abstract Sub AddDefaultItem()
+    Public Abstract Sub AddItem()
+End Class

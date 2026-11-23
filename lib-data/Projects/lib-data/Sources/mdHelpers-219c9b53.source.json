@@ -1,0 +1,16 @@
+{
+  "Version": 6,
+  "Name": "mdHelpers",
+  "Id": "219c9b53-5ce2-4196-b8d7-d4356ab4e0c7",
+  "Kind": "Module",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-helpers",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "mdHelpers-219c9b53.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

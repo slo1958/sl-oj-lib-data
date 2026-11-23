@@ -1,0 +1,16 @@
+Public Module mdHelpers
+
+  ## Replace placeholders like %0 with values from the paramarray
+  Public Function ReplaceItems(prmTemplate As string, ParamArray v() As string) As string
+  Var temp As String = prmTemplate
+
+  For i As Integer = 0 To v.LastIndex
+    temp = temp.Replace("%" + i.ToString(), v[i])
+
+  Next
+
+  Return temp
+
+
+  End Function
+End Module

@@ -1,0 +1,10 @@
+Public Class clMetaDataEntry
+
+    Public Constructor(prmWho As string, prmWhat As string)
+    Self.What = prmWhat
+    Self.Who = prmWho
+
+    End Constructor
+    Public Property Who As String
+    Public Property What As String
+End Class

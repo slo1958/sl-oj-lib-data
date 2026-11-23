@@ -1,0 +1,37 @@
+Public Class clNumberDataSerie Inherits clAbstractDataSerie
+
+    Public Property DataStore() As Double
+    Public Override Function Count() As integer
+
+    Return Datastore.Count
+    End Function
+    Public Property DefaultValue As integer
+    Public Constructor(prmSerieName As string)
+
+    Super.Constructor(prmSerieName)
+    Self.DefaultValue = 0
+
+    End Constructor
+    ## Add one entry set to default value
+    Public Sub AddDefaultItem()
+
+    Self.DataStore.Append(Self.DefaultValue)
+
+    Return
+
+    End Sub
+    Public Sub SetDefaultValue(prmDefaultValue As Double)
+
+    Self.DefaultValue = prmDefaultValue
+
+    Return
+
+    End Sub
+    Public Sub AddItem(prmValue As Double)
+
+    Self.DataStore.Append(prmValue)
+
+    Return
+
+    End Sub
+End Class

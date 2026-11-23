@@ -1,0 +1,16 @@
+{
+  "Version": 6,
+  "Name": "clAbstractDataSerie",
+  "Id": "ed36871a-416c-4366-a9d1-041e863995ea",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clAbstractDataSerie-ed36871a.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

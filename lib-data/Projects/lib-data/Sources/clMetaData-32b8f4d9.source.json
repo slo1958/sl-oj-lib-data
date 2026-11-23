@@ -1,0 +1,16 @@
+{
+  "Version": 6,
+  "Name": "clMetaData",
+  "Id": "32b8f4d9-9d03-4f4b-ad20-2e137c434e3e",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clMetaData-32b8f4d9.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

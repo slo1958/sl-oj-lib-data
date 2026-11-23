@@ -1,0 +1,16 @@
+{
+  "Version": 6,
+  "Name": "clMetaDataEntry",
+  "Id": "14464003-a6d0-4e33-a46e-0b59ab8ee113",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clMetaDataEntry-14464003.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -79,5 +79,9 @@
     "DefaultLocale": "en-GB",
     "SupportedLocales": []
   },
-  "EmptyFolders": []
+  "EmptyFolders": [
+    "lib-data-core",
+    "lib-data-core/data-series",
+    "lib-data-helpers"
+  ]
 }

@@ -1,0 +1,10 @@
+Public Class clMetaData
+
+    Public Property History() As clMetaDataEntry
+    Public Sub Add(prmWho As string, prmWhat As string)
+    History.Append(new clMetaDataEntry(prmWho, prmWhat))
+    End Sub
+    Public Function Count() As integer
+    return History.Count
+    End Function
+End Class
