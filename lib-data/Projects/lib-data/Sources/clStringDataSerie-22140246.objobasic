@@ -3,23 +3,13 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
     Public Constructor(prmSerieName As string)
 
     Super.Constructor(prmSerieName)
-    Self.DefaultValue = ""
-
-    Self.SerieDataType = clDataField.cstTypeString
+    Self.FieldDefinition.DefaultValue = ""
+    Self.FieldDefinition.DataType = clDataField.cstTypeString
 
     Return
 
     End Constructor
-    Public Property DefaultValue As String
     Public Property DataStore() As String
-    ## Add one entry set to default value
-    Public Sub AppendDefaultItem()
-
-    Self.DataStore.Append(Self.DefaultValue)
-
-    Return
-
-  End Sub
  
 
     Public Sub AppendItem(prmValue As String)
@@ -35,7 +25,7 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
     End Function
     Public Sub SetDefaultValue(prmDefaultValue As string)
 
-    Self.DefaultValue = prmDefaultValue
+    Self.FieldDefinition.DefaultValue = prmDefaultValue
 
     Return
 
@@ -46,8 +36,12 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
 
     return
     End Sub
-    Public Override Function GetDataType() As string
+    Public Function Element(prmElementIndex As integer) As Object
 
-    Return clDataField.cstTypeString
+    Return Self.DataStore[prmElementIndex]
     End Function
+    Public Sub Element(prmElementIndex As integer, Assigns prmValue As object)
+
+    Self.DataStore[prmElementIndex] = string(prmValue)
+    End Sub
 End Class

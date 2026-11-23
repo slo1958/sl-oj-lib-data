@@ -1,15 +1,15 @@
 Public Class clDataRow
 
-    Public Property FieldsValue As Dictionary
+    Public Property FieldsValue() As Object
+    ## Creates a datarow object. Note that the pointer to the structure is used as is, the constructor does not clone the content;
     Public Constructor(prmStructure As clDataStructure)
-
-    Self.FieldsValue = New Dictionary
 
     If prmStructure = Nothing Then
       Self.DataStructure = New clDataStructure
 
     Else
       Self.DataStructure = prmStructure
+      Self.FieldsValue.Resize(prmStructure.Count())
 
     End If
 
@@ -17,15 +17,39 @@ Public Class clDataRow
     End Constructor
     Public Sub SetField(prmFieldName As string, prmFieldValue As object)
 
-
-    Self.FieldsValue.Value(prmFieldName) = prmFieldValue
+    Self.FieldsValue[Self.FieldIndex(prmFieldname)] = prmFieldValue
 
     Return
 
     End Sub
     Public Property DataStructure As clDataStructure
-    Public Function getField(prmFieldName As string) As object
+    Public Function GetField(prmFieldName As string) As object
 
-    return self.FieldsValue.Value(prmFieldName)
+    Return Self.FieldsValue[Self.FieldIndex(prmFieldname)]
+
+
+    End Function
+    Public Sub SetField(prmFieldIndex As integer, prmFieldValue As object)
+
+    Self.FieldsValue[prmFieldIndex] = prmFieldValue
+
+    Return
+
+    End Sub
+    Public Function GetField(prmFieldIndex As integer) As object
+
+    Return Self.FieldsValue[prmFieldIndex]
+
+    End Function
+    ## Return the index of the field
+    Public Function FieldIndex(prmFieldName As string) As integer
+
+    For i As Integer = 0 To DataStructure.LastIndex()
+      If Self.DataStructure.GetFieldDefinition(i).Name() = prmFieldName Then Return i
+
+    Next
+
+    Return -1
+
     End Function
 End Class

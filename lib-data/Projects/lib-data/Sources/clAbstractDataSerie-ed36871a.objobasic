@@ -1,7 +1,5 @@
 Public Abstract Class clAbstractDataSerie
 
-    Public Property Name As String
-    Public Property DisplayName As String
     ## Add an entry to the metadata associated with the dataSerie
     Public Sub AppendMetadata(prmWho As string, prmWhat As string)
 
@@ -16,19 +14,24 @@ Public Abstract Class clAbstractDataSerie
     Public Constructor(prmSerieName As string)
 
     Self.MetaData = New clMetaData
-    Self.Name = prmSerieName
-    Self.DisplayName = prmSerieName
 
-    Self.SerieDataType = clDataField.cstTypeUndefined
+    Self.FieldDefinition = New clDataField()
+
+    Self.FieldDefinition.Name = prmSerieName
+    Self.FieldDefinition.DisplayName = prmSerieName
+    Self.FieldDefinition.DataType = clDataField.cstTypeUndefined
 
     Return
 
     End Constructor
     Public Property MetaData As clMetaData
-    Public Sub SetDisplayName(prmDisplayName As string)
+    Public Sub DisplayName(Assigns prmDisplayName As string)
 
-    Self.DisplayName = prmDisplayName
-    Self.MetaData.Add(CurrentMethodName(), mdHelpers.ReplaceItems("Update display name of %0 to %1", Self.Name, prmDisplayName))
+    Self.FieldDefinition.DisplayName = prmDisplayName
+    Var msg As String = mdHelpers.ReplaceItems("Update display name of %0 to %1", Self.FieldDefinition.Name(), prmDisplayName)
+
+    Self.MetaData.Add(CurrentMethodName(), msg)
+
     Return
 
 
@@ -48,12 +51,29 @@ Public Abstract Class clAbstractDataSerie
 
     End Function
     Public Abstract Function Count() As integer
-    Public Abstract Sub AppendDefaultItem()
-    Public Abstract Sub AppendItem()
+    Public Sub AppendDefaultItem()
+
+    Self.AppendItem(Self.FieldDefinition.DefaultValue)
+
+    Return
+
+    End Sub
+    Public Abstract Sub AppendItem(prmValue As object)
     Public Abstract Sub ClearDataStore()
-    Public Property SerieDataType As String
+    Protected Property FieldDefinition As clDataField
     Public Function GetDataType() As string
 
-    Return clDataField.cstTypeUndefined
+    Return Self.FieldDefinition.DataType
     End Function
+    Public Function DisplayName() As string
+
+    Return Self.FieldDefinition.DisplayName
+    End Function
+    Public Function Definition() As clDataField
+
+    Return Self.FieldDefinition.Clone()
+
+    End Function
+    Public Abstract Function Element(prmElementIndex As integer) As object
+    Public Abstract Sub Element(prmElementIndex As integer, Assigns prmValue As object)
 End Class

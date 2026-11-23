@@ -18,11 +18,13 @@ Public Class clDataTable
     Self.Name = prmTableName
     Self.DisplayName = prmTableName
 
-    Self.IndexDataSerie = New clIntegerDataSerie("Index")
+    Self.IndexDataSerie = New clIntegerDataSerie(cstIndexSerieName)
     Self.AppendDataSerie(Self.IndexDataSerie)
 
-    Self.DeletedFlagDataSerie = New clBooleanDataSerie("Deleted")
+    Self.DeletedFlagDataSerie = New clBooleanDataSerie(cstMaskSerieName)
     Self.AppendDataserie(Self.DeletedFlagDataSerie)
+
+    Self.cachedStructure = Nothing
 
     Return
 
@@ -33,8 +35,9 @@ Public Class clDataTable
     ## Add an entry to the metadata associated with the dataSerie
     Public Sub AppendDataSerie(prmDataSerie As clAbstractDataSerie)
 
-    Self.DataSeries.Append(prmDataSerie)
+    Self.cachedStructure = Nothing
 
+    Self.DataSeries.Append(prmDataSerie)
 
     Return
 
@@ -99,4 +102,43 @@ Public Class clDataTable
     End Sub
   Public Const cstIndexSerieName As string = "SYS$Index"
   Public Const cstMaskSerieName As string = "SYS$RowMask"
+    Public Function GetDataSerie(prmSerieIndex As integer) As clAbstractDataSerie
+
+    Return DataSeries[prmSerieIndex]
+    End Function
+    Public Function DataRow(prmRowIndex As integer) As clDataRow
+
+    Var results As New clDataRow(self.TableStructure())
+
+    For i As Integer = 0 To DataSeries.LastIndex
+      Var fieldValue As Object = Self.DataSeries[i].Element(prmRowIndex)
+      results.SetField(i, fieldValue)
+
+    Next
+
+    Return results
+
+    End Function
+    Public Function TableStructure() As clDataStructure
+
+    If Self.cachedStructure = Nothing Then
+
+      Var results As clDataStructure
+
+      For Each serie As clAbstractDataSerie In DataSeries
+        results.AppendField(serie.Definition())
+
+      Next
+
+      Self.cachedStructure = results
+      Return results
+
+    Else
+      Return Self.cachedStructure
+
+    End If
+
+
+    End Function
+    Private Property cachedStructure As clDataStructure
 End Class

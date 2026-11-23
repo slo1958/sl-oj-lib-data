@@ -5,28 +5,20 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     Return Datastore.Count
     End Function
-    Public Property DefaultValue As Boolean
     Public Constructor(prmSerieName As string)
 
     Super.Constructor(prmSerieName)
-    Self.DefaultValue = False
 
-    Self.SerieDataType = clDataField.cstTypeBoolean
+    Self.FieldDefinition.DefaultValue = False
+
+    Self.FieldDefinition.DataType = clDataField.cstTypeBoolean
 
     Return
 
     End Constructor
-    ## Add one entry set to default value
-    Public Sub AppendDefaultItem()
-
-    Self.DataStore.Append(Self.DefaultValue)
-
-    Return
-
-    End Sub
     Public Sub SetDefaultValue(prmDefaultValue As Boolean)
 
-    Self.DefaultValue = prmDefaultValue
+    Self.FieldDefinition.DefaultValue = prmDefaultValue
 
     Return
 
@@ -44,8 +36,12 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     return
     End Sub
-    Public Override Function GetDataType() As string
+    Public Function Element(prmElementIndex As integer) As Object
 
-    Return clDataField.cstTypeBoolean
+    Return Self.DataStore[prmElementIndex]
     End Function
+    Public Sub Element(prmElementIndex As integer, Assigns prmValue As object)
+
+    Self.DataStore[prmElementIndex] = Boolean(prmValue) 
+    End Sub
 End Class
