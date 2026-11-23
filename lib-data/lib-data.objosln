@@ -13,6 +13,9 @@
       "Type": "Desktop"
     }
   ],
-  "EmptyFolders": [],
+  "EmptyFolders": [
+    "sl-lib-logging",
+    "sl-lib-logging/logWriters"
+  ],
   "AiCustomInstructions": ""
 }

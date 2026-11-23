@@ -1,0 +1,27 @@
+Public Class clLogMethodStatistics
+
+    Public Constructor(MethodName As string, totalCount As integer, totalDuration As Double)
+    self.Name = MethodName
+    Self.Count = totalCount
+    Self.Duration = totalDuration
+
+    Return
+
+    End Constructor
+    Public Property Count As integer
+    Public Property Duration As Double
+    Public Function Average() As double
+    If Self.Count < 1 Then
+      Return 0
+    Else
+      Return Self.Duration / Self.Count
+
+    End If
+
+    End Function
+    Public Function Clone() As clLogMethodStatistics
+    Return New clLogMethodStatistics(self.Name, Self.Count, Self.Duration)
+
+    End Function
+    Public Property Name As String
+End Class

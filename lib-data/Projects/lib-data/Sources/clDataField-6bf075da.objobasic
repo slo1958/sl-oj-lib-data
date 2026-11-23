@@ -1,8 +1,8 @@
 Public Class clDataField
 
     Private Property mName As String
-    Public Property DisplayName As String
-    Public Property DataType As string
+    Private Property mDisplayName As String
+    Private Property mDataType As string
   Public Const cstTypeNumber As String = "Number"
   Public Const cstTypeString As String = "String"
   Public Const cstTypeInteger As String = "Integer"
@@ -13,9 +13,10 @@ Public Class clDataField
 
     Var temp As New clDataField
 
-    temp.DataType = Self.DataType
     temp.DefaultValue = Self.DefaultValue
-    temp.DisplayName = Self.DisplayName
+
+    temp.mDataType = Self.mDataType
+    temp.mDisplayName = Self.mDisplayName
     temp.mName = Self.mName
 
     Return temp
@@ -23,5 +24,90 @@ Public Class clDataField
     Public Function Name() As String
 
     return self.mName
+    End Function
+    Public Shared Function BuildFieldDefinition(prmFieldValue As Object, Optional prmFieldName As string = "") As clDataField
+
+    Var tempType As String
+    Var tempName As String
+
+    Select Case prmFieldValue.GetType()
+
+
+      Case "Boolean"
+        tempType = cstTypeBoolean
+
+      Case "Double"
+        tempType = cstTypeNumber
+
+      Case "Integer"
+        tempType = cstTypeInteger
+
+      Case "String"
+        tempType = cstTypeString
+
+
+      Else
+        tempType = cstTypeUndefined
+
+
+    End Select
+
+    If prmFieldName = "" Then
+      tempName = "Unnamed" + FieldCounter.ToString()
+      FieldCounter += 1
+
+    Else
+      tempName = prmFieldName
+
+    End If
+
+    Return New clDataField(tempName, tempType)
+
+    End Function
+    Private Shared Property FieldCounter As integer
+    Public Function DisplayName() As String
+
+    If Self.mDisplayName = "" Then Return Self.mName
+
+    Return Self.mDisplayName
+    End Function
+    Public Function DisplayName(Assigns prmName As string) As String
+
+    Self.mDisplayName = prmName
+    End Function
+    Constructor()
+    Self.mName = "Unnamed"
+    Self.mDisplayName = ""
+    Self.DataType = cstTypeUndefined
+
+    End Constructor
+    Public Constructor(prmFieldName As string, prmFieldType As string)
+
+    Self.mName = prmFieldName
+    Self.mDisplayName = ""
+    Self.DataType = CleanType(prmFieldType)
+
+    Return
+
+
+    End Constructor
+    Public Function CleanType(prmFieldType As string) As string
+
+    If prmFieldType = cstTypeBoolean Then Return prmFieldType
+    If prmFieldType = cstTypeInteger Then Return prmFieldType
+    If prmFieldType = cstTypeNumber Then Return prmFieldType
+    If prmFieldType = cstTypeString Then Return prmFieldType
+
+    Return cstTypeUndefined
+
+    End Function
+    Public Sub DataType(Assigns prmFieldType As string)
+
+    Self.mDataType = CleanType(prmFieldType)
+
+    End Sub
+    Public Function DataType() As string
+    Return Self.mDataType
+
     End Function
 End Class

@@ -35,9 +35,9 @@ Public Class clDataTable
     ## Add an entry to the metadata associated with the dataSerie
     Public Sub AppendDataSerie(prmDataSerie As clAbstractDataSerie)
 
-    Self.cachedStructure = Nothing
+    If Not ValidSerieName(prmDataSerie.Name()) then Return
 
-    Self.DataSeries.Append(prmDataSerie)
+    Self.AppendDataSerie_Internal(prmDataSerie)
 
     Return
 
@@ -141,4 +141,61 @@ Public Class clDataTable
 
     End Function
     Private Property cachedStructure As clDataStructure
+    ## Add fields from the data row to the table using field names
+    Public Sub AppendDataRow(prmRow As clDataRow)
+
+    For i As Integer = 0 To prmRow.LastIndex()
+      Var fieldname As String = prmRow.GetFieldName(i)
+
+
+    Next
+    For i As Integer = 0 To Self.DataSeries.LastIndex
+
+
+    Next
+    End Sub
+    Public Function GetDataSerie(prmSerieName As string) As clAbstractDataSerie
+
+    Var tempIndex As Integer = Self.SerieIndex(prmSerieName)
+
+    Return DataSeries[tempIndex]
+
+    End Function
+    ## Return the index of the dataserie
+    Public Function SerieIndex(prmFieldName As string) As integer
+
+    For i As Integer = 0 To Self.DataSeries.LastIndex
+      Var tempName As String = Self.DataSeries[i].Name()
+
+      If tempName = prmFieldName Then Return i
+
+    Next
+
+    Return -1
+
+    End Function
+    Public Shared Function ValidSerieName(prmSerieName As string) As Boolean
+
+    If prmSerieName.Trim().Length = 0 Then Return False
+
+    If prmSerieName.Trim() = cstIndexSerieName Then Return False
+    If prmSerieName.Trim() = cstMaskSerieName Then Return False
+
+    Return True
+
+    End Function
+    ## Add an entry to the metadata associated with the dataSerie
+    Private Sub AppendDataSerie_Internal(prmDataSerie As clAbstractDataSerie)
+
+    Var tempName As String = prmDataSerie.Name()
+
+    If Self.SerieIndex(tempName) >= 0 Then Return
+
+    Self.cachedStructure = Nothing
+
+    Self.DataSeries.Append(prmDataSerie)
+
+    Return
+
+    End Sub
 End Class

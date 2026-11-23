@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clLogMethodStatistics",
+  "Id": "a3c9c345-688a-416e-b878-9684dade663d",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "lib_LogManager",
+  "ParentModuleId": "5a33cdde-668b-4fd5-9b6d-05194af09840",
+  "AvailableInDesigner": false,
+  "CodeFile": "clLogMethodStatistics-a3c9c345.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

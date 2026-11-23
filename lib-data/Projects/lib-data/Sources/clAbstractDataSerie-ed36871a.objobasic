@@ -63,11 +63,11 @@ Public Abstract Class clAbstractDataSerie
     Protected Property FieldDefinition As clDataField
     Public Function GetDataType() As string
 
-    Return Self.FieldDefinition.DataType
+    Return Self.FieldDefinition.DataType()
     End Function
     Public Function DisplayName() As string
 
-    Return Self.FieldDefinition.DisplayName
+    Return Self.FieldDefinition.DisplayName()
     End Function
     Public Function Definition() As clDataField
 
@@ -76,4 +76,8 @@ Public Abstract Class clAbstractDataSerie
     End Function
     Public Abstract Function Element(prmElementIndex As integer) As object
     Public Abstract Sub Element(prmElementIndex As integer, Assigns prmValue As object)
+    Public Function Name() As string
+
+    Return Self.FieldDefinition.Name()
+    End Function
 End Class

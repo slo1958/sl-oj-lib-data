@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "LibraryInformation_lib_logging",
+  "Id": "62661895-6d70-4800-a584-b940b4268f1d",
+  "Kind": "Module",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "LibraryInformation_lib_logging-62661895.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clMethodTimer",
+  "Id": "cbdfd616-5bbd-4d4f-9c22-381ac759d373",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "Internals",
+  "ParentModuleId": "fc17bf98-cae7-4e3c-860d-a597a1aa88d7",
+  "AvailableInDesigner": false,
+  "CodeFile": "clMethodTimer-cbdfd616.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clSeverityFilter",
+  "Id": "f9c2b309-f474-43b4-a3e9-91d27ab4a134",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "Internals",
+  "ParentModuleId": "fc17bf98-cae7-4e3c-860d-a597a1aa88d7",
+  "AvailableInDesigner": false,
+  "CodeFile": "clSeverityFilter-f9c2b309.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "itfLogWriter",
+  "Id": "9b87209e-7d6c-46af-a27e-4c1a54754736",
+  "Kind": "Interface",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "lib_LogManager",
+  "ParentModuleId": "5a33cdde-668b-4fd5-9b6d-05194af09840",
+  "AvailableInDesigner": false,
+  "CodeFile": "itfLogWriter-9b87209e.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

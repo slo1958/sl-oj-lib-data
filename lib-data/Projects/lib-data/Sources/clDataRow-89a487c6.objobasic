@@ -6,10 +6,12 @@ Public Class clDataRow
 
     If prmStructure = Nothing Then
       Self.DataStructure = New clDataStructure
+      Self.LockedStructure = False
 
     Else
       Self.DataStructure = prmStructure
       Self.FieldsValue.Resize(prmStructure.Count())
+      Self.LockedStructure = True
 
     End If
 
@@ -17,7 +19,32 @@ Public Class clDataRow
     End Constructor
     Public Sub SetField(prmFieldName As string, prmFieldValue As object)
 
-    Self.FieldsValue[Self.FieldIndex(prmFieldname)] = prmFieldValue
+    Var tmpIndex As Integer = Self.FieldIndex(prmFieldname)
+
+    If tmpIndex < 0 Then
+
+      # If the field does not exist in the structure, and the lock is off, we can add the field
+
+      If Self.LockedStructure Then
+        # BOUM
+
+        Return
+
+      Else
+        Var fld As clDataField = clDataField.BuildFieldDefinition(prmFieldValue)
+
+        Self.DataStructure.AppendField(fld)
+        Self.FieldsValue.Append(prmFieldValue)
+
+
+      End If
+
+    Else
+
+      Self.FieldsValue[tmpIndex] = prmFieldValue
+
+    End If
+
 
     Return
 
@@ -50,6 +77,17 @@ Public Class clDataRow
     Next
 
     Return -1
+
+    End Function
+    Public Function LastIndex() As integer
+
+    Return Self.FieldsValue.LastIndex
+
+    End Function
+    Private Property LockedStructure As Boolean
+    Public Function GetFieldName(prmFieldIndex As integer) As string
+
+    Return Self.DataStructure.GetFieldDefinition(prmFieldIndex).Name()
 
     End Function
 End Class

@@ -1,0 +1,37 @@
+Public Class ListBoxLogWriter Inherits ListBox Implements lib_LogManager.itfLogWriter
+
+    Public Sub AddLogEntry(MessageSeverity As string, MessageTime As string, MessageSource As string, MessageText As string)
+
+
+    Var row As Integer = Self.AddRow()
+
+    Self.SetCellText(row, 0) = MessageSeverity
+    Self.SetCellText(row, 1) = MessageTime
+    Self.SetCellText(row, 2) = MessageSource
+    Self.SetCellText(row, 3) = MessageText
+
+    Self.ScrollToRow(row)
+
+    Return
+
+
+    End Sub
+    Event Opening()
+    Self.ColumnCount = 4
+
+    Self.HasHeaders = True
+
+    Self.SetHeaderText(0) = kSeverity
+    Self.SetHeaderText(1) = kWhen
+    Self.SetHeaderText(2) = kWho
+    Self.SetHeaderText(3) = kMessage
+
+    RaiseEvent Opening()
+
+    End Event
+    Public Const kMessage As string = "Message"
+    Public Const kSeverity As string = "Severity"
+    Public Const kWhen As string = "When"
+    Public Const kWho As string = "Who"
+    Event Opening()
+End Class

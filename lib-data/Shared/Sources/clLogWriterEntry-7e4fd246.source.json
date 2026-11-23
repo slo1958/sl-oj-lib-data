@@ -1,0 +1,22 @@
+{
+  "Version": 8,
+  "Name": "clLogWriterEntry",
+  "Id": "7e4fd246-17ac-401a-82a1-3743f76ae2d8",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "Internals",
+  "ParentModuleId": "fc17bf98-cae7-4e3c-860d-a597a1aa88d7",
+  "AvailableInDesigner": false,
+  "CodeFile": "clLogWriterEntry-7e4fd246.objobasic",
+  "LayoutFile": "",
+  "Notes": [
+    {
+      "Name": "Read me",
+      "Content": "Internal class used by clLoging to store log writer information\n\n",
+      "IsPreviewMode": false
+    }
+  ],
+  "InspectorBehaviour": []
+}

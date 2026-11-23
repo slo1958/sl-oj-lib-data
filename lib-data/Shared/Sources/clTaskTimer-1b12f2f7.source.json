@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clTaskTimer",
+  "Id": "1b12f2f7-b01f-4096-8531-fb75d60178c7",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "Internals",
+  "ParentModuleId": "fc17bf98-cae7-4e3c-860d-a597a1aa88d7",
+  "AvailableInDesigner": false,
+  "CodeFile": "clTaskTimer-1b12f2f7.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

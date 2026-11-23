@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "lib_LogManager",
+  "Id": "5a33cdde-668b-4fd5-9b6d-05194af09840",
+  "Kind": "Module",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "lib_LogManager-5a33cdde.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "Internals",
+  "Id": "fc17bf98-cae7-4e3c-860d-a597a1aa88d7",
+  "Kind": "Module",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "lib_LogManager",
+  "ParentModuleId": "5a33cdde-668b-4fd5-9b6d-05194af09840",
+  "AvailableInDesigner": false,
+  "CodeFile": "Internals-fc17bf98.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

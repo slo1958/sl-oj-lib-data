@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clLogManager",
+  "Id": "92ea69f8-9400-4056-8580-2ca96f7bd219",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "lib_LogManager",
+  "ParentModuleId": "5a33cdde-668b-4fd5-9b6d-05194af09840",
+  "AvailableInDesigner": false,
+  "CodeFile": "clLogManager-92ea69f8.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "ListBoxLogWriter",
+  "Id": "e0b0a1eb-d45b-4f5d-9212-38f369d29508",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "sl-lib-logging",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "ListBoxLogWriter-e0b0a1eb.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}
