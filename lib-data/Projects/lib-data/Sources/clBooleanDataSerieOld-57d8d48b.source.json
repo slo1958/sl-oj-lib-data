@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clBooleanDataSerieOld",
+  "Id": "57d8d48b-a839-4ca6-8a15-615357535623",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clBooleanDataSerieOld-57d8d48b.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

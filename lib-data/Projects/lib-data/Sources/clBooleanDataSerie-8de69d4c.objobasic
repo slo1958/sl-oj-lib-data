@@ -1,0 +1,32 @@
+Public Class clBooleanDataSerie Inherits clGenericDataSerie(of boolean)
+
+    Public Constructor(prmSerieName As string)
+
+    Super.Constructor(prmSerieName)
+
+    Self.FieldDefinition.DefaultValue = False
+
+    Self.FieldDefinition.SetDataType(clDataField.cstTypeBoolean)
+
+    Return
+
+    End Constructor
+    Public Function Clone() As clBooleanDataSerie
+
+    Var temp As New clBooleanDataSerie("Cloned from " + Self.Name())
+
+    temp.AppendItems(Self.DataStore)
+
+    Return temp
+
+    End Function
+    Public Sub AppendItem(prmValue As object)
+
+    print("Using appenditem / object")
+
+    Self.DataStore.Append(Boolean(prmValue))
+
+    Return
+
+    End Sub
+End Class

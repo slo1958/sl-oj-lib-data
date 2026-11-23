@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clGenericDataSerie",
+  "Id": "8d9cd28e-43e1-4bb3-8586-927bbec2f758",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clGenericDataSerie-8d9cd28e.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

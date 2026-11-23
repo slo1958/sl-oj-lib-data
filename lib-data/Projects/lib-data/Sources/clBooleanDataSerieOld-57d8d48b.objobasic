@@ -1,4 +1,4 @@
-Public Class clBooleanDataSerie Inherits clAbstractDataSerie
+Public Class clBooleanDataSerieOld Inherits clAbstractDataSerie
 
     Public Property DataStore() As Boolean
     Public Override Function Count() As integer
@@ -57,4 +57,21 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     Return DataStore.LastIndex
     End Function
+    Public Function Clone() As clBooleanDataSerie
+
+    Var temp As New clBooleanDataSerie("Cloned from " + Self.Name())
+
+    temp.AppendItems(Self.DataStore)
+
+    Return temp
+
+    End Function
+    Public Sub AppendItems(prmItems() As Boolean)
+
+    For Each v As Boolean In prmItems
+      Self.AppendItem(v)
+
+    Next
+
+    End Sub
 End Class

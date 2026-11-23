@@ -27,6 +27,8 @@ Public Class clDataTable
 
     Self.cachedStructure = Nothing
 
+    Self.FilterDataSerie = Nothing
+
     Return
 
 
@@ -276,4 +278,18 @@ Public Class clDataTable
     Return DeletedFlagDataSerie.LastIndex()
 
     End Function
+    Public Sub EnableFilter()
+    Self.FilterMode = True
+
+    End Sub
+    Public Sub DisableFilter()
+    self.FilterMode = false
+    End Sub
+    Public Property FilterMode As Boolean
+    Public Sub EnableFilter(prmFilterData As clBooleanDataSerie)
+    Self.FilterMode = True
+    Self.FilterDataSerie = prmFilterData
+    Return
+    End Sub
+    Public Property FilterDataSerie As clBooleanDataSerie
 End Class

@@ -1,0 +1,52 @@
+Public Class clGenericDataSerie(Of T) Inherits clAbstractDataSerie
+
+    Public Property DataStore() As T
+    Public Sub AppendItem(prmValue As T)
+
+    print("Using appenditem / typed")
+
+
+    Self.DataStore.Append(prmValue)
+
+    Return
+
+    End Sub
+    Public Sub AppendItems(prmItems() As T)
+
+    For Each v As T In prmItems
+      Self.AppendItem(v)
+
+    Next
+    End Sub
+    Public Sub ClearDataStore()
+
+    Self.DataStore.Clear()
+
+    return
+    End Sub
+    Public Override Function Count() As integer
+
+    Return Datastore.Count
+    End Function
+    Public Function Element(prmElementIndex As integer) As Object
+
+    Return Self.DataStore[prmElementIndex]
+    End Function
+    Public Sub Element(prmElementIndex As integer, Assigns prmValue As object)
+
+    Self.DataStore[prmElementIndex] = T(prmValue) 
+    End Sub
+    Public Function LastIndex() As integer
+
+    If DataStore.Count = 0 Then Return -1
+
+    Return DataStore.LastIndex
+    End Function
+    Public Sub SetDefaultValue(prmDefaultValue As T)
+
+    Self.FieldDefinition.DefaultValue = prmDefaultValue
+
+    Return
+
+    End Sub
+End Class

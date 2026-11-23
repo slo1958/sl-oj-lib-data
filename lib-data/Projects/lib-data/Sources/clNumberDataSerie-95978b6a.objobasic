@@ -39,6 +39,8 @@ Public Class clNumberDataSerie Inherits clAbstractDataSerie
     End Sub
     Public Sub AppendItem(prmValue As object)
 
+    print("Using appenditem / object / " + self.Name())
+
     Self.DataStore.Append(Double(prmValue))
 
     Return
