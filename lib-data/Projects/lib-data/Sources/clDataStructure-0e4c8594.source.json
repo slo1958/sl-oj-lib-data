@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clDataStructure",
+  "Id": "0e4c8594-5d6e-4bf2-8bdf-8ab75a6cd5d2",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clDataStructure-0e4c8594.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

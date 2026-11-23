@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clDataRow",
+  "Id": "89a487c6-c871-4c47-929b-c02da182e1bd",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clDataRow-89a487c6.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

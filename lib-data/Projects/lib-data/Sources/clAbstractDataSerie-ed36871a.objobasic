@@ -19,6 +19,8 @@ Public Abstract Class clAbstractDataSerie
     Self.Name = prmSerieName
     Self.DisplayName = prmSerieName
 
+    Self.SerieDataType = clDataField.cstTypeUndefined
+
     Return
 
     End Constructor
@@ -49,4 +51,5 @@ Public Abstract Class clAbstractDataSerie
     Public Abstract Sub AddDefaultItem()
     Public Abstract Sub AddItem()
     Public Abstract Sub ClearDataStore()
+    Public Property SerieDataType As String
 End Class

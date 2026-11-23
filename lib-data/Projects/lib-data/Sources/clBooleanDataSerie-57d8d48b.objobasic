@@ -11,6 +11,8 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
     Super.Constructor(prmSerieName)
     Self.DefaultValue = False
 
+    Self.SerieDataType = clDataField.cstTypeBoolean
+
     Return
 
     End Constructor

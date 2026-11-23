@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clDataField",
+  "Id": "6bf075da-1c9e-44a6-8b7e-f36743837e94",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clDataField-6bf075da.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

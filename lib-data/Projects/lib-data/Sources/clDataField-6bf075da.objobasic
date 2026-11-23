@@ -1,0 +1,18 @@
+Public Class clDataField
+
+    Public Property Name As String
+    Public Property DisplayName As String
+    Public Property DataType As string
+  Public Const cstTypeNumber As String = "Number"
+  Public Const cstTypeString As String = "String"
+  Public Const cstTypeInteger As String = "Integer"
+  Public Const cstTypeBoolean As String = "Boolean"
+  Public Const cstTypeUndefined As String = "Undefined"
+    Public Property DefaultValue As Object
+    Public Function Clone() As clDataField
+
+    Var temp As clDataField
+
+
+    End Function
+End Class

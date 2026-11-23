@@ -1,7 +1,6 @@
 Public Class clDataTable
 
     Public Property DataSeries() As clAbstractDataSerie
-    Public Property MetaData As 
     ## Add an entry to the metadata associated with the dataSerie
     Public Sub AddMetaData(prmWho As string, prmWhat As string)
 

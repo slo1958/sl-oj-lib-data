@@ -1,0 +1,22 @@
+Public Class clDataStructure
+
+    Private Property FieldsDefinition() As clDataField
+    Constructor()
+
+
+    Return
+
+    End Constructor
+    Public Sub AddField(prmFieldDefinition As clDataField)
+
+    Self.FieldsDefinition.Append(prmFieldDefinition)
+
+    Return
+
+    End Sub
+    Public Constructor(prmSourceStructure As clDataStructure)
+
+    Self.FieldsDefinition = $$ Loop OVER FIELD$$
+    prmSourceStructure
+    End Constructor
+End Class

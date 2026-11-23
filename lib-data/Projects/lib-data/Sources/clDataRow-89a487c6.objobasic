@@ -1,0 +1,31 @@
+Public Class clDataRow
+
+    Public Property FieldsValue As Dictionary
+    Public Constructor(prmStructure As clDataStructure)
+
+    Self.FieldsValue = New Dictionary
+
+    If prmStructure = Nothing Then
+      Self.DataStructure = New clDataStructure
+
+    Else
+      Self.DataStructure = prmStructure
+
+    End If
+
+
+    End Constructor
+    Public Sub SetField(prmFieldName As string, prmFieldValue As object)
+
+
+    Self.FieldsValue.Value(prmFieldName) = prmFieldValue
+
+    Return
+
+    End Sub
+    Public Property DataStructure As clDataStructure
+    Public Function getField(prmFieldName As string) As object
+
+    return self.FieldsValue.Value(prmFieldName)
+    End Function
+End Class

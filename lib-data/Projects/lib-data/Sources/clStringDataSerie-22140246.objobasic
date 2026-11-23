@@ -5,6 +5,8 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
     Super.Constructor(prmSerieName)
     Self.DefaultValue = ""
 
+    Self.SerieDataType = clDataField.cstTypeString
+
     Return
 
     End Constructor

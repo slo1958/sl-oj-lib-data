@@ -11,6 +11,8 @@ Public Class clNumberDataSerie Inherits clAbstractDataSerie
     Super.Constructor(prmSerieName)
     Self.DefaultValue = 0
 
+    Self.SerieDataType = clDataField.cstTypeNumber
+
     Return
 
     End Constructor
