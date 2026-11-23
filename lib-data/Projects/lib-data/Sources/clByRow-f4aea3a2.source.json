@@ -1,0 +1,22 @@
+{
+  "Version": 8,
+  "Name": "clByRow",
+  "Id": "f4aea3a2-971a-422d-95d8-a4ec4484fbfd",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-table",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clByRow-f4aea3a2.objobasic",
+  "LayoutFile": "",
+  "Notes": [
+    {
+      "Name": "MyNote1",
+      "Content": "\nClass Countdown Implements Iterable\n    Property Start As Integer\n\n    Constructor(start As Integer)\n        Me.Start = start\n    End Constructor\n\n    Function GetIterator() As CountdownIterator\n        Return New CountdownIterator(Me.Start)\n    End Function\nEnd Class\n\n\n\nFor Each n As Integer In New Countdown(3)\n    Print(n)\nNext\n# Prints: 3, 2, 1, 0",
+      "IsPreviewMode": false
+    }
+  ],
+  "InspectorBehaviour": []
+}

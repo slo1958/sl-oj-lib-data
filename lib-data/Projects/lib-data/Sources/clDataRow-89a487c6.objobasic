@@ -1,7 +1,7 @@
 Public Class clDataRow
 
     Public Property FieldsValue() As Object
-    ## Creates a datarow object. Note that the pointer to the structure is used as is, the constructor does not clone the content;
+    ## Creates a datarow object. Note that the pointer to the structure is used as is, the constructor does not clone the content. If Nothing is passed, then the structure can be created on the fly.
     Public Constructor(prmStructure As clDataStructure)
 
     If prmStructure = Nothing Then

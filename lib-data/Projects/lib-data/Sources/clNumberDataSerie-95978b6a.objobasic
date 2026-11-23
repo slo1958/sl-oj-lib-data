@@ -11,7 +11,7 @@ Public Class clNumberDataSerie Inherits clAbstractDataSerie
 
     Self.FieldDefinition.DefaultValue = 0
 
-    Self.FieldDefinition.DataType = clDataField.cstTypeNumber
+    Self.FieldDefinition.SetDataType(clDataField.cstTypeNumber)
 
     Return
 
@@ -37,4 +37,18 @@ Public Class clNumberDataSerie Inherits clAbstractDataSerie
 
     Self.DataStore[prmElementIndex] = double(prmValue)
     End Sub
+    Public Sub AppendItem(prmValue As object)
+
+    Self.DataStore.Append(Double(prmValue))
+
+    Return
+
+    End Sub
+    Public Function LastIndex() As integer
+
+    If DataStore.Count = 0 Then Return -1
+
+    Return DataStore.LastIndex
+
+    End Function
 End Class

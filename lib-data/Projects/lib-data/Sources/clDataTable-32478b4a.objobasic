@@ -18,11 +18,12 @@ Public Class clDataTable
     Self.Name = prmTableName
     Self.DisplayName = prmTableName
 
-    Self.IndexDataSerie = New clIntegerDataSerie(cstIndexSerieName)
-    Self.AppendDataSerie(Self.IndexDataSerie)
+    Self.IndexDataSerie = New clAutoIncrementDataSerie(cstIndexSerieName)
+    #Self.AppendDataSerie_Internal(Self.IndexDataSerie)
 
     Self.DeletedFlagDataSerie = New clBooleanDataSerie(cstMaskSerieName)
-    Self.AppendDataserie(Self.DeletedFlagDataSerie)
+    Self.DeletedFlagDataSerie.SetDefaultValue(True)
+    #Self.AppendDataSerie_Internal(Self.DeletedFlagDataSerie)
 
     Self.cachedStructure = Nothing
 
@@ -33,15 +34,34 @@ Public Class clDataTable
     Public Property Name As String
     Public Property MetaData As clMetaData
     ## Add an entry to the metadata associated with the dataSerie
-    Public Sub AppendDataSerie(prmDataSerie As clAbstractDataSerie)
+    Public Function AppendDataSerie(ParamArray prmDataSeries As clAbstractDataSerie) As Boolean
 
-    If Not ValidSerieName(prmDataSerie.Name()) then Return
+    Var errCount As Integer = 0
 
-    Self.AppendDataSerie_Internal(prmDataSerie)
+    For Each prmDataSerie As clAbstractDataSerie In prmDataSeries
 
-    Return
+      Var serieName As String = prmDataSerie.Name()
 
-    End Sub
+      If Not ValidSerieName(serieName) Then
+
+        mdHelpers.DataLibLogs().WriteError(CurrentMethodName() _
+          , cstErrInvalidFieldName _
+          , serieName _
+          )
+
+        errCount += 1
+
+      Else
+        Self.AppendDataSerie_Internal(prmDataSerie)
+
+      End If
+
+
+    Next
+
+    Return errCount = 0
+
+    End Function
     Public Property DisplayName As String
     ## Get the number of items in the datatable. It is the number of items in the largest data serie
     ##
@@ -66,7 +86,11 @@ Public Class clDataTable
 
     For Each serie As clAbstractDataSerie In DataSeries
       serie.ResizeTo(prmTargetSize)
+
     Next
+
+    Self.IndexDataSerie.ResizeTo(prmTargetSize)
+    Self.DeletedFlagDataSerie.ResizeTo(prmTargetSize)
 
     Return prmTargetSize
 
@@ -82,13 +106,16 @@ Public Class clDataTable
       serie.ResizeTo(maxSize)
     Next
 
+    Self.IndexDataSerie.ResizeTo(maxSize)
+    Self.DeletedFlagDataSerie.ResizeTo(maxSize)
+
     Return maxSize
 
 
 
 
     End Function
-    Public Property IndexDataSerie As clIntegerDataSerie
+    Public Property IndexDataSerie As clAutoIncrementDataSerie
     Public Property DeletedFlagDataSerie As clBooleanDataSerie
     Public Sub SetDisplayName(prmDisplayName As string)
 
@@ -97,8 +124,6 @@ Public Class clDataTable
     Return
 
 
-    End Sub
-    Public Sub AppendRow(prmRow As clDataRow)
     End Sub
   Public Const cstIndexSerieName As string = "SYS$Index"
   Public Const cstMaskSerieName As string = "SYS$RowMask"
@@ -123,7 +148,7 @@ Public Class clDataTable
 
     If Self.cachedStructure = Nothing Then
 
-      Var results As clDataStructure
+      Var results As new clDataStructure
 
       For Each serie As clAbstractDataSerie In DataSeries
         results.AppendField(serie.Definition())
@@ -144,15 +169,26 @@ Public Class clDataTable
     ## Add fields from the data row to the table using field names
     Public Sub AppendDataRow(prmRow As clDataRow)
 
-    For i As Integer = 0 To prmRow.LastIndex()
-      Var fieldname As String = prmRow.GetFieldName(i)
 
-
-    Next
     For i As Integer = 0 To Self.DataSeries.LastIndex
+      Var fieldname As String = Self.DataSeries[i].Name()
+      Var srcFieldIndex As Integer = prmRow.FieldIndex(fieldname)
 
+      If srcFieldIndex >= 0 Then
+        Self.DataSeries[i].AppendItem(prmRow.GetField(srcFieldIndex))
+
+      Else
+        Self.DataSeries[i].AppendDefaultItem()
+
+      End If
 
     Next
+
+    # Just in case...
+    Self.FixSize()
+
+    Return
+
     End Sub
     Public Function GetDataSerie(prmSerieName As string) As clAbstractDataSerie
 
@@ -163,6 +199,8 @@ Public Class clDataTable
     End Function
     ## Return the index of the dataserie
     Public Function SerieIndex(prmFieldName As string) As integer
+
+    If Self.DataSeries.Count = 0 Then Return -1
 
     For i As Integer = 0 To Self.DataSeries.LastIndex
       Var tempName As String = Self.DataSeries[i].Name()
@@ -189,13 +227,53 @@ Public Class clDataTable
 
     Var tempName As String = prmDataSerie.Name()
 
-    If Self.SerieIndex(tempName) >= 0 Then Return
+    If Self.SerieIndex(tempName) >= 0 Then
 
+      mdHelpers.DataLibLogs().WriteError(CurrentMethodName() _
+        , cstErrFieldAlreadyDefined _
+        , tempName _
+        , Self.Name _
+        )
+
+      Return
+    End If
+
+    # Reset cached structure
     Self.cachedStructure = Nothing
 
+
     Self.DataSeries.Append(prmDataSerie)
+
+    # Self.AppendMetaData(CurrentMethodName(), prmWhat)
 
     Return
 
     End Sub
+  Public Const cstErrInvalidFieldName As string = "Invalid field name [%0]"
+  Public Const cstErrFieldAlreadyDefined As string = "Field [%0] already defined in [%1]"
+    ## Add values to the table using field index
+    Public Sub AppendDataRow(ParamArray values() As Object)
+
+    For i As Integer = 0 To Self.DataSeries.LastIndex
+
+      If i <= values.LastIndex Then
+        Self.DataSeries[i].AppendItem(values[i])
+
+      Else
+        Self.DataSeries[i].AppendDefaultItem()
+
+      End If
+
+    Next
+
+    # Just in case...
+    Self.FixSize()
+
+    Return
+
+    End Sub
+    Public Function LastIndex() As integer
+    Return DeletedFlagDataSerie.LastIndex()
+
+    End Function
 End Class

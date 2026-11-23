@@ -4,6 +4,32 @@ Class Window1 Inherits Window
 
     Var tbl As New clDataTable("MyTable")
 
+    Var s1 As New clStringDataSerie("Country")
+    Var s2 As New clNumberDataSerie("Sales")
+    Var s3 As New clNumberDataSerie("Volume")
 
+    _ = tbl.AppendDataSerie(s1, s2, s3)
+
+    tbl.AppendDataRow("Belgium", 12000, 1100)
+    tbl.AppendDataRow("France", 14000, 1200)
+    tbl.AppendDataRow("Italy", 12500, 1700)
+    tbl.AppendDataRow("France", 14000, 1200)
+    tbl.AppendDataRow("Italy", 12500, 1700)
+
+    Listbox1.RemoveAllRows()
+    Listbox1.ColumnCount = 3
+
+    For Each dr As clDataRow In New clByRow(tbl)
+      Var idx As Integer = Listbox1.AddRow()
+
+      listbox1.SetCellText(idx, 0, dr.GetField(0).ToString())
+      listbox1.SetCellText(idx, 1, dr.GetField(1).ToString())
+      listbox1.SetCellText(idx, 2, dr.GetField(2).ToString())
+
+
+    Next
+
+
+    Return
     End Sub
 End Class

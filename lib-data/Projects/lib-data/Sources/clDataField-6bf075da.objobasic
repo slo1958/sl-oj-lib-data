@@ -71,21 +71,23 @@ Public Class clDataField
 
     Return Self.mDisplayName
     End Function
-    Public Function DisplayName(Assigns prmName As string) As String
+    Public Sub SetDisplayName(prmName As string)
 
     Self.mDisplayName = prmName
-    End Function
+    End Sub
     Constructor()
     Self.mName = "Unnamed"
     Self.mDisplayName = ""
-    Self.DataType = cstTypeUndefined
+    Self.mDataType = cstTypeUndefined
+
+    Return
 
     End Constructor
     Public Constructor(prmFieldName As string, prmFieldType As string)
 
     Self.mName = prmFieldName
     Self.mDisplayName = ""
-    Self.DataType = CleanType(prmFieldType)
+    Self.mDataType = CleanType(prmFieldType)
 
     Return
 
@@ -101,7 +103,7 @@ Public Class clDataField
     Return cstTypeUndefined
 
     End Function
-    Public Sub DataType(Assigns prmFieldType As string)
+    Public Sub SetDataType(prmFieldType As string)
 
     Self.mDataType = CleanType(prmFieldType)
 

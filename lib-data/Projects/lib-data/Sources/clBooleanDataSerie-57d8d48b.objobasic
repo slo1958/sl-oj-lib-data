@@ -11,7 +11,7 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     Self.FieldDefinition.DefaultValue = False
 
-    Self.FieldDefinition.DataType = clDataField.cstTypeBoolean
+    Self.FieldDefinition.SetDataType(clDataField.cstTypeBoolean)
 
     Return
 
@@ -44,4 +44,17 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     Self.DataStore[prmElementIndex] = Boolean(prmValue) 
     End Sub
+    Public Sub AppendItem(prmValue As object)
+
+    Self.DataStore.Append(Boolean(prmValue))
+
+    Return
+
+    End Sub
+    Public Function LastIndex() As integer
+
+    If DataStore.Count = 0 Then Return -1
+
+    Return DataStore.LastIndex
+    End Function
 End Class

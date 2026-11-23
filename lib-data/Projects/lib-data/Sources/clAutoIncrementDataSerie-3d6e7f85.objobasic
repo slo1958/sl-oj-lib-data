@@ -1,0 +1,59 @@
+Public Class clAutoIncrementDataSerie Inherits clAbstractDataSerie
+
+    Public Override Function Count() As integer
+
+    Return LastValue + 1
+
+    End Function
+    Public Constructor(prmSerieName As string)
+
+    Super.Constructor(prmSerieName)
+
+    Self.FieldDefinition.DefaultValue = 0
+
+    Self.LastValue = -1
+
+    # Self.FieldDefinition.DataType() #
+
+    Self.FieldDefinition.SetDataType(clDataField.cstTypeInteger)
+
+    Return
+    End Constructor
+    Public Sub SetDefaultValue(prmDefaultValue As Integer)
+
+    Self.FieldDefinition.DefaultValue = prmDefaultValue
+
+    Return
+
+    End Sub
+    Public Sub ClearDataStore()
+
+    Self.LastValue = -1
+
+    return
+    End Sub
+    Public Function Element(prmElementIndex As integer) As Object
+
+    Return prmElementIndex
+
+
+    End Function
+    Public Sub Element(prmElementIndex As integer, Assigns prmValue As object)
+
+    # Cannot assign value to autoincrement dataserie
+
+
+    return
+    End Sub
+    Public Sub AppendItem(prmValue As object)
+
+    Self.LastValue += 1
+
+    Return
+
+    End Sub
+    Public Property LastValue As integer
+    Public Function LastIndex() As integer
+    return LastValue
+    End Function
+End Class

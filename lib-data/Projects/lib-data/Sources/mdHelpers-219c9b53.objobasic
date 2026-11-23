@@ -13,4 +13,9 @@ Public Module mdHelpers
 
 
   End Function
+  Public Function DataLibLogs() As lib_LogManager.clLogManager
+
+  Return lib_LogManager.clLogManager.GetDefaultLogingSupport()
+
+  End Function
 End Module

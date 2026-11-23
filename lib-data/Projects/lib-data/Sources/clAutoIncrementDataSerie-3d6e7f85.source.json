@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clAutoIncrementDataSerie",
+  "Id": "3d6e7f85-7509-48d6-adb5-f02c155f34d5",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clAutoIncrementDataSerie-3d6e7f85.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

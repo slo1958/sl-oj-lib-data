@@ -1,0 +1,27 @@
+Public Class clIteratorByRows Implements Iterator 
+
+
+    Public Constructor(prmTable As clDataTable)
+    Self.DataTable = prmTable
+
+    self.CurrentRow = 0
+    End Constructor
+    Private Property DataTable As clDataTable
+    Public Function MoveNext() As Boolean
+
+    If CurrentRow > Self.DataTable.LastIndex()  Then
+      Current = Nothing
+      Return False
+
+    Else
+      Current = DataTable.DataRow(CurrentRow)
+      CurrentRow = CurrentRow + 1
+
+      Return True
+
+    End If
+
+    End Function
+    Public Property Current As clDataRow
+    Private Property CurrentRow As integer
+End Class

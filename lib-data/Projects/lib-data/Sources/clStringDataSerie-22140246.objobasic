@@ -3,8 +3,9 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
     Public Constructor(prmSerieName As string)
 
     Super.Constructor(prmSerieName)
+
     Self.FieldDefinition.DefaultValue = ""
-    Self.FieldDefinition.DataType = clDataField.cstTypeString
+    Self.FieldDefinition.SetDataType(clDataField.cstTypeString)
 
     Return
 
@@ -44,4 +45,17 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
 
     Self.DataStore[prmElementIndex] = string(prmValue)
     End Sub
+    Public Sub AppendItem(prmValue As object)
+
+    Self.DataStore.Append(String(prmValue))
+
+    Return
+
+    End Sub
+    Public Function LastIndex() As integer
+
+    If DataStore.Count = 0 Then Return -1
+
+    Return DataStore.LastIndex
+    End Function
 End Class

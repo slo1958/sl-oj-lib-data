@@ -15,11 +15,7 @@ Public Abstract Class clAbstractDataSerie
 
     Self.MetaData = New clMetaData
 
-    Self.FieldDefinition = New clDataField()
-
-    Self.FieldDefinition.Name = prmSerieName
-    Self.FieldDefinition.DisplayName = prmSerieName
-    Self.FieldDefinition.DataType = clDataField.cstTypeUndefined
+    Self.FieldDefinition = New clDataField(prmSerieName, clDataField.cstTypeUndefined)
 
     Return
 
@@ -80,4 +76,5 @@ Public Abstract Class clAbstractDataSerie
 
     Return Self.FieldDefinition.Name()
     End Function
+    Public Abstract Function LastIndex() As integer
 End Class

@@ -6,28 +6,30 @@ Public Class clDataStructure
     Return
 
     End Constructor
-    Public Sub AppendField(prmFieldDefinition As clDataField)
+    Public Function AppendField(prmFieldDefinition As clDataField) As Boolean
 
     If Self.GetFieldDefinition(prmFieldDefinition.Name()) = Nothing Then
 
       Self.FieldsDefinition.Append(prmFieldDefinition)
 
-      Return
+      Return True
 
     Else
-      # SHOULD BOUM
+      mdHelpers.DataLibLogs().WriteError(CurrentMethodName(), cstErrFieldAlreadyExists, prmFieldDefinition.Name())
 
+      Return False
 
     End If
 
 
-    End Sub
+    End Function
     Public Constructor(prmSourceStructure As clDataStructure)
 
     Self.FieldsDefinition.Clear()
 
     For i As Integer = 0 To prmSourceStructure.LastIndex()
       Self.AppendField(prmSourceStructure.GetFieldDefinition(i).Clone())
+
     Next
 
     Return
@@ -49,6 +51,13 @@ Public Class clDataStructure
       Return Self.FieldsDefinition[prmFieldIndex]
 
     Catch dummy As RuntimeException
+
+      mdHelpers.DataLibLogs().WriteWarning(CurrentMethodName() _
+        , cstWngFieldIndexOutOfBound _
+        , prmFieldIndex.ToString() _
+        , FieldsDefinition.LastIndex.ToString() _
+        )
+
       Return Nothing
 
     End Try
@@ -57,12 +66,25 @@ Public Class clDataStructure
     ## Return the field definition object of the field matching the name passed as parameter
     Public Function GetFieldDefinition(prmFieldName As String) As clDataField
 
-    For i As Integer = 0 To FieldsDefinition.LastIndex
-      If Self.FieldsDefinition[i].Name() = prmFieldName Then Return Self.FieldsDefinition[i]
+    If FieldsDefinition.Count > 0 Then
 
-    Next
+      For i As Integer = 0 To FieldsDefinition.LastIndex
+        If Self.FieldsDefinition[i].Name() = prmFieldName Then Return Self.FieldsDefinition[i]
+
+      Next
+
+    End If
+
+
+    mdHelpers.DataLibLogs().WriteWarning(CurrentMethodName() _
+      , cstWngCannotFindFieldDefinition _
+      , prmFieldName _
+      )
 
     Return Nothing
 
     End Function
+  Public Const cstErrFieldAlreadyExists As string = "Field %0 already exists in data structure definition"
+  Public Const cstWngFieldIndexOutOfBound As string = "Field index out of bound, value %0, limit %1"
+  Public Const cstWngCannotFindFieldDefinition As String = "Cannot find definition of field [%0]"
 End Class
