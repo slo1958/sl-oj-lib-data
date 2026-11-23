@@ -1,0 +1,91 @@
+Public Class clDataTable
+
+    Public Property DataSeries() As clAbstractDataSerie
+    Public Property MetaData As 
+    ## Add an entry to the metadata associated with the dataSerie
+    Public Sub AddMetaData(prmWho As string, prmWhat As string)
+
+    If Self.MetaData <> Nothing Then
+      Self.MetaData.Add(prmWho, prmWhat)
+
+    End If
+
+    Return
+
+    End Sub
+    Public Constructor(prmTableName As string)
+
+    Self.MetaData = New clMetaData
+    Self.Name = prmTableName
+    Self.DisplayName = prmTableName
+
+    Self.IndexDataSerie = New clIntegerDataSerie("Index")
+    Self.AddDataSerie(Self.IndexDataSerie)
+
+    Self.DeletedFlagDataSerie = New clBooleanDataSerie("Deleted")
+    Self.AddDataserie(Self.DeletedFlagDataSerie)
+
+    Return
+
+
+    End Constructor
+    Public Property Name As String
+    Public Property MetaData As clMetaData
+    ## Add an entry to the metadata associated with the dataSerie
+    Public Sub AddDataSerie(prmDataSerie As clAbstractDataSerie)
+
+    Self.DataSeries.Append(prmDataSerie)
+
+
+    Return
+
+    End Sub
+    Public Property DisplayName As String
+    ## Get the number of items in the datatable. It is the number of items in the largest data serie
+    ##
+    Public Function Count() As integer
+
+    Var results As Integer
+
+    For Each serie As clAbstractDataSerie In Self.DataSeries
+      If serie.Count() > results Then results = serie.Count()
+
+    Next
+
+    Return results
+
+
+    End Function
+    Public Function ResizeTo(prmTargetSize As integer) As integer
+
+    Var maxSize As Integer = Self.Count()
+
+    If maxSize > prmTargetSize Then Return maxSize
+
+    For Each serie As clAbstractDataSerie In DataSeries
+      serie.ResizeTo(prmTargetSize)
+    Next
+
+    Return prmTargetSize
+
+
+
+
+    End Function
+    Public Function FixSize() As integer
+
+    Var maxSize As Integer = Self.Count()
+
+    For Each serie As clAbstractDataSerie In DataSeries
+      serie.ResizeTo(maxSize)
+    Next
+
+    Return maxSize
+
+
+
+
+    End Function
+    Public Property IndexDataSerie As clIntegerDataSerie
+    Public Property DeletedFlagDataSerie As clBooleanDataSerie
+End Class

@@ -1,0 +1,45 @@
+Public Class clBooleanDataSerie Inherits clAbstractDataSerie
+
+    Public Property DataStore() As Boolean
+    Public Override Function Count() As integer
+
+    Return Datastore.Count
+    End Function
+    Public Property DefaultValue As Boolean
+    Public Constructor(prmSerieName As string)
+
+    Super.Constructor(prmSerieName)
+    Self.DefaultValue = False
+
+    Return
+
+    End Constructor
+    ## Add one entry set to default value
+    Public Sub AddDefaultItem()
+
+    Self.DataStore.Append(Self.DefaultValue)
+
+    Return
+
+    End Sub
+    Public Sub SetDefaultValue(prmDefaultValue As Boolean)
+
+    Self.DefaultValue = prmDefaultValue
+
+    Return
+
+    End Sub
+    Public Sub AddItem(prmValue As Boolean)
+
+    Self.DataStore.Append(prmValue)
+
+    Return
+
+    End Sub
+    Public Sub ClearDataStore()
+
+    Self.DataStore.Clear()
+
+    return
+    End Sub
+End Class

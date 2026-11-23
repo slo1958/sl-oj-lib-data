@@ -1,5 +1,5 @@
 {
-  "Version": 6,
+  "Version": 8,
   "Id": "bca839c5-8a23-481f-b6ad-9cb9a7dc3971",
   "Name": "lib-data",
   "Type": "Desktop",
@@ -13,10 +13,12 @@
       "osx-arm64"
     ],
     "IncludeODBCSupport": false,
+    "IncludeVideoSupport": false,
     "WorkerProjectIds": [],
     "DefaultWindow": "Window1",
     "DefaultWebPage": "",
-    "WebRequestHandler": ""
+    "WebRequestHandler": "",
+    "DefaultMobilePage": ""
   },
   "Metadata": {
     "Identity": {
@@ -46,6 +48,41 @@
       "DeploymentNetworkAccess": "AllInterfaces",
       "PublicUrl": "",
       "OpenBrowserOnDeployment": false
+    },
+    "MobilePlatform": {
+      "Ios": {
+        "BundleIdentifier": "",
+        "BuildNumber": 1,
+        "UsesNonExemptEncryption": false,
+        "Privacy": {
+          "RequiredReasonApis": [],
+          "CollectedData": [],
+          "Tracking": false,
+          "TrackingDomains": []
+        },
+        "DeviceFamilies": [
+          "IPhone",
+          "IPad"
+        ],
+        "IPhoneOrientations": [
+          "Portrait",
+          "LandscapeLeft",
+          "LandscapeRight"
+        ],
+        "IPadOrientations": [
+          "Portrait",
+          "LandscapeLeft",
+          "LandscapeRight",
+          "PortraitUpsideDown"
+        ],
+        "MinimumOSVersion": "17.0"
+      }
+    },
+    "WebInstallation": {
+      "AllowInstallation": false,
+      "ShortName": "",
+      "ThemeColour": "",
+      "BackgroundColour": ""
     },
     "FileAssociations": [],
     "UrlSchemes": [],
@@ -82,6 +119,7 @@
   "EmptyFolders": [
     "lib-data-core",
     "lib-data-core/data-series",
+    "lib-data-core/data-table",
     "lib-data-helpers"
   ]
 }

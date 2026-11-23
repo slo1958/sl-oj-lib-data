@@ -48,4 +48,5 @@ Public Abstract Class clAbstractDataSerie
     Public Abstract Function Count() As integer
     Public Abstract Sub AddDefaultItem()
     Public Abstract Sub AddItem()
+    Public Abstract Sub ClearDataStore()
 End Class

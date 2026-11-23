@@ -18,11 +18,8 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
     Return
 
   End Sub
-  Self.DataStore.Append(Self.DefaultValue)
+ 
 
-  Return
-
-    End Sub
     Public Sub AddItem(prmValue As String)
 
     Self.DataStore.Append(prmValue)
@@ -40,5 +37,11 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
 
     Return
 
+    End Sub
+    Public Sub ClearDataStore()
+
+    Self.DataStore.Clear()
+
+    return
     End Sub
 End Class

@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clDataTable",
+  "Id": "32478b4a-3951-47d6-b5fc-cd63df240b88",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-table",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clDataTable-32478b4a.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

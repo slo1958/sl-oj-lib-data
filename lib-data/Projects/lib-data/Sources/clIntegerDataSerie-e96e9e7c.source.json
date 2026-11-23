@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clIntegerDataSerie",
+  "Id": "e96e9e7c-816b-45dc-aa58-e65f4706d35e",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clIntegerDataSerie-e96e9e7c.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

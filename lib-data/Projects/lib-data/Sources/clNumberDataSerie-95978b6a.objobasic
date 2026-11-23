@@ -5,11 +5,13 @@ Public Class clNumberDataSerie Inherits clAbstractDataSerie
 
     Return Datastore.Count
     End Function
-    Public Property DefaultValue As integer
+    Public Property DefaultValue As Double
     Public Constructor(prmSerieName As string)
 
     Super.Constructor(prmSerieName)
     Self.DefaultValue = 0
+
+    Return
 
     End Constructor
     ## Add one entry set to default value
@@ -33,5 +35,11 @@ Public Class clNumberDataSerie Inherits clAbstractDataSerie
 
     Return
 
+    End Sub
+    Public Sub ClearDataStore()
+
+    Self.DataStore.Clear()
+
+    return
     End Sub
 End Class
