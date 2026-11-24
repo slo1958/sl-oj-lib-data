@@ -1,7 +1,7 @@
 {
   "Version": 8,
   "Name": "clBooleanDataSerie",
-  "Id": "57d8d48b-a839-4ca6-8a15-615357535623",
+  "Id": "8de69d4c-07b5-4456-8056-396da7eb18d2",
   "Kind": "Class",
   "BuildScope": "Application",
   "Namespace": "",
@@ -9,7 +9,7 @@
   "ParentModule": "",
   "ParentModuleId": "",
   "AvailableInDesigner": false,
-  "CodeFile": "clBooleanDataSerie-57d8d48b.objobasic",
+  "CodeFile": "clBooleanDataSerie-8de69d4c.objobasic",
   "LayoutFile": "",
   "Notes": [],
   "InspectorBehaviour": []
