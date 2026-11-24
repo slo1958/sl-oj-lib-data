@@ -6,7 +6,7 @@ Class Window1 Inherits Window
 
     Var s1 As New clStringDataSerie("Country")
     Var s2 As New clNumberDataSerie("Sales")
-    Var s3 As New clNumberDataSerie("Volume")
+    Var s3 As New clIntegerDataSerie("Volume")
     Var s4 As New clBooleanDataSerie("Actif")
 
     _ = tbl.AppendDataSerie(s1, s2, s3, s4)
@@ -18,18 +18,42 @@ Class Window1 Inherits Window
     tbl.AppendDataRow("Italy", 12500, 1700)
 
     Listbox1.RemoveAllRows()
-    Listbox1.ColumnCount = 4
 
-    For Each dr As clDataRow In New clByRow(tbl)
-      Var idx As Integer = Listbox1.AddRow()
 
-      listbox1.SetCellText(idx, 0, dr.GetField(0).ToString())
-      listbox1.SetCellText(idx, 1, dr.GetField(1).ToString())
-      listbox1.SetCellText(idx, 2, dr.GetField(2).ToString())
-      listbox1.SetCellText(idx, 3, dr.GetField(3).ToString())
+
+    # we include the index in the output, hence + 1
+    Listbox1.ColumnCount = tbl.CountDataSeries() + 1
+    listbox1.SetHeaderText(0, "Index")
+
+    Var colIndex As Integer = 0
+
+    For Each ds As clAbstractDataSerie In New clByDataSerie(tbl)
+
+      listbox1.SetHeaderText(colIndex + 1, ds.Name())
+      colIndex += 1
+
+    Next
+
+
+
+    For Each dr As clDataRow In New clByRowWithIndex(tbl)
+      Var idxRow As Integer = Listbox1.AddRow()
+
+      For idxCol As Integer = 0 To dr.LastIndex()
+        listbox1.SetCellText(idxRow, idxCol, dr.GetField(idxCol).ToString())
+
+      Next
+
+      # listbox1.SetCellText(idxRow, 0, dr.GetField(0).ToString())
+      # listbox1.SetCellText(idxRow, 1, dr.GetField(1).ToString())
+      # listbox1.SetCellText(idxRow, 2, dr.GetField(2).ToString())
+      # listbox1.SetCellText(idxRow, 3, dr.GetField(3).ToString())
 
 
     Next
+
+    Var myserie As clAbstractDataSerie = tbl.GetDataSerie(clDataTable.cstIndexSerieIndex)
+    Label1.Text = myserie.LastIndex().ToString()
 
 
     Return

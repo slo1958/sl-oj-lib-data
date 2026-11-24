@@ -1,0 +1,88 @@
+Public Class clNumberDataSerie Inherits clAbstractDataSerie
+
+    Public Constructor(prmSerieName As string)
+
+    Super.Constructor(prmSerieName)
+
+    Self.SetupFieldDefinition(0.0)
+
+    Self.ClearDataStore()
+
+    Return
+
+    End Constructor
+    Public Sub AppendItem(prmValue As object)
+
+    Self.DataStore.AppendItem(Double(prmValue))
+
+    Return
+
+    End Sub
+    Public Property DataStore As clGenericDataStore(of Double)
+    Public Sub SetDefaultValue(prmDefaultValue As Double)
+
+    Self.DataStore.SetDefaultValue(prmDefaultValue)
+    Self.FieldDefinition.SetDefaultValue(prmDefaultValue)
+
+    Return
+
+    End Sub
+    Public Override Sub AppendDefaultItem()
+
+    Self.DataStore.AppendDefaultItem()
+
+    Return
+    End Sub
+    Public Constructor(prmSourceDataSerie As clNumberDataSerie)
+
+    Super.Constructor("Cloned from " + prmSourceDataSerie.Name())
+
+    Self.SetupFieldDefinition(prmSourceDataSerie.FieldDefinition.DefaultValue())
+
+    Self.ClearDataStore()
+
+    Var items() As Double
+
+    items = prmSourceDataSerie.DataStore.Items()
+
+    Self.DataStore.AppendItems(items)
+
+    Return
+    End Constructor
+    Public Function Element(prmElementIndex As integer) As object
+
+    Return Self.DataStore.Item(prmElementIndex)
+    End Function
+    Public Sub Element(prmElementIndex As integer, Assigns prmValue As object)
+
+    Self.DataStore.Item(prmElementIndex) = prmValue
+
+
+    End Sub
+    Public Function Count() As integer
+
+    return self.DataStore.Count()
+    End Function
+    Public Function LastIndex() As integer
+
+    return self.DataStore.LastIndex()
+    End Function
+    ## Creates an empty datastore and assign default value
+    Public Sub ClearDataStore()
+
+    Self.DataStore = New clGenericDataStore(Of Double)
+
+    Self.DataStore.SetDefaultValue(Double(Self.FieldDefinition.DefaultValue()))
+
+    Return
+    End Sub
+    Protected Sub SetupFieldDefinition(prmDefaultValue As object)
+
+    Self.FieldDefinition.SetDefaultValue(prmDefaultValue)
+
+    Self.FieldDefinition.SetDataType(clDataField.cstTypeNumber)
+
+    Return
+
+    End Sub
+End Class

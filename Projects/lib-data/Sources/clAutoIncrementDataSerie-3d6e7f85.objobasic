@@ -42,8 +42,13 @@ Public Class clAutoIncrementDataSerie Inherits clAbstractDataSerie
 
     # Cannot assign value to autoincrement dataserie
 
+    mdHelpers.DataLibLogs().WriteError(CurrentMethodName() _
+      , cstErrCannotUpdate _
+      , Self.Name() _
+      )
 
-    return
+    Return
+
     End Sub
     Public Sub AppendItem(prmValue As object)
 
@@ -56,4 +61,5 @@ Public Class clAutoIncrementDataSerie Inherits clAbstractDataSerie
     Public Function LastIndex() As integer
     return LastValue
     End Function
+  Public Const cstErrCannotUpdate As String = "Cannot assign value to autoincrement dataserie [%0]"
 End Class

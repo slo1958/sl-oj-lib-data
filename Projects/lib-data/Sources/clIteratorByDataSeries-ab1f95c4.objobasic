@@ -1,0 +1,27 @@
+Public Class clIteratorByDataSeries Implements Iterator
+
+
+    Public Constructor(prmTable As clDataTable)
+    Self.DataTable = prmTable
+
+    self.CurrentDataSerie = 0
+    End Constructor
+    Private Property DataTable As clDataTable
+    Public Function MoveNext() As Boolean
+
+    If CurrentDataSerie > Self.DataTable.LastDataSerieIndex() Then
+      Current = Nothing
+      Return False
+
+    Else
+      Current = DataTable.GetDataSerie(CurrentDataSerie)
+      CurrentDataSerie = CurrentDataSerie + 1
+
+      Return True
+
+    End If
+
+    End Function
+    Public Property Current As clAbstractDataSerie
+    Private Property CurrentDataSerie As integer
+End Class

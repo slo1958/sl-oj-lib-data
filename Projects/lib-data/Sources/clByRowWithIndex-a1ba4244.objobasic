@@ -1,0 +1,12 @@
+Public Class clByRowWithIndex Implements Iterable
+
+    Public Constructor(prmTable As clDataTable)
+    Self.DataTable = prmTable
+
+    End Constructor
+    Public Property DataTable As clDataTable
+    Public Function GetIterator() As clIteratorByRows
+    Return New clIteratorByRows(DataTable, True)
+
+    End Function
+End Class

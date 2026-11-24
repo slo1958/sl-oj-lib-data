@@ -1,0 +1,12 @@
+Public Class clByDataSerie Implements Iterable
+
+    Public Constructor(prmTable As clDataTable)
+    Self.DataTable = prmTable
+
+    End Constructor
+    Public Property DataTable As clDataTable
+    Public Function GetIterator() As clIteratorByDataSeries
+    Return New clIteratorByDataSeries(DataTable)
+
+    End Function
+End Class

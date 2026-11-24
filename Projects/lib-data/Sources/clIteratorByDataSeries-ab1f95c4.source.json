@@ -1,0 +1,22 @@
+{
+  "Version": 8,
+  "Name": "clIteratorByDataSeries",
+  "Id": "ab1f95c4-c844-49e5-b086-09e2c517af54",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-table",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clIteratorByDataSeries-ab1f95c4.objobasic",
+  "LayoutFile": "",
+  "Notes": [
+    {
+      "Name": "MyNote",
+      "Content": "Class CountdownIterator Implements Iterator\n    Property Value As Integer\n    Property Current As Integer\n\n    Constructor(start As Integer)\n        Me.Value = start + 1\n        Me.Current = 0\n    End Constructor\n\n    Function MoveNext() As Boolean\n        Me.Value = Me.Value - 1\n        If Me.Value >= 0 Then\n            Me.Current = Me.Value\n            Return True\n        End If\n        Return False\n    End Function\nEnd Class\n\n",
+      "IsPreviewMode": false
+    }
+  ],
+  "InspectorBehaviour": []
+}

@@ -1,7 +1,7 @@
 {
   "Version": 8,
   "Name": "clNumberDataSerie",
-  "Id": "95978b6a-0c78-4e6f-b4cd-f5128c9f3824",
+  "Id": "b1fc23d3-39e4-46d9-aa56-976a735a139f",
   "Kind": "Class",
   "BuildScope": "Application",
   "Namespace": "",
@@ -9,7 +9,7 @@
   "ParentModule": "",
   "ParentModuleId": "",
   "AvailableInDesigner": false,
-  "CodeFile": "clNumberDataSerie-95978b6a.objobasic",
+  "CodeFile": "clNumberDataSerie-b1fc23d3.objobasic",
   "LayoutFile": "",
   "Notes": [],
   "InspectorBehaviour": []

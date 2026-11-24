@@ -6,7 +6,7 @@ Public Class clByRow Implements Iterable
     End Constructor
     Public Property DataTable As clDataTable
     Public Function GetIterator() As clIteratorByRows
-    Return New clIteratorByRows(DataTable)
+    Return New clIteratorByRows(DataTable, False)
 
     End Function
 End Class

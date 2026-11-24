@@ -87,4 +87,21 @@ Public Class clDataStructure
   Public Const cstErrFieldAlreadyExists As string = "Field %0 already exists in data structure definition"
   Public Const cstWngFieldIndexOutOfBound As string = "Field index out of bound, value %0, limit %1"
   Public Const cstWngCannotFindFieldDefinition As String = "Cannot find definition of field [%0]"
+    Public Function InsertFieldDefinition(prmIndex As integer, prmFieldDefinition As clDataField) As Boolean
+
+    If Self.GetFieldDefinition(prmFieldDefinition.Name()) = Nothing Then
+
+      Self.FieldsDefinition.Insert(prmIndex, prmFieldDefinition)
+
+      Return True
+
+    Else
+      mdHelpers.DataLibLogs().WriteError(CurrentMethodName(), cstErrFieldAlreadyExists, prmFieldDefinition.Name())
+
+      Return False
+
+    End If
+
+
+    End Function
 End Class

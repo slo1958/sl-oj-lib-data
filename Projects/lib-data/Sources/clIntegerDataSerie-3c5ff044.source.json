@@ -1,7 +1,7 @@
 {
   "Version": 8,
   "Name": "clIntegerDataSerie",
-  "Id": "e96e9e7c-816b-45dc-aa58-e65f4706d35e",
+  "Id": "3c5ff044-8917-465c-9ed3-0c107da58f00",
   "Kind": "Class",
   "BuildScope": "Application",
   "Namespace": "",
@@ -9,7 +9,7 @@
   "ParentModule": "",
   "ParentModuleId": "",
   "AvailableInDesigner": false,
-  "CodeFile": "clIntegerDataSerie-e96e9e7c.objobasic",
+  "CodeFile": "clIntegerDataSerie-3c5ff044.objobasic",
   "LayoutFile": "",
   "Notes": [],
   "InspectorBehaviour": []

@@ -3,9 +3,6 @@ Public Class clGenericDataStore(Of T)
     Private Property DataStore() As T
     Public Sub AppendItem(prmValue As T)
 
-    print("Using appenditem / typed")
-
-
     Self.DataStore.Append(prmValue)
 
     Return
@@ -17,6 +14,9 @@ Public Class clGenericDataStore(Of T)
       Self.AppendItem(v)
 
     Next
+
+    Return
+
     End Sub
     Public Sub ClearDataStore()
 
@@ -51,8 +51,6 @@ Public Class clGenericDataStore(Of T)
     End Sub
     Private Property DefaultValue As T
     Public Sub AppendDefaultItem()
-
-    print("Using appenditem / typed")
 
     Self.DataStore.Append(Self.DefaultValue)
 

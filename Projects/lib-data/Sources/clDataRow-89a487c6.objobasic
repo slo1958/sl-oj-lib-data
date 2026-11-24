@@ -2,7 +2,7 @@ Public Class clDataRow
 
     Public Property FieldsValue() As Object
     ## Creates a datarow object. Note that the pointer to the structure is used as is, the constructor does not clone the content. If Nothing is passed, then the structure can be created on the fly.
-    Public Constructor(prmStructure As clDataStructure)
+    Public Constructor(prmStructure As clDataStructure, Optional prmKeepUnlocked As boolean = false)
 
     If prmStructure = Nothing Then
       Self.DataStructure = New clDataStructure
@@ -10,8 +10,8 @@ Public Class clDataRow
 
     Else
       Self.DataStructure = prmStructure
-      Self.FieldsValue.Resize(prmStructure.Count())
-      Self.LockedStructure = True
+      Self.AdjustDataSize(False)
+      Self.LockedStructure = not prmKeepUnlocked
 
     End If
 
@@ -26,7 +26,11 @@ Public Class clDataRow
       # If the field does not exist in the structure, and the lock is off, we can add the field
 
       If Self.LockedStructure Then
-        # BOUM
+
+        mdHelpers.DataLibLogs().WriteError(CurrentMethodName() _
+          , cstErrCannotAddFieldToLocked _
+          , prmFieldName _
+          )
 
         Return
 
@@ -64,7 +68,17 @@ Public Class clDataRow
     End Function
     Public Sub SetField(prmFieldIndex As integer, prmFieldValue As object)
 
-    Self.FieldsValue[prmFieldIndex] = prmFieldValue
+    Try
+      Self.FieldsValue[prmFieldIndex] = prmFieldValue
+
+    Catch dummy As RuntimeException
+
+      mdHelpers.DataLibLogs().WriteError(CurrentMethodName() _
+        , cstErrIndexOutOfRange _
+        , prmFieldIndex.ToString() _
+        )
+
+    End Try
 
     Return
 
@@ -101,4 +115,73 @@ Public Class clDataRow
     Return Self.DataStructure.GetFieldDefinition(prmFieldIndex).Name()
 
     End Function
+    Public Sub LockStructure()
+
+    Self.LockedStructure = True
+
+    Return
+
+    End Sub
+  Public Const cstErrCannotAddFieldToLocked As String = "Cannot add field [%0] to a locked clDataRow"
+  Public Const cstErrIndexOutOfRange As String = "Index %0 is out of range in %1"
+    Sub MyMethod()
+    End Sub
+    ## Add a new field definition at the end of the set of fields
+    Public Sub AppendFieldDefinition(prmFieldDefinition As clDataField)
+
+
+    If Self.LockedStructure Then
+
+      mdHelpers.DataLibLogs().WriteError(CurrentMethodName() _
+        , cstErrCannotAddFieldToLocked _
+        , prmFieldDefinition.Name() _
+        )
+
+      Return
+
+    End If
+
+    Self.DataStructure.AppendFieldDefinition(prmFieldDefinition)
+
+    Self.AdjustDataSize(True)
+
+    Return
+
+    End Sub
+    ## Adjust the size of the data store to match the number of fields in the data structure.
+    Protected Sub AdjustDataSize(prmPreserveData As Boolean)
+
+    Self.FieldsValue.Resize(self.DataStructure.Count())
+
+    If prmPreserveData Then Return
+
+    For i As Integer = 0 To Self.FieldsValue.LastIndex
+      Self.FieldsValue[i] = Nothing
+
+    Next
+
+    Return
+
+    End Sub
+    Public Sub InsertFieldDefinition(prmFieldIndex As integer, prmFieldDefinition As clDataField)
+
+
+    If Self.LockedStructure Then
+
+      mdHelpers.DataLibLogs().WriteError(CurrentMethodName() _
+        , cstErrCannotAddFieldToLocked _
+        , prmFieldDefinition.Name() _
+        )
+
+      Return
+
+    End If
+
+    Self.DataStructure.InsertFieldDefinition(prmFieldIndex, prmFieldDefinition)
+
+    Self.AdjustDataSize(False)
+
+    Return
+
+    End Sub
 End Class

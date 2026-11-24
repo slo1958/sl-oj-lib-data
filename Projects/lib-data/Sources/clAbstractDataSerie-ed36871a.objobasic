@@ -77,4 +77,7 @@ Public Abstract Class clAbstractDataSerie
     Return Self.FieldDefinition.Name()
     End Function
     Public Abstract Function LastIndex() As integer
+    Public Function GetFieldDefinition() As clDataField
+    Return self.FieldDefinition
+    End Function
 End Class

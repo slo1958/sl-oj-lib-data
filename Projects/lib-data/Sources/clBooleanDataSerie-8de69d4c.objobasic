@@ -4,20 +4,14 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     Super.Constructor(prmSerieName)
 
-    Self.FieldDefinition.SetDefaultValue(False)
+    Self.SetupFieldDefinition(false)
 
-    Self.FieldDefinition.SetDataType(clDataField.cstTypeBoolean)
-
-    Self.DataStore = New clGenericDataStore(Of Boolean)
-
-    Self.DataStore.SetDefaultValue(False)
+    Self.ClearDataStore()
 
     Return
 
     End Constructor
     Public Sub AppendItem(prmValue As object)
-
-    print("Using appenditem / object")
 
     Self.DataStore.AppendItem(Boolean(prmValue))
 
@@ -43,9 +37,7 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     Super.Constructor("Cloned from " + prmSourceDataSerie.Name())
 
-    Self.FieldDefinition.DefaultValue = prmSourceDataSerie.FieldDefinition.DefaultValue()
-
-    Self.FieldDefinition.SetDataType(clDataField.cstTypeBoolean)
+    Self.SetupFieldDefinition(prmSourceDataSerie.FieldDefinition.DefaultValue())
 
     Self.ClearDataStore()
 
@@ -83,5 +75,14 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
     Self.DataStore.SetDefaultValue(Boolean(Self.FieldDefinition.DefaultValue()))
 
     Return
+    End Sub
+    Protected Sub SetupFieldDefinition(prmDefaultValue As object)
+
+    Self.FieldDefinition.SetDefaultValue(prmDefaultValue)
+
+    Self.FieldDefinition.SetDataType(clDataField.cstTypeBoolean)
+
+    Return
+
     End Sub
 End Class
