@@ -343,7 +343,7 @@ Public Class clDataTable
 
     Next
 
-    Return false
+    Return False
 
     End Function
     Public Property OptionalMaskDataSeries() As clBooleanDataSerie
