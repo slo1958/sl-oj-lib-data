@@ -1,32 +1,87 @@
-Public Class clBooleanDataSerie Inherits clGenericDataSerie(of boolean)
+Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     Public Constructor(prmSerieName As string)
 
     Super.Constructor(prmSerieName)
 
-    Self.FieldDefinition.DefaultValue = False
+    Self.FieldDefinition.SetDefaultValue(False)
 
     Self.FieldDefinition.SetDataType(clDataField.cstTypeBoolean)
+
+    Self.DataStore = New clGenericDataStore(Of Boolean)
+
+    Self.DataStore.SetDefaultValue(False)
 
     Return
 
     End Constructor
-    Public Function Clone() As clBooleanDataSerie
-
-    Var temp As New clBooleanDataSerie("Cloned from " + Self.Name())
-
-    temp.AppendItems(Self.DataStore)
-
-    Return temp
-
-    End Function
     Public Sub AppendItem(prmValue As object)
 
     print("Using appenditem / object")
 
-    Self.DataStore.Append(Boolean(prmValue))
+    Self.DataStore.AppendItem(Boolean(prmValue))
 
     Return
 
+    End Sub
+    Public Property DataStore As clGenericDataStore(of boolean)
+    Public Sub SetDefaultValue(prmDefaultValue As Boolean)
+
+    Self.DataStore.SetDefaultValue(prmDefaultValue)
+    Self.FieldDefinition.SetDefaultValue(prmDefaultValue)
+
+    Return
+
+    End Sub
+    Public Override Sub AppendDefaultItem()
+
+    Self.DataStore.AppendDefaultItem()
+
+    Return
+    End Sub
+    Public Constructor(prmSourceDataSerie As clBooleanDataSerie)
+
+    Super.Constructor("Cloned from " + prmSourceDataSerie.Name())
+
+    Self.FieldDefinition.DefaultValue = prmSourceDataSerie.FieldDefinition.DefaultValue()
+
+    Self.FieldDefinition.SetDataType(clDataField.cstTypeBoolean)
+
+    Self.ClearDataStore()
+
+    Var items() As Boolean
+
+    items = prmSourceDataSerie.DataStore.Items()
+
+    Self.DataStore.AppendItems(items)
+
+    Return
+    End Constructor
+    Public Function Element(prmElementIndex As integer) As object
+
+    Return Self.DataStore.Item(prmElementIndex)
+    End Function
+    Public Sub Element(prmElementIndex As integer, Assigns prmValue As object)
+
+    Self.DataStore.Item(prmElementIndex) = prmValue
+
+
+    End Sub
+    Public Function Count() As integer
+
+    return self.DataStore.Count()
+    End Function
+    Public Function LastIndex() As integer
+
+    return self.DataStore.LastIndex()
+    End Function
+    ## Creates an empty datastore and assign default value
+    Public Sub ClearDataStore()
+
+    Self.DataStore = New clGenericDataStore(Of Boolean)
+
+    Self.DataStore.SetDefaultValue(Boolean(Self.FieldDefinition.DefaultValue()))
+
+    Return
     End Sub
 End Class

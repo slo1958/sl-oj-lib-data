@@ -6,7 +6,7 @@ Public Class clDataStructure
     Return
 
     End Constructor
-    Public Function AppendField(prmFieldDefinition As clDataField) As Boolean
+    Public Function AppendFieldDefinition(prmFieldDefinition As clDataField) As Boolean
 
     If Self.GetFieldDefinition(prmFieldDefinition.Name()) = Nothing Then
 
@@ -28,7 +28,7 @@ Public Class clDataStructure
     Self.FieldsDefinition.Clear()
 
     For i As Integer = 0 To prmSourceStructure.LastIndex()
-      Self.AppendField(prmSourceStructure.GetFieldDefinition(i).Clone())
+      Self.AppendFieldDefinition(new clDataField(prmSourceStructure.GetFieldDefinition(i)))
 
     Next
 

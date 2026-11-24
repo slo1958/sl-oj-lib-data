@@ -8,19 +8,7 @@ Public Class clDataField
   Public Const cstTypeInteger As String = "Integer"
   Public Const cstTypeBoolean As String = "Boolean"
   Public Const cstTypeUndefined As String = "Undefined"
-    Public Property DefaultValue As Object
-    Public Function Clone() As clDataField
-
-    Var temp As New clDataField
-
-    temp.DefaultValue = Self.DefaultValue
-
-    temp.mDataType = Self.mDataType
-    temp.mDisplayName = Self.mDisplayName
-    temp.mName = Self.mName
-
-    Return temp
-    End Function
+    Private Property mDefaultValue As Object
     Public Function Name() As String
 
     return self.mName
@@ -79,7 +67,7 @@ Public Class clDataField
     Self.mName = "Unnamed"
     Self.mDisplayName = ""
     Self.mDataType = cstTypeUndefined
-
+    self.mDefaultValue = Nothing
     Return
 
     End Constructor
@@ -112,4 +100,25 @@ Public Class clDataField
     Return Self.mDataType
 
     End Function
+    Public Sub SetDefaultValue(prmDefaultValue As Object)
+
+    Self.mDefaultValue = prmDefaultValue
+
+    Return
+
+    End Sub
+    Public Function DefaultValue() As Object
+
+    Return Self.mDefaultValue
+
+    End Function
+    Public Constructor(prmSourceFieldDefinition As clDataField)
+
+    Self.mDataType = prmSourceFieldDefinition.mDataType
+    Self.mDefaultValue = prmSourceFieldDefinition.mDefaultValue
+    Self.mDisplayName = prmSourceFieldDefinition.mDisplayName
+    Self.mName = prmSourceFieldDefinition.mName
+
+    Return
+    End Constructor
 End Class

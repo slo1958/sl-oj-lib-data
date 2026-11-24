@@ -9,7 +9,7 @@ Public Class clAutoIncrementDataSerie Inherits clAbstractDataSerie
 
     Super.Constructor(prmSerieName)
 
-    Self.FieldDefinition.DefaultValue = 0
+    Self.FieldDefinition.SetDefaultValue(0) 
 
     Self.LastValue = -1
 
