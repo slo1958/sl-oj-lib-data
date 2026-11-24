@@ -33,7 +33,7 @@ Public Class clDataRow
       Else
         Var fld As clDataField = clDataField.BuildFieldDefinition(prmFieldValue)
 
-        Self.DataStructure.AppendField(fld)
+        Self.DataStructure.AppendFieldDefinition(fld)
         Self.FieldsValue.Append(prmFieldValue)
 
 
@@ -52,7 +52,13 @@ Public Class clDataRow
     Public Property DataStructure As clDataStructure
     Public Function GetField(prmFieldName As string) As object
 
-    Return Self.FieldsValue[Self.FieldIndex(prmFieldname)]
+    Try
+      Return Self.FieldsValue[Self.FieldIndex(prmFieldname)]
+
+    Catch dummy As RuntimeException
+      Return Nothing
+
+    End Try
 
 
     End Function
@@ -64,8 +70,13 @@ Public Class clDataRow
 
     End Sub
     Public Function GetField(prmFieldIndex As integer) As object
+    Try
+      Return Self.FieldsValue[prmFieldIndex]
 
-    Return Self.FieldsValue[prmFieldIndex]
+    Catch dummy as RuntimeException
+      Return Nothing
+
+    End Try
 
     End Function
     ## Return the index of the field

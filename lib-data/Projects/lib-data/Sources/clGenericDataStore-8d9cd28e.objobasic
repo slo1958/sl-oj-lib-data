@@ -1,0 +1,89 @@
+Public Class clGenericDataStore(Of T)
+
+    Private Property DataStore() As T
+    Public Sub AppendItem(prmValue As T)
+
+    print("Using appenditem / typed")
+
+
+    Self.DataStore.Append(prmValue)
+
+    Return
+
+    End Sub
+    Public Sub AppendItems(prmItems() As T)
+
+    For Each v As T In prmItems
+      Self.AppendItem(v)
+
+    Next
+    End Sub
+    Public Sub ClearDataStore()
+
+    Self.DataStore.Clear()
+
+    return
+    End Sub
+    Public Function Count() As integer
+
+    Return Datastore.Count
+    End Function
+    Public Function Item(prmElementIndex As integer) As Object
+
+    Return Self.DataStore[prmElementIndex]
+    End Function
+    Public Sub Item(prmElementIndex As integer, Assigns prmValue As object)
+
+    Self.DataStore[prmElementIndex] = T(prmValue) 
+    End Sub
+    Public Function LastIndex() As integer
+
+    If DataStore.Count = 0 Then Return -1
+
+    Return DataStore.LastIndex
+    End Function
+    Public Sub SetDefaultValue(prmDefaultValue As T)
+
+    Self.DefaultValue = prmDefaultValue
+
+    Return
+
+    End Sub
+    Private Property DefaultValue As T
+    Public Sub AppendDefaultItem()
+
+    print("Using appenditem / typed")
+
+    Self.DataStore.Append(Self.DefaultValue)
+
+    Return
+
+    End Sub
+    Constructor()
+
+    self.DefaultValue = Nothing
+    End Constructor
+    Public Function ResizeTo(prmTargetSize As integer) As integer
+
+    If Self.Count() > prmTargetSize Then Return Self.Count()
+
+    While Self.Count() < prmTargetSize
+      Self.AppendDefaultItem()
+
+    Wend
+
+    Return Self.Count()
+
+
+
+    End Function
+    Public Function Items() As T()
+
+    return self.DataStore
+    End Function
+    Public Function GetDefaultValue() As T
+
+    Return Self.DefaultValue
+
+    End Function
+End Class

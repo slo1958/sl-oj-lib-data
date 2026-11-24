@@ -153,7 +153,7 @@ Public Class clDataTable
       Var results As new clDataStructure
 
       For Each serie As clAbstractDataSerie In DataSeries
-        results.AppendField(serie.Definition())
+        results.AppendFieldDefinition(serie.Definition())
 
       Next
 
