@@ -54,11 +54,11 @@ Public Class clIntegerDataSerie Inherits clAbstractDataSerie
     End Constructor
     Public Function Element(prmElementIndex As integer) As object
 
-    Return Self.DataStore.Item(prmElementIndex)
+    Return Self.DataStore.GetItem(prmElementIndex)
     End Function
     Public Sub Element(prmElementIndex As integer, Assigns prmValue As object)
 
-    Self.DataStore.Item(prmElementIndex) = prmValue
+    Self.DataStore.SetItem(prmElementIndex) = Integer(prmValue)
 
 
     End Sub

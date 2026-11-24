@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clRangeDoubleTransformationTests",
+  "Id": "71942743-51f0-4ff2-8b6a-c78618a79ba3",
+  "Kind": "Class",
+  "BuildScope": "Test",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clRangeDoubleTransformationTests-71942743.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

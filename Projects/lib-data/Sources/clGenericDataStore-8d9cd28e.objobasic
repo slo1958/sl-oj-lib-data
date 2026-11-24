@@ -28,13 +28,13 @@ Public Class clGenericDataStore(Of T)
 
     Return Datastore.Count
     End Function
-    Public Function Item(prmElementIndex As integer) As Object
+    Public Function GetItem(prmElementIndex As integer) As Object
 
     Return Self.DataStore[prmElementIndex]
     End Function
-    Public Sub Item(prmElementIndex As integer, Assigns prmValue As object)
+    Public Sub SetItem(prmElementIndex As integer, Assigns prmValue As T)
 
-    Self.DataStore[prmElementIndex] = T(prmValue) 
+    Self.DataStore[prmElementIndex] = prmValue
     End Sub
     Public Function LastIndex() As integer
 

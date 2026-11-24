@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clLowBoundDoubleTransformation",
+  "Id": "5c11aaff-944c-4c4d-a93c-d58250d96e40",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clLowBoundDoubleTransformation-5c11aaff.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clHighBoundDoubleTransformation",
+  "Id": "c0f60cfd-87c8-4e60-ad05-ff3387ecbbe9",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clHighBoundDoubleTransformation-c0f60cfd.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -5,7 +5,7 @@ Class Window1 Inherits Window
     Var tbl As New clDataTable("MyTable")
 
     Var s1 As New clStringDataSerie("Country")
-    Var s2 As New clNumberDataSerie("Sales")
+    Var s2 As New clDoubleDataSerie("Sales")
     Var s3 As New clIntegerDataSerie("Volume")
     Var s4 As New clBooleanDataSerie("Actif")
 
@@ -55,6 +55,23 @@ Class Window1 Inherits Window
     Var myserie As clAbstractDataSerie = tbl.GetDataSerie(clDataTable.cstIndexSerieIndex)
     Label1.Text = myserie.LastIndex().ToString()
 
+
+    Return
+    End Sub
+    Sub Button2_Opening()
+    End Sub
+    Sub Button2_Pressed()
+    Var ds0 As New clDoubleDataSerie("test")
+
+    ds0.AppendItem(100.0)
+    ds0.AppendItem(200.0)
+    ds0.AppendItem(300.0)
+
+    Var ts As New clLowBoundDoubleTransformation(ds0, False)
+
+    ts.SetBoundary(150)
+
+    ts.TransformInPlace()
 
     Return
     End Sub

@@ -60,6 +60,7 @@ Public Class clDataRow
       Return Self.FieldsValue[Self.FieldIndex(prmFieldname)]
 
     Catch dummy As RuntimeException
+      pragma unused dummy
       Return Nothing
 
     End Try
@@ -76,6 +77,7 @@ Public Class clDataRow
       mdHelpers.DataLibLogs().WriteError(CurrentMethodName() _
         , cstErrIndexOutOfRange _
         , prmFieldIndex.ToString() _
+        , dummy.Message _
         )
 
     End Try
@@ -87,7 +89,8 @@ Public Class clDataRow
     Try
       Return Self.FieldsValue[prmFieldIndex]
 
-    Catch dummy as RuntimeException
+    Catch dummy As RuntimeException
+      pragma unused dummy
       Return Nothing
 
     End Try

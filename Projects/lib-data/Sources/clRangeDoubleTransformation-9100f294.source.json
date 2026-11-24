@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clRangeDoubleTransformation",
+  "Id": "9100f294-3853-407c-98e2-e80019e264cb",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clRangeDoubleTransformation-9100f294.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

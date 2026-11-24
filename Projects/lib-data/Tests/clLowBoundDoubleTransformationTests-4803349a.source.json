@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clLowBoundDoubleTransformationTests",
+  "Id": "4803349a-fde7-4f89-bcb4-c7f8bdbd75cc",
+  "Kind": "Class",
+  "BuildScope": "Test",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clLowBoundDoubleTransformationTests-4803349a.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

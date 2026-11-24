@@ -1,0 +1,238 @@
+Public Class clRangeDoubleTransformationTests Inherits TestCase
+    Public Sub Test_001_Fixed_NewSerie_NoMask()
+    Var ds0 As New clDoubleDataSerie("test")
+
+    ds0.AppendItem(100.0)
+    ds0.AppendItem(200.0)
+    ds0.AppendItem(300.0)
+
+    Var ts As New clRangeDoubleTransformation(ds0, False)
+
+    ts.SetBoundaries(150, 250)
+
+    Var ds1 As clDoubleDataSerie = ts.Transform()
+
+    assert.Equal(150.0, ds1.Element(0))
+    assert.Equal(200.0, ds1.Element(1))
+    assert.Equal(250.0, ds1.Element(2))
+
+    # check that the original serie is not updated
+    assert.Equal(100.0, ds0.Element(0))
+    assert.Equal(200.0, ds0.Element(1))
+    assert.Equal(300.0, ds0.Element(2))
+
+
+    End Sub
+    Public Sub Test_002_Fixed_InPlace_NoMask()
+    Var ds0 As New clDoubleDataSerie("test")
+
+    ds0.AppendItem(100.0)
+    ds0.AppendItem(200.0)
+    ds0.AppendItem(300.0)
+
+    Var ts As New clRangeDoubleTransformation(ds0, False)
+
+    ts.SetBoundaries(150, 250)
+
+    ts.TransformInPlace()
+
+    assert.Equal(150.0, ds0.Element(0))
+    assert.Equal(200.0, ds0.Element(1))
+    assert.Equal(250.0, ds0.Element(2))
+
+    End Sub
+    Public Sub Test_003_Fixed_NewSerie_WithMask()
+    Var ds0 As New clDoubleDataSerie("test")
+
+    ds0.AppendItem(100.0)
+    ds0.AppendItem(200.0)
+    ds0.AppendItem(300.0)
+
+    Var ts As New clRangeDoubleTransformation(ds0, True)
+
+    ts.SetBoundaries(150, 250)
+
+    Var ds1 As clDoubleDataSerie = ts.Transform()
+
+    assert.Equal(ds1.Element(0), 150)
+    assert.Equal(200.0, ds1.Element(1))
+    assert.Equal(ds1.Element(2), 250)
+
+    # check that the original serie is not updated
+    assert.Equal(100.0, ds0.Element(0))
+    assert.Equal(200.0, ds0.Element(1))
+    assert.Equal(300.0, ds0.Element(2))
+
+
+    Var bs1 As clBooleanDataSerie = ts.ChangeMask()
+    assert.Equal(True, bs1.Element(0))
+    assert.Equal(False, bs1.Element(1))
+    assert.Equal(True, bs1.Element(2))
+
+
+    End Sub
+    Public Sub Test_004_Fixed_InPlace_WithMask()
+    Var ds0 As New clDoubleDataSerie("test")
+
+    ds0.AppendItem(100.0)
+    ds0.AppendItem(200.0)
+    ds0.AppendItem(300.0)
+
+    Var ts As New clRangeDoubleTransformation(ds0, True)
+
+    ts.SetBoundaries(150, 250)
+
+    ts.TransformInPlace()
+
+    # check that the original serie is not updated
+    assert.Equal(150.0, ds0.Element(0))
+    assert.Equal(200.0, ds0.Element(1))
+    assert.Equal(250.0, ds0.Element(2))
+
+    Var bs1 As clBooleanDataSerie = ts.ChangeMask()
+    assert.Equal(True, bs1.Element(0))
+    assert.Equal(False, bs1.Element(1))
+    assert.Equal(True, bs1.Element(2))
+
+    End Sub
+    Public Sub Test_005_Serie_NewSerie_NoMask()
+    Var ds0 As New clDoubleDataSerie("test")
+
+    ds0.AppendItem(100.0)
+    ds0.AppendItem(200.0)
+    ds0.AppendItem(300.0)
+
+    Var ds2 As New clDoubleDataSerie("lowlimit")
+    ds2.AppendItem(50.0)
+    ds2.AppendItem(150.0)
+    ds2.AppendItem(500.0)
+
+    Var ds3 As New clDoubleDataSerie("highlimit")
+    ds3.AppendItem(90.0)
+    ds3.AppendItem(250.0)
+    ds3.AppendItem(1000.0)
+
+    Var ts As New clRangeDoubleTransformation(ds0, False)
+
+    ts.SetBoundaries(ds2, ds3)
+
+    Var ds1 As clDoubleDataSerie = ts.Transform()
+
+    assert.Equal(90.0, ds1.Element(0))
+    assert.Equal(200.0, ds1.Element(1))
+    assert.Equal(500.0, ds1.Element(2))
+
+    # check that the original serie is not updated
+    assert.Equal(100.0, ds0.Element(0))
+    assert.Equal(200.0, ds0.Element(1))
+    assert.Equal(300.0, ds0.Element(2))
+
+
+    End Sub
+    Public Sub Test_006_Serie_InPlace_NoMask()
+    Var ds0 As New clDoubleDataSerie("test")
+
+    ds0.AppendItem(100.0)
+    ds0.AppendItem(200.0)
+    ds0.AppendItem(300.0)
+
+    Var ds2 As New clDoubleDataSerie("lowlimit")
+    ds2.AppendItem(50.0)
+    ds2.AppendItem(150.0)
+    ds2.AppendItem(500.0)
+
+    Var ds3 As New clDoubleDataSerie("highlimit")
+    ds3.AppendItem(90.0)
+    ds3.AppendItem(250.0)
+    ds3.AppendItem(1000.0)
+
+    Var ts As New clRangeDoubleTransformation(ds0, False)
+
+    ts.SetBoundaries(ds2, ds3)
+
+    ts.TransformInPlace()
+
+    assert.Equal(90.0, ds0.Element(0))
+    assert.Equal(200.0, ds0.Element(1))
+    assert.Equal(500.0, ds0.Element(2))
+
+
+
+
+    End Sub
+    Public Sub Test_007_Serie_NewSerie_WithMask()
+    Var ds0 As New clDoubleDataSerie("test")
+
+    ds0.AppendItem(100.0)
+    ds0.AppendItem(200.0)
+    ds0.AppendItem(300.0)
+
+    Var ds2 As New clDoubleDataSerie("lowlimit")
+    ds2.AppendItem(50.0)
+    ds2.AppendItem(150.0)
+    ds2.AppendItem(500.0)
+
+    Var ds3 As New clDoubleDataSerie("highlimit")
+    ds3.AppendItem(90.0)
+    ds3.AppendItem(250.0)
+    ds3.AppendItem(1000.0)
+
+    Var ts As New clRangeDoubleTransformation(ds0, True)
+
+    ts.SetBoundaries(ds2, ds3)
+
+    Var ds1 As clDoubleDataSerie = ts.Transform()
+
+    assert.Equal(90.0, ds1.Element(0))
+    assert.Equal(200.0, ds1.Element(1))
+    assert.Equal(500.0, ds1.Element(2))
+
+    # check that the original serie is not updated
+    assert.Equal(100.0, ds0.Element(0))
+    assert.Equal(200.0, ds0.Element(1))
+    assert.Equal(300.0, ds0.Element(2))
+
+
+    Var bs1 As clBooleanDataSerie = ts.ChangeMask()
+    assert.Equal(True, bs1.Element(0))
+    assert.Equal(False, bs1.Element(1))
+    assert.Equal(True, bs1.Element(2))
+
+
+    End Sub
+    Public Sub Test_008_Fixed_InPlace_WithMask()
+    Var ds0 As New clDoubleDataSerie("test")
+
+    ds0.AppendItem(100.0)
+    ds0.AppendItem(200.0)
+    ds0.AppendItem(300.0)
+
+    Var ds2 As New clDoubleDataSerie("lowlimit")
+    ds2.AppendItem(50.0)
+    ds2.AppendItem(150.0)
+    ds2.AppendItem(500.0)
+
+    Var ds3 As New clDoubleDataSerie("highlimit")
+    ds3.AppendItem(90.0)
+    ds3.AppendItem(250.0)
+    ds3.AppendItem(1000.0)
+
+    Var ts As New clRangeDoubleTransformation(ds0, True)
+
+    ts.SetBoundaries(ds2, ds3)
+
+    ts.TransformInPlace()
+
+    assert.Equal(90.0, ds0.Element(0))
+    assert.Equal(200.0, ds0.Element(1))
+    assert.Equal(500.0, ds0.Element(2))
+
+
+    Var bs1 As clBooleanDataSerie = ts.ChangeMask()
+    assert.Equal(True, bs1.Element(0))
+    assert.Equal(False, bs1.Element(1))
+    assert.Equal(True, bs1.Element(2))
+
+
+    End Sub
+End Class

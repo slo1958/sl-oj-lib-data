@@ -1,0 +1,54 @@
+Public Class clHighBoundDoubleTransformation Inherits clAbstractDoubleTransformation
+
+    Public Sub SetBoundary(prmBoundary As Double)
+    Self.Boundary = prmBoundary
+    Return
+
+    End Sub
+    Protected Property Boundary As Double
+  Public Constructor(prmSourceDataSerie As clDoubleDataSerie, prmBuildChangeMask As Boolean)
+
+    Super.Constructor(prmSourceDataSerie, prmBuildChangeMask)
+    Self.Name = "HighBoundary"
+
+    Self.Boundary = Double.MaxValue
+
+    Return
+
+
+  End Constructor
+    Protected Override Function TransformElement(prmElementIndex As integer, prmElementValue As Double) As double
+
+    Var tempBoundary As Double = Self.getBoundary(prmElementIndex, Self.Boundary, Self.BoundarySerie)
+
+    If prmElementValue > tempBoundary Then
+      Return tempBoundary
+
+    Else
+      Return prmElementValue
+
+    End If
+
+
+
+    End Function
+    Protected Property BoundarySerie As clDoubleDataSerie = Nothing
+    Public Sub SetBoundary(prmBoundary As clDoubleDataSerie)
+    Self.BoundarySerie = prmBoundary
+    Return
+
+    End Sub
+    Private Function getBoundary(prmElementIndex As integer, prmFixed As double, prmSerie As clDoubleDataSerie) As double
+
+    If prmSerie = Nothing Then
+      Return prmFixed
+
+    ElseIf prmElementIndex > prmSerie.LastIndex() Then
+      Return prmFixed
+
+    Else
+      Return Double(prmSerie.Element(prmElementIndex))
+
+    End If
+    End Function
+End Class

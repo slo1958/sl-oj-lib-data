@@ -1,0 +1,93 @@
+Public Class clAbstractDoubleTransformation
+
+    Public Constructor(prmSourceDataSerie As clDoubleDataSerie, prmBuildChangeMask As Boolean)
+    Self.sourceDataSerie = prmSourceDataSerie
+    Self.newDataSerie = Nothing
+    Self.Name = "Generic"
+
+    If prmBuildChangeMask Then
+      Self.changeDataSerie = New clBooleanDataSerie("Updated")
+
+    Else
+      Self.changeDataSerie = Nothing
+
+    End If
+
+    End Constructor
+    Protected Property sourceDataSerie As clDoubleDataSerie
+    Protected Function TransformElement(prmElementIndex As integer, prmElementValue As Double) As double
+
+    Pragma unused prmElementIndex, prmElementValue
+
+    # Default is 'do nothing' transformation
+    Return prmElementValue
+
+
+    End Function
+    ## Applies the transformation on the existing dataserie
+    Public Sub TransformInPlace()
+
+    # for inplace transformation, the method returns Nothing
+
+    Self.sourceDataSerie.AppendMetadata(name, "Apply " + Self.Name)
+
+    Self.Transform_Internal(True)
+
+    Return
+    End Sub
+    Protected Property newDataSerie As clDoubleDataSerie
+    Protected Property changeDataSerie As clBooleanDataSerie
+    ## Applies the transformation and returns a new dataserie
+    Public Function Transform() As clDoubleDataSerie
+
+    # for inplace transformation, the method returns Nothing
+
+    Self.newDataSerie = New clDoubleDataSerie(Name + " " + sourceDataSerie.Name())
+
+    Self.Transform_Internal(True)
+
+    Return Self.newDataSerie
+
+    End Function
+    ## Applies the transformation, only calculates the change mask
+    Public Sub TransformNoUpdate()
+
+    Self.Transform_Internal(False)
+
+    Return
+    End Sub
+    ## Return the boolean data serie holding the flag marking updated elements
+    Public Function ChangeMask() As clBooleanDataSerie
+
+    Return Self.changeDataSerie
+
+    End Function
+    Protected Sub Transform_Internal(prmDoUpdate As Boolean)
+
+    For index As Integer = 0 To sourceDataSerie.LastIndex()
+
+      Var initialValue As Double = Double(sourceDataSerie.Element(index))
+
+      Var newValue As Double = Self.TransformElement(index, initialValue)
+
+      If prmDoUpdate Then
+        If Self.newDataSerie = Nothing Then
+          Self.sourceDataSerie.Element(index) = newValue
+
+        Else
+          Self.newDataSerie.AppendItem(newValue)
+
+        End If
+      End If
+
+
+      If Self.changeDataSerie <> Nothing Then
+        Self.changeDataSerie.AppendItem(initialValue <> newValue)
+
+      End If
+
+    Next
+
+    End Sub
+    Protected Property Name As String
+End Class

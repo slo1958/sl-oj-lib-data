@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clHighBoundDoubleTransformationTests",
+  "Id": "7946eacb-653b-4bad-a45f-e4aa7e0f95e8",
+  "Kind": "Class",
+  "BuildScope": "Test",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clHighBoundDoubleTransformationTests-7946eacb.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

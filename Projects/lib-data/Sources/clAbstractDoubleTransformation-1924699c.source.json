@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clAbstractDoubleTransformation",
+  "Id": "1924699c-9a68-4271-8d4e-bdcb83a0ed01",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series-transformations",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clAbstractDoubleTransformation-1924699c.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}
