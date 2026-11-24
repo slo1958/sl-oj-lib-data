@@ -1,4 +1,4 @@
-Public Class clBooleanDataSerieOld Inherits clAbstractDataSerie
+Public Class clBooleanDataSerie Inherits clAbstractDataSerie
 
     Public Property DataStore() As Boolean
     Public Override Function Count() As integer

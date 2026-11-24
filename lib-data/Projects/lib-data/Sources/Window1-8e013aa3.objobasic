@@ -9,7 +9,7 @@ Class Window1 Inherits Window
     Var s3 As New clNumberDataSerie("Volume")
     Var s4 As New clBooleanDataSerie("Actif")
 
-    _ = tbl.AppendDataSerie(s1, s2, s3)
+    _ = tbl.AppendDataSerie(s1, s2, s3, s4)
 
     tbl.AppendDataRow("Belgium", 12000, 1100, True)
     tbl.AppendDataRow("France", 14000, 1200, False)
