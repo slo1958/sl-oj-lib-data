@@ -120,7 +120,10 @@
     "lib-data-core",
     "lib-data-core/data-series",
     "lib-data-core/data-series-transformations",
+    "lib-data-core/data-series-transformations/Implementations",
+    "lib-data-core/data-series/Implementations",
     "lib-data-core/data-table",
+    "lib-data-core/data-table/Iterations",
     "lib-data-core/Misc",
     "lib-data-helpers"
   ]

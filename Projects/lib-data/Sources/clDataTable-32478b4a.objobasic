@@ -20,8 +20,7 @@ Public Class clDataTable
 
     Self.IndexDataSerie = New clAutoIncrementDataSerie(cstIndexSerieName)
 
-    Self.DeletedFlagDataSerie = New clBooleanDataSerie(cstMaskSerieName)
-    Self.DeletedFlagDataSerie.SetDefaultValue(True)
+    Self.ResetMainMask()
 
 
     Self.cachedStructure = Nothing
@@ -91,7 +90,7 @@ Public Class clDataTable
     Next
 
     Self.IndexDataSerie.ResizeTo(prmTargetSize)
-    Self.DeletedFlagDataSerie.ResizeTo(prmTargetSize)
+    Self.MainMaskDataSerie.ResizeTo(prmTargetSize)
 
     Return prmTargetSize
 
@@ -105,10 +104,11 @@ Public Class clDataTable
 
     For Each serie As clAbstractDataSerie In DataSeries
       serie.ResizeTo(maxSize)
+
     Next
 
     Self.IndexDataSerie.ResizeTo(maxSize)
-    Self.DeletedFlagDataSerie.ResizeTo(maxSize)
+    Self.MainMaskDataSerie.ResizeTo(maxSize)
 
     Return maxSize
 
@@ -117,7 +117,8 @@ Public Class clDataTable
 
     End Function
     Public Property IndexDataSerie As clAutoIncrementDataSerie
-    Public Property DeletedFlagDataSerie As clBooleanDataSerie
+    ## MainMaskDataSerie contains True when a row should be visible and false when a row is masked. The default value is set to True, so all rows are visible by default
+    Public Property MainMaskDataSerie As clBooleanDataSerie
     Public Sub SetDisplayName(prmDisplayName As string)
 
     Self.DisplayName = prmDisplayName
@@ -131,7 +132,7 @@ Public Class clDataTable
     Public Function GetDataSerie(prmSerieIndex As integer) As clAbstractDataSerie
 
     If prmSerieIndex = cstIndexSerieIndex Then Return Self.IndexDataSerie
-    If prmSerieIndex = cstMaskSerieIndex Then Return Self.DeletedFlagDataSerie
+    If prmSerieIndex = cstMaskSerieIndex Then Return Self.MainMaskDataSerie
 
     Return DataSeries[prmSerieIndex]
     End Function
@@ -290,7 +291,7 @@ Public Class clDataTable
 
     End Sub
     Public Function LastRowIndex() As integer
-    Return DeletedFlagDataSerie.LastIndex()
+    Return MainMaskDataSerie.LastIndex()
 
     End Function
     Public Sub EnableFilter()
@@ -323,4 +324,55 @@ Public Class clDataTable
     End Function
   Public Const cstIndexSerieIndex As integer = -1
   Public Const cstMaskSerieIndex As Integer = -2
+    ## Return a flag indicating that a row is masked
+    Public Function RowIsHidden(prmRowIndex As integer) As Boolean
+    # 
+    # The mainMaskDataSerie contains True when a row should be visible and false when a row is masked
+    #
+    If Self.MainMaskDataSerie = Nothing Then Return False
+
+    Var tmp As Boolean
+
+    tmp = Boolean(Self.MainMaskDataSerie.Element(prmRowIndex))
+
+    If Not tmp Then Return True
+
+    For Each Serie As clBooleanDataSerie In Self.OptionalMaskDataSeries
+      tmp = Boolean(serie.Element(prmRowIndex))
+      If Not tmp Then Return True
+
+    Next
+
+    Return false
+
+    End Function
+    Public Property OptionalMaskDataSeries() As clBooleanDataSerie
+    ## Adds one or more masking data series
+    Public Sub AppendUserMaskDataSeries(ParamArray prmMaskingSeries As clBooleanDataSerie)
+
+    For Each serie As clBooleanDataSerie In prmMaskingSeries
+      Self.OptionalMaskDataSeries.Append(serie)
+
+    Next
+
+    End Sub
+    ## Remove all optional masking data serie. The default serie is unaffected
+    Public Sub RemoveAllUserMasks()
+
+    Self.OptionalMaskDataSeries.Clear()
+
+    return
+    End Sub
+    Public Sub ResetMainMask()
+
+    Self.MainMaskDataSerie = New clBooleanDataSerie(cstMaskSerieName)
+    Self.MainMaskDataSerie.SetDefaultValue(True)
+
+    Var maxSize As Integer = Self.CountRows()
+
+    Self.MainMaskDataSerie.ResizeTo(maxSize)
+
+    Return
+
+    End Sub
 End Class

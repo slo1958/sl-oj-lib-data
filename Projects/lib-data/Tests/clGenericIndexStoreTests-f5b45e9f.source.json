@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clGenericIndexStoreTests",
+  "Id": "f5b45e9f-ba03-49ab-97c7-a51ba4f01cfd",
+  "Kind": "Class",
+  "BuildScope": "Test",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clGenericIndexStoreTests-f5b45e9f.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

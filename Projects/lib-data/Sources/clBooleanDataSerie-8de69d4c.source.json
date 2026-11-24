@@ -5,7 +5,7 @@
   "Kind": "Class",
   "BuildScope": "Application",
   "Namespace": "",
-  "Folder": "lib-data-core/data-series",
+  "Folder": "lib-data-core/data-series/Implementations",
   "ParentModule": "",
   "ParentModuleId": "",
   "AvailableInDesigner": false,

@@ -4,18 +4,66 @@ Class Window1 Inherits Window
 
     Var tbl As New clDataTable("MyTable")
 
-    Var s1 As New clStringDataSerie("Country")
+    Var s0 As New clStringDataSerie("Country")
+    Var s1 As New clStringDataSerie("Product")
     Var s2 As New clDoubleDataSerie("Sales")
     Var s3 As New clIntegerDataSerie("Volume")
     Var s4 As New clBooleanDataSerie("Actif")
 
-    _ = tbl.AppendDataSerie(s1, s2, s3, s4)
+    _ = tbl.AppendDataSerie(s0, s1, s2, s3, s4)
 
-    tbl.AppendDataRow("Belgium", 12000, 1100, True)
-    tbl.AppendDataRow("France", 14000, 1200, False)
-    tbl.AppendDataRow("Italy", 12500, 1700)
-    tbl.AppendDataRow("France", 14000, 1200)
-    tbl.AppendDataRow("Italy", 12500, 1700)
+    tbl.AppendDataRow("Belgium", "Product1", 12000, 1100, True)
+    tbl.AppendDataRow("France", "Product2", 14000, 1200, False)
+    tbl.AppendDataRow("Italy", "Product2", 12500, 1700)
+    tbl.AppendDataRow("France", "Product1", 14000, 1200)
+    tbl.AppendDataRow("Italy", "Product1", 12500, 1700)
+
+
+    # Adding a column with price, which is sales divided by volume
+    Var s5 As clDoubleDataSerie
+
+    For i As Integer = 0 To s1.LastIndex()
+      s5 = s2 / s3
+
+    Next
+
+    tbl.AppendDataSerie(s5)
+
+    #calculate VAT on sales
+
+    Var s6 As clDoubleDataSerie
+    s6 = s2 * 0.21
+    s6.Rename("VAT")
+    tbl.AppendDataSerie(s6)
+
+    #
+    #
+    #
+
+    #
+    # Apply filter ?
+    #
+
+    If CheckBox1.Checked Then
+
+      Var ts As New clLowBoundDoubleTransformation(s5, True)
+      ts.SetBoundary(10.00)
+
+      # The lowbound transformer identifies rows where the value is below boundary
+      # We run the filter, only to get the bitmap of changes
+      # 
+      ts.TransformNoUpdate()
+
+      tbl.AppendUserMaskDataSeries(ts.ChangeMask())
+
+
+    End If
+
+
+
+    #
+    # Ready to display
+    #
 
     Listbox1.RemoveAllRows()
 
@@ -55,23 +103,6 @@ Class Window1 Inherits Window
     Var myserie As clAbstractDataSerie = tbl.GetDataSerie(clDataTable.cstIndexSerieIndex)
     Label1.Text = myserie.LastIndex().ToString()
 
-
-    Return
-    End Sub
-    Sub Button2_Opening()
-    End Sub
-    Sub Button2_Pressed()
-    Var ds0 As New clDoubleDataSerie("test")
-
-    ds0.AppendItem(100.0)
-    ds0.AppendItem(200.0)
-    ds0.AppendItem(300.0)
-
-    Var ts As New clLowBoundDoubleTransformation(ds0, False)
-
-    ts.SetBoundary(150)
-
-    ts.TransformInPlace()
 
     Return
     End Sub

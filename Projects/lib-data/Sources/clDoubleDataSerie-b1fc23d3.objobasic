@@ -85,4 +85,276 @@ Public Class clDoubleDataSerie Inherits clAbstractDataSerie
     Return
 
     End Sub
+    Public Shared Function operator_divide(s1 As clDoubleDataSerie, s2 As clDoubleDataSerie) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "/" + s2.Name())
+
+    Var limit1 As Integer = s1.LastIndex()
+    Var limit2 As Integer = s2.LastIndex()
+
+    For i As Integer = 0 To mdhelpers.Maximum(limit1, limit2)
+      If i <= limit1 And i <= limit2 Then
+        results.AppendItem(mdHelpers.NiceDivide(Double(s1.Element(i)), Double(s2.Element(i))))
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_divide(s1 As clDoubleDataSerie, s2 As clIntegerDataSerie) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "/" + s2.Name())
+
+    Var limit1 As Integer = s1.LastIndex()
+    Var limit2 As Integer = s2.LastIndex()
+
+    For i As Integer = 0 To mdhelpers.Maximum(limit1, limit2)
+      If i <= limit1 And i <= limit2 Then
+        results.AppendItem(mdHelpers.NiceDivide(Double(s1.Element(i)), integer(s2.Element(i))))
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_multiply(s1 As clDoubleDataSerie, s2 As clDoubleDataSerie) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "*" + s2.Name())
+
+    Var limit1 As Integer = s1.LastIndex()
+    Var limit2 As Integer = s2.LastIndex()
+
+    For i As Integer = 0 To mdhelpers.Maximum(limit1, limit2)
+      If i <= limit1 And i <= limit2 Then
+        results.AppendItem(Double(s1.Element(i)) * Double(s2.Element(i)))
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_multiply(s1 As clDoubleDataSerie, s2 As clIntegerDataSerie) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "*" + s2.Name())
+
+    Var limit1 As Integer = s1.LastIndex()
+    Var limit2 As Integer = s2.LastIndex()
+
+    For i As Integer = 0 To mdhelpers.Maximum(limit1, limit2)
+      If i <= limit1 And i <= limit2 Then
+        results.AppendItem(Double(s1.Element(i)) * Integer(s2.Element(i)))
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_divide(s1 As clDoubleDataSerie, s2 As double) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "/" + s2.ToString())
+
+    Var limit1 As Integer = s1.LastIndex()
+
+    For i As Integer = 0 To limit1
+      If i <= limit1 Then
+        results.AppendItem(mdHelpers.NiceDivide(Double(s1.Element(i)), s2))
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_multiply(s1 As clDoubleDataSerie, s2 As double) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "*" + s2.ToString())
+
+    Var limit1 As Integer = s1.LastIndex()
+
+    For i As Integer = 0 To limit1
+      If i <= limit1 Then
+        results.AppendItem(Double(s1.Element(i)) * s2)
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_add(s1 As clDoubleDataSerie, s2 As clDoubleDataSerie) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "+" + s2.Name())
+
+    Var limit1 As Integer = s1.LastIndex()
+    Var limit2 As Integer = s2.LastIndex()
+
+    For i As Integer = 0 To mdhelpers.Maximum(limit1, limit2)
+      If i <= limit1 And i <= limit2 Then
+        results.AppendItem(Double(s1.Element(i)) + Double(s2.Element(i)))
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_add(s1 As clDoubleDataSerie, s2 As clIntegerDataSerie) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "+" + s2.Name())
+
+    Var limit1 As Integer = s1.LastIndex()
+    Var limit2 As Integer = s2.LastIndex()
+
+    For i As Integer = 0 To mdhelpers.Maximum(limit1, limit2)
+      If i <= limit1 And i <= limit2 Then
+        results.AppendItem(Double(s1.Element(i)) + Integer(s2.Element(i)))
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_add(s1 As clDoubleDataSerie, s2 As double) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "+" + s2.ToString())
+
+    Var limit1 As Integer = s1.LastIndex()
+
+    For i As Integer = 0 To limit1
+      If i <= limit1 Then
+        results.AppendItem(Double(s1.Element(i)) + s2)
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function Operator_Subtract(s1 As clDoubleDataSerie, s2 As clDoubleDataSerie) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "-" + s2.Name())
+
+    Var limit1 As Integer = s1.LastIndex()
+    Var limit2 As Integer = s2.LastIndex()
+
+    For i As Integer = 0 To mdhelpers.Maximum(limit1, limit2)
+      If i <= limit1 And i <= limit2 Then
+        results.AppendItem(Double(s1.Element(i)) - Double(s2.Element(i)))
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_subtract(s1 As clDoubleDataSerie, s2 As clIntegerDataSerie) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "-" + s2.Name())
+
+    Var limit1 As Integer = s1.LastIndex()
+    Var limit2 As Integer = s2.LastIndex()
+
+    For i As Integer = 0 To mdhelpers.Maximum(limit1, limit2)
+      If i <= limit1 And i <= limit2 Then
+        results.AppendItem(Double(s1.Element(i)) - Integer(s2.Element(i)))
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
+    Public Shared Function operator_subtract(s1 As clDoubleDataSerie, s2 As double) As clDoubleDataSerie
+
+    Var results As New clDoubleDataSerie(s1.Name() + "-" + s2.ToString())
+
+    Var limit1 As Integer = s1.LastIndex()
+
+    For i As Integer = 0 To limit1
+      If i <= limit1 Then
+        results.AppendItem(Double(s1.Element(i)) - s2)
+      Else
+        results.AppendDefaultItem()
+
+      End If
+
+    Next
+
+    Return results
+
+
+
+
+    End Function
 End Class

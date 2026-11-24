@@ -1,0 +1,41 @@
+Public Class clGenericIndexStore(Of T)
+
+    Public Property MasterIndex As Dictionary
+    Constructor()
+
+    Self.MasterIndex = New Dictionary
+
+    End Constructor
+    Public Sub AddIndexEntry(prmKey As T, prmIndex As integer)
+    Var indexList() As Integer
+
+    If Self.MasterIndex.HasKey(prmKey) Then
+      indexList = Self.MasterIndex.Value(prmKey)
+    Else
+
+    End If
+
+    If indexList.IndexOf(prmIndex) < 0 Then
+      indexList.Append(prmIndex)
+
+    End If
+
+    Self.MasterIndex.Value(prmKey) = indexList
+
+    Return
+    End Sub
+    Public Function GetRowIndexes(prmKey As T) As integer()
+    Var indexList() As Integer
+
+    If Self.MasterIndex.HasKey(prmKey) Then
+      indexList = Self.MasterIndex.Value(prmKey)
+
+    Else
+
+    End If
+
+    Return indexList
+
+
+    End Function
+End Class

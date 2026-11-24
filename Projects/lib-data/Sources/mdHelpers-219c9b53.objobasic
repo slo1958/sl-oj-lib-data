@@ -18,4 +18,20 @@ Public Module mdHelpers
   Return lib_LogManager.clLogManager.GetDefaultLogingSupport()
 
   End Function
+  Public Function Maximum(v1 As integer, v2 As integer) As integer
+  If v1 > v2 Then Return v1
+
+  Return v2
+  End Function
+  Public Function NiceDivide(v1 As double, v2 As double) As double
+  If v2.Abs() > 0.000000001 Then
+    Return v1 / v2
+
+  Else
+    Return 0
+
+
+  End If
+
+  End Function
 End Module

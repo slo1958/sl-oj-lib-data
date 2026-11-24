@@ -9,13 +9,22 @@ Public Class clIteratorByRows Implements Iterator
     Private Property DataTable As clDataTable
     Public Function MoveNext() As Boolean
 
-    If CurrentRow > Self.DataTable.LastRowIndex() Then
+    Var lastRowIndex As Integer = Self.DataTable.LastRowIndex()
+
+    If CurrentRow > lastRowIndex Then
       Current = Nothing
       Return False
 
     Else
+
+      # Skip masked rows
+      While DataTable.RowIsHidden(currentRow) And currentrow <= lastRowIndex
+        currentrow += 1
+
+      Wend
+
       Current = DataTable.DataRow(CurrentRow, WithIndex)
-      CurrentRow = CurrentRow + 1
+      CurrentRow += 1
 
       Return True
 

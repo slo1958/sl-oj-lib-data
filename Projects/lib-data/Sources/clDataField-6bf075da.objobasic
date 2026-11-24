@@ -121,4 +121,7 @@ Public Class clDataField
 
     Return
     End Constructor
+    Public Sub Rename(prmNewName As string)
+    self.mName = prmNewName
+    End Sub
 End Class

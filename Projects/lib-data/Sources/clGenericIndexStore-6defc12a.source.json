@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clGenericIndexStore",
+  "Id": "6defc12a-c3fe-4379-bbbd-110cb996bc8d",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clGenericIndexStore-6defc12a.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

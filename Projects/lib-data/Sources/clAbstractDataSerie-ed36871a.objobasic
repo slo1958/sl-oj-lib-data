@@ -80,4 +80,9 @@ Public Abstract Class clAbstractDataSerie
     Public Function GetFieldDefinition() As clDataField
     Return self.FieldDefinition
     End Function
+    Public Sub Rename(prmNewName As string)
+
+    Self.FieldDefinition.Rename(prmNewName)
+
+    End Sub
 End Class
