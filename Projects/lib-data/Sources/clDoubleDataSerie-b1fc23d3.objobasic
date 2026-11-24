@@ -357,4 +357,5 @@ Public Class clDoubleDataSerie Inherits clAbstractDataSerie
 
 
     End Function
+
 End Class
