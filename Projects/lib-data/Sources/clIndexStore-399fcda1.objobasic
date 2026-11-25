@@ -1,0 +1,119 @@
+Public Class clIndexStore
+
+    Public Property MasterIndex As Dictionary
+    Constructor()
+
+    Self.MasterIndex = New Dictionary
+    Self.isLeaf = False
+
+    End Constructor
+    Public Sub AddIndexEntry(prmKeys() As string, prmIndex As integer)
+
+    If prmKeys.Count = 1 Then
+      Self.AddEntryToLastIndex(prmKeys[0], prmIndex)
+      Return
+
+    End If
+
+    Var Key As String = prmKeys[0]
+    Var childList As clIndexStore
+
+    If Self.MasterIndex.HasKey(Key) Then
+      childList = Self.MasterIndex.Value(Key)
+
+    Else
+      childList = New clIndexStore
+      Self.MasterIndex.Value(Key) = childList
+
+    End If
+
+    prmKeys.RemoveAt(0)
+
+    If prmKeys.Count = 1 Then
+      childList.AddEntryToLastIndex(prmKeys[0], prmIndex)
+
+    Else
+      childList.AddIndexEntry(prmKeys, prmIndex)
+
+    End If
+
+    Return
+    End Sub
+    Public Function GetRowIndexes(prmKeys() As string) As integer()
+    Var results() As Integer
+    Var Key As String = prmKeys[0]
+    Var childList As clIndexStore
+
+    If Self.isLeaf Then
+
+      If Self.MasterIndex.HasKey(Key) Then
+        results = Self.MasterIndex.Value(Key)
+
+      End If
+
+      Return results
+
+    Else
+
+      If prmKeys.Count = 1 Then
+        results = childList.getAllRowIndexes()
+
+      Else
+        prmKeys.RemoveAt(0)
+        results = childList.GetRowIndexes(prmKeys)
+
+      End If
+
+
+    End If
+
+    Return results
+    End Function
+    Protected Sub AddEntryToLastIndex(prmKey As string, prmIndex As integer)
+    Var indexList() As Integer
+
+    Self.isLeaf = True
+
+    If Self.MasterIndex.HasKey(prmKey) Then
+      indexList = Self.MasterIndex.Value(prmKey)
+    Else
+
+    End If
+
+    If indexList.IndexOf(prmIndex) < 0 Then
+      indexList.Append(prmIndex)
+
+    End If
+
+    Self.MasterIndex.Value(prmKey) = indexList
+
+    Return
+    End Sub
+    Public Function getAllRowIndexes() As integer()
+    Var indexList() As Integer
+    Var tempList() As Integer
+    Var childList As clIndexStore
+
+    If Self.isLeaf Then
+      For Each k As String In Self.MasterIndex.Keys
+        tempList = Self.MasterIndex.Value(k)
+        indexList.AppendAll(tempList)
+
+      Next
+
+    Else
+
+      For Each k As String In Self.MasterIndex.Keys
+        childList = Self.MasterIndex.Value(k)
+        tempList = childList.getAllRowIndexes()
+        indexList.AppendAll(tempList)
+
+      Next
+
+    End If
+
+    Return indexList
+
+    End Function
+    Public Property isLeaf As Boolean
+End Class
