@@ -35,7 +35,7 @@ Public Class clIndexStoreTests Inherits TestCase
     assert.equal(exp_DDD, res_DDD)
 
     End Sub
-    Public Sub Test_001_DoubleKey_GetRowIndexes()
+    Public Sub Test_004_DoubleKey_GetRowIndexes()
 
 
     Var index As New clIndexStore(2)
@@ -147,7 +147,7 @@ Public Class clIndexStoreTests Inherits TestCase
 
 
     End Sub
-    Public Sub Test_001_DoubleKey_GetRowIndexesStarting()
+    Public Sub Test_005_DoubleKey_GetRowIndexesStarting()
 
 
     Var index As New clIndexStore(2)
@@ -182,5 +182,111 @@ Public Class clIndexStoreTests Inherits TestCase
     assert.equal(exp_CCC, res_CCC)
     assert.equal(exp_DDD, res_DDD)
 
+    End Sub
+    Public Sub Test_006_TripleKey_GetRowIndexesStarting()
+
+
+    Var index As New clIndexStore(3)
+
+    index.AddIndexEntry(["AAA", "BBB"], 1)
+    index.AddIndexEntry(["CCC", "DDD"], 3)
+    index.AddIndexEntry(["AAA", "BBB", "EEE"], 6)
+    index.AddIndexEntry(["EEE", "DDD"], 5)
+    index.AddIndexEntry(["BBB", "GGG"], 7)
+    index.AddIndexEntry(["AAA", "CCC"], 10)
+    index.AddIndexEntry(["BBB"], 30)
+    index.AddIndexEntry(["CCC"], 50)
+    index.AddIndexEntry(["BBB"], 70)
+
+
+    Var res_AAA1() As Integer = index.GetAllRowIndexesStartingWith(["AAA"])
+    Var res_AAA2() As Integer = index.GetAllRowIndexesStartingWith(["AAA", "BBB"])
+    Var res_AAA3() As Integer = index.GetAllRowIndexesStartingWith(["AAA", "BBB", "ZZZ"])
+    Var res_CCC1() As Integer = index.GetAllRowIndexesStartingWith(["CCC"])
+    Var res_CCC2() As Integer = index.GetAllRowIndexesStartingWith(["CCC", "DDD"])
+    Var res_CCC3() As Integer = index.GetAllRowIndexesStartingWith(["CCC", "YYY"])
+    Var res_DDD1() As Integer = index.GetAllRowIndexesStartingWith(["DDD"])
+
+    Var exp_AAA1() As Integer = [1, 6, 10]
+    Var exp_AAA2() As Integer = [1, 6]
+    Var exp_AAA3() As Integer
+
+    Var exp_CCC1() As Integer = [3, 50]
+    Var exp_CCC2() As Integer = [3]
+    Var exp_CCC3() As Integer
+
+    Var exp_DDD1() As Integer
+
+    assert.equal(3, res_AAA1.Count, "Count res_AAA1")
+    assert.equal(2, res_AAA2.Count, "Count res_AAA2")
+    assert.equal(0, res_AAA3.Count, "Count res_AAA3")
+
+    assert.equal(2, res_CCC1.Count, "Count res_CCC1")
+    assert.equal(1, res_CCC2.Count, "Count res_CCC2")
+    assert.equal(0, res_CCC3.Count, "Count res_CCC3")
+
+    assert.equal(0, res_DDD1.Count, "Count res_DDD1")
+
+    assert.equal(exp_AAA1, res_AAA1, "res_AAA1")
+    assert.equal(exp_AAA2, res_AAA2, "res_AAA2")
+    assert.equal(exp_AAA3, res_AAA3, "res_AAA3")
+
+    assert.equal(exp_CCC1, res_CCC1, "res_CCC1")
+    assert.equal(exp_CCC2, res_CCC2, "res_CCC2")
+    assert.equal(exp_CCC3, res_CCC3, "res_CCC3")
+
+    assert.equal(exp_DDD1, res_DDD1, "res_DDD1")
+
+    End Sub
+    Public Sub Test_000_Basic()
+
+
+    Var index As New clIndexStore(1)
+
+    Var res_AAA1() As Integer = index.GetRowIndexes([])
+    Var res_AAA2() As Integer = index.GetRowIndexes(["AAA"])
+
+    Var exp_AAA1() As Integer
+    Var exp_AAA2() As Integer
+
+
+    index.AddIndexEntry(["BBB"], 1)
+
+    Var res_BBB1() As Integer = index.GetRowIndexes([])
+    Var res_BBB2() As Integer = index.GetRowIndexes(["AAA"])
+    Var res_BBB3() As Integer = index.GetRowIndexes(["BBB"])
+
+    Var exp_BBB1() As Integer
+    Var exp_BBB2() As Integer
+    Var exp_BBB3() As Integer = [1]
+
+    index.AddIndexEntry(["BBB"], 3)
+
+    Var res_BBB4() As Integer = index.GetRowIndexes([])
+    Var res_BBB5() As Integer = index.GetRowIndexes(["AAA"])
+    Var res_BBB6() As Integer = index.GetRowIndexes(["BBB"])
+
+    Var exp_BBB4() As Integer
+    Var exp_BBB5() As Integer
+    Var exp_BBB6() As Integer = [1, 3]
+
+
+    assert.equal(0, res_AAA1.Count, "res_AAA1.Count")
+    assert.equal(0, res_AAA2.Count, "res_AAA2.Count")
+    assert.equal(0, res_BBB1.Count, "res_BBB1.Count")
+    assert.equal(0, res_BBB2.Count, "res_BBB2.Count")
+    assert.equal(1, res_BBB3.Count, "res_BBB3.Count")
+    assert.equal(0, res_BBB4.Count, "res_BBB4.Count")
+    assert.equal(0, res_BBB5.Count, "res_BBB5.Count")
+    assert.equal(2, res_BBB6.Count, "res_BBB6.Count")
+
+    assert.equal(exp_AAA1, exp_AAA1, "res_AAA1")
+    assert.equal(exp_AAA2, exp_AAA2, "res_AAA2")
+    assert.equal(exp_BBB1, exp_BBB1, "res_BBB1")
+    assert.equal(exp_BBB2, exp_BBB2, "res_BBB2")
+    assert.equal(exp_BBB3, exp_BBB3, "res_BBB3")
+    assert.equal(exp_BBB4, exp_BBB4, "res_BBB4")
+    assert.equal(exp_BBB5, exp_BBB5, "res_BBB5")
+    assert.equal(exp_BBB6, exp_BBB6, "res_BBB6")
     End Sub
 End Class

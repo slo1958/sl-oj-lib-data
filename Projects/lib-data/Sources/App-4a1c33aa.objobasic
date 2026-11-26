@@ -2,35 +2,42 @@ Class App Inherits DesktopApplication
 
     Event Opening(args() As String)
 
-    Var index2 As New clIndexStore(2)
-
-    index2.AddIndexEntry(["AAA", "BBB"], 1)
-
-    index2.AddIndexEntry(["AAA", "CCC"], 2)
-
-    # index2.AddIndexEntry(["ZZZ", "YYY"], 10)
-
-    # index2.AddIndexEntry(["AAA", "BBB", "DDD"], 4)
-
-    # index2.AddIndexEntry(["ZZZ"], 20)
-
-    # index2.AddIndexEntry(["AAA"], 3)
-
-    # Var res1() As Integer = index2.getAllRowIndexes()
-
-    # Var res2() As Integer = index2.GetRowIndexes(["AAA"])
-
-    # Var res3() As Integer = index2.GetAllRowIndexesStartingWith(["AAA"])
-    # Var res4() As Integer = index2.GetAllRowIndexesStartingWith(["ZZZ"])
+    # Var index As New clIndexStore(1)
 
 
-    # print(res2.Count)
+    # index.AddIndexEntry(["BBB"], 1)
 
-    # Var index1 As New clIndexStore(1)
-    # index1.AddIndexEntry(["AAA"], 10)
-    # index1.AddIndexEntry(["BBB"], 12)
-    # index1.AddIndexEntry(["AAA"], 10)
+    # Var res_BBB1() As Integer = index.GetRowIndexes([])
+    # Var res_BBB2() As Integer = index.GetRowIndexes(["AAA"])
+    # Var res_BBB3() As Integer = index.GetRowIndexes(["BBB"])
 
-    Return
+    # print(res_BBB1.Count)
+    # print(res_BBB2.Count)
+    # print(res_BBB3.Count)
+
+    # # index2.AddIndexEntry(["ZZZ", "YYY"], 10)
+
+    # # index2.AddIndexEntry(["AAA", "BBB", "DDD"], 4)
+
+    # # index2.AddIndexEntry(["ZZZ"], 20)
+
+    # # index2.AddIndexEntry(["AAA"], 3)
+
+    # # Var res1() As Integer = index2.getAllRowIndexes()
+
+    # # Var res2() As Integer = index2.GetRowIndexes(["AAA"])
+
+    # # Var res3() As Integer = index2.GetAllRowIndexesStartingWith(["AAA"])
+    # # Var res4() As Integer = index2.GetAllRowIndexesStartingWith(["ZZZ"])
+
+
+    # # print(res2.Count)
+
+    # # Var index1 As New clIndexStore(1)
+    # # index1.AddIndexEntry(["AAA"], 10)
+    # # index1.AddIndexEntry(["BBB"], 12)
+    # # index1.AddIndexEntry(["AAA"], 10)
+
+    # Return
     End Event
 End Class

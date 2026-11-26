@@ -85,7 +85,7 @@ Public Class clIndexStore
     If Self.currentDepth <= 1 Then
 
       If Self.MasterIndex.HasKey(Key) Then
-        results = Self.MasterIndex.Value(Key)
+        results.AppendAll(Self.MasterIndex.Value(Key))
 
       End If
 
@@ -276,7 +276,9 @@ Public Class clIndexStore
     If Self.currentDepth <= 1 Then
 
       If Self.MasterIndex.HasKey(Key) Then
-        results = Self.MasterIndex.Value(Key)
+        Var tempRes() As Integer
+        tempRes = Self.MasterIndex.Value(Key)
+        results.AppendAll(tempRes)
 
       End If
 
