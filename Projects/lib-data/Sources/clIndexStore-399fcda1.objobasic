@@ -1,103 +1,135 @@
 Public Class clIndexStore
 
     Public Property MasterIndex As Dictionary
-    Constructor()
+    ## prmIndexDepth is the number of keys/dimensions expected for one row
+    Public Constructor(prmIndexDepth As integer)
 
     Self.MasterIndex = New Dictionary
-    Self.isLeaf = False
+    Self.currentDepth = prmIndexDepth
+
 
     End Constructor
-    Public Sub AddIndexEntry(prmKeys() As string, prmIndex As integer)
+    Public Sub AddIndexEntry(prmKeys As array(of string), prmRowIndex As integer)
 
-    If prmKeys.Count = 1 Then
-      Self.AddEntryToLastIndex(prmKeys[0], prmIndex)
+    If currentDepth = 1 Then # we are inserting in the row indexes
+      If prmKeys.Count > 1 Then # this is wrong
+        print("WARNING: cannot insert key(s) ending with " + prmKeys.Join(" ") + ", extra elements ignored.")
+        InsertAsRowIndex(prmKeys[0], prmRowIndex)
+
+        Return
+
+      End If
+
+      If prmKeys.Count = 0 Then
+        InsertAsRowIndex("", prmRowIndex)
+
+      Else
+        InsertAsRowIndex(prmKeys[0], prmRowIndex)
+
+      End If
+
       Return
 
     End If
 
-    Var Key As String = prmKeys[0]
+    Var workKey As String
+    Var remKeys() As String
+
     Var childList As clIndexStore
 
-    If Self.MasterIndex.HasKey(Key) Then
-      childList = Self.MasterIndex.Value(Key)
+    If prmKeys.Count = 0 Then # no more keys for insertion
+      workKey = ""
+
 
     Else
-      childList = New clIndexStore
-      Self.MasterIndex.Value(Key) = childList
+      For i As Integer = 0 To prmkeys.LastIndex
+        If i = 0 Then
+          workKey = prmKeys[i]
+
+        Else
+          remKeys.Append(prmkeys[i])
+        End If
+      Next
 
     End If
 
-    prmKeys.RemoveAt(0)
+    childList = InsertAsNodeEntry(workKey)
 
-    If prmKeys.Count = 1 Then
-      childList.AddEntryToLastIndex(prmKeys[0], prmIndex)
-
-    Else
-      childList.AddIndexEntry(prmKeys, prmIndex)
-
-    End If
+    childList.AddIndexEntry(remKeys, prmRowIndex)
 
     Return
     End Sub
-    Public Function GetRowIndexes(prmKeys() As string) As integer()
+    Public Function GetRowIndexes(prmKeys() As string) As Integer()
+    #
+    # get all rows indexes matching the provided key field values
+    # 
+
+
     Var results() As Integer
-    Var Key As String = prmKeys[0]
+    Var Key As String = ""
+    Var remKeys() As String
     Var childList As clIndexStore
 
-    If Self.isLeaf Then
+    If prmKeys.Count > 0 Then
+      For i As Integer = 0 To prmKeys.LastIndex
+        If i = 0 Then
+          Key = prmKeys[i]
+        Else
+          remKeys.Append(prmKeys[i])
+        End If
+
+      Next
+
+    End If
+
+    If Self.currentDepth <= 1 Then
 
       If Self.MasterIndex.HasKey(Key) Then
         results = Self.MasterIndex.Value(Key)
 
       End If
 
-      Return results
-
     Else
-
-      If prmKeys.Count = 1 Then
-        results = childList.getAllRowIndexes()
-
-      Else
-        prmKeys.RemoveAt(0)
-        results = childList.GetRowIndexes(prmKeys)
-
+      If Self.MasterIndex.HasKey(Key) Then
+        childList = Self.MasterIndex.Value(Key)
+        results = childList.GetRowIndexes(remKeys)
       End If
-
 
     End If
 
     Return results
     End Function
-    Protected Sub AddEntryToLastIndex(prmKey As string, prmIndex As integer)
-    Var indexList() As Integer
-
-    Self.isLeaf = True
+    Protected Sub InsertAsRowIndex(prmKey As string, prmRowIndex As integer)
+    Var localIndexList() As Integer
 
     If Self.MasterIndex.HasKey(prmKey) Then
-      indexList = Self.MasterIndex.Value(prmKey)
+      localIndexList = Self.MasterIndex.Value(prmKey)
     Else
 
     End If
 
-    If indexList.IndexOf(prmIndex) < 0 Then
-      indexList.Append(prmIndex)
+    If localIndexList.IndexOf(prmRowIndex) < 0 Then
+      localIndexList.Append(prmRowIndex)
 
     End If
 
-    Self.MasterIndex.Value(prmKey) = indexList
+    Self.MasterIndex.Value(prmKey) = localIndexList
 
     Return
     End Sub
     Public Function getAllRowIndexes() As integer()
-    Var indexList() As Integer
+    #
+    # Returns all indexes in the subtree
+    #
+
+    Var Results() As Integer
     Var tempList() As Integer
     Var childList As clIndexStore
 
-    If Self.isLeaf Then
+    If Self.currentDepth <= 1 Then
       For Each k As String In Self.MasterIndex.Keys
         tempList = Self.MasterIndex.Value(k)
-        indexList.AppendAll(tempList)
+        Results.AppendAll(tempList)
 
       Next
 
@@ -106,14 +138,156 @@ Public Class clIndexStore
       For Each k As String In Self.MasterIndex.Keys
         childList = Self.MasterIndex.Value(k)
         tempList = childList.getAllRowIndexes()
-        indexList.AppendAll(tempList)
+        Results.AppendAll(tempList)
 
       Next
 
     End If
 
-    Return indexList
+    Return Results
 
     End Function
-    Public Property isLeaf As Boolean
+    Public Property currentDepth As integer
+    Public Function GetFlattenedIndex() As clIndexRow()
+    #
+    # returns selected key values and row indexes
+    #
+
+    Var prevKeys() As String
+
+    Return GetFlattenedIndex_Internal(prevKeys)
+
+
+    End Function
+    Protected Function GetFlattenedIndex_Internal(prmPreviousKeys() As string) As clIndexRow()
+    #
+    # This method processes the current level
+    # prmPreviousKeys is used to populate the keys in the clIndexRow 
+    #
+    Var results() As clIndexRow
+
+    If Self.currentDepth <= 1 Then
+      # The object stored in the dictionary is an array of integer with the matching row indexes
+
+      For Each k As String In Self.MasterIndex.Keys
+        Var x() As Integer = Self.MasterIndex.Value(k)
+        Var r As New clIndexRow
+        r.AppendKeys(prmPreviousKeys)
+        r.AppendKey(k)
+        r.AppendIndexes(x)
+        results.Append(r)
+
+      Next
+
+      Return results
+
+    Else
+      # The object stored in the dictionary is a pointer to the next level
+
+      For Each k As String In Self.MasterIndex.Keys
+        Var currentKeys() As String
+        Var tempRes() As clIndexRow
+        Var Nextlevel As clIndexStore = clIndexStore(Self.MasterIndex.Value(k))
+
+        currentKeys.AppendAll(prmPreviousKeys)
+        currentKeys.Append(k)
+
+        tempRes = Nextlevel.GetFlattenedIndex_Internal(currentKeys)
+
+        results.AppendAll(tempRes)
+
+      Next
+
+    End If
+
+    Return results
+
+
+    End Function
+    Property indexList() As Integer
+    Protected Function InsertAsNodeEntry(prmCurrentKey As string) As clIndexStore
+
+    Var Key As String = prmCurrentKey
+
+    Var childList As clIndexStore
+
+    If Self.MasterIndex.HasKey(Key) Then
+      childList = Self.MasterIndex.Value(Key)
+
+    Else
+      childList = New clIndexStore(currentDepth - 1)
+      Self.MasterIndex.Value(Key) = childList
+
+    End If
+
+    Return childList
+
+    End Function
+    Public Function GetAllRowIndexesStartingWith(prmStartKeys() As string) As Integer()
+    #
+    # get all rows indexes matching the provided key field values
+    # get all indexes when the
+
+
+    Var results() As Integer
+    Var Key As String = ""
+    Var remKeys() As String
+    Var childList As clIndexStore
+
+    If prmStartKeys.Count > 0 Then
+
+      # prepare keys
+
+      For i As Integer = 0 To prmStartKeys.LastIndex
+        If i = 0 Then
+          Key = prmStartKeys[i]
+        Else
+          remKeys.Append(prmStartKeys[i])
+        End If
+
+      Next
+
+    Else
+      # Collect all row indexes
+
+      If currentDepth <= 1 Then
+
+        For Each k As String In MasterIndex.Keys
+          Var tempRes() As Integer = Self.MasterIndex.Value(k)
+          results.AppendAll(tempRes)
+        Next
+
+      Else
+        # here remKeys is empty
+        For Each k As String In MasterIndex.Keys
+          childList = Self.MasterIndex.Value(k)
+          Var tempRes() As Integer = childList.GetAllRowIndexesStartingWith(remKeys)
+
+          results.AppendAll(tempRes)
+
+        Next
+
+
+      End If
+      Return results
+
+    End If
+
+    If Self.currentDepth <= 1 Then
+
+      If Self.MasterIndex.HasKey(Key) Then
+        results = Self.MasterIndex.Value(Key)
+
+      End If
+
+    Else
+      If Self.MasterIndex.HasKey(Key) Then
+        childList = Self.MasterIndex.Value(Key)
+        results = childList.GetAllRowIndexesStartingWith(remKeys)
+      End If
+
+    End If
+
+    Return results
+    End Function
 End Class

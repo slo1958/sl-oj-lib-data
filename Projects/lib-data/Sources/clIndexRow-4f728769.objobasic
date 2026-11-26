@@ -1,0 +1,39 @@
+Public Class clIndexRow
+
+    Constructor()
+    End Constructor
+    Public Property Keys() As String
+    Public Property RelatedIndexes() As Integer
+    Public Sub AppendKey(prmKey As string)
+    Self.Keys.Append(prmKey)
+
+    Return
+
+    End Sub
+    Public Sub AppendIndexes(prmIndexes() As integer)
+    Self.RelatedIndexes.AppendAll(prmIndexes)
+
+    Return
+
+    End Sub
+    Public Function GetAllIndexes() As integer()
+    Return Self.RelatedIndexes
+
+    End Function
+    Public Sub AppendIndex(prmIndex As integer)
+    Self.RelatedIndexes.Append(prmIndex)
+
+    Return
+
+    End Sub
+    Public Function GetAllKeys() As string()
+    Return Self.Keys
+
+    End Function
+    Public Sub AppendKeys(prmKey() As string)
+    Self.Keys.AppendAll(prmKey)
+
+    Return
+
+    End Sub
+End Class

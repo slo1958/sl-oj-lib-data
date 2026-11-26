@@ -5,7 +5,7 @@
   "Kind": "Class",
   "BuildScope": "Application",
   "Namespace": "",
-  "Folder": "lib-data-core/Misc",
+  "Folder": "lib-data-core/data-structure",
   "ParentModule": "",
   "ParentModuleId": "",
   "AvailableInDesigner": false,

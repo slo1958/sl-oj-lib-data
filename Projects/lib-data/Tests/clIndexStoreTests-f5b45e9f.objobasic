@@ -1,33 +1,181 @@
 Public Class clIndexStoreTests Inherits TestCase
-    Public Sub Test_001_StringKey()
+    Public Sub Test_001_SingleKey()
 
 
-    Var index As New clIndexStore()
+    Var index As New clIndexStore(1)
 
-    index.AddIndexEntry(array("AAA"), 1)
-    index.AddIndexEntry(array("BBB"), 3)
-    index.AddIndexEntry(array("CCC"), 5)
-    index.AddIndexEntry(array("AAA"), 1)
-    index.AddIndexEntry(array("AAA"), 10)
-    index.AddIndexEntry(array("BBB"), 30)
-    index.AddIndexEntry(array("CCC"), 50)
-    index.AddIndexEntry(array("BBB"), 70)
+    index.AddIndexEntry(["AAA"], 1)
+    index.AddIndexEntry(["BBB"], 3)
+    index.AddIndexEntry(["CCC"], 5)
+    index.AddIndexEntry(["AAA"], 1)
+    index.AddIndexEntry(["AAA"], 10)
+    index.AddIndexEntry(["BBB"], 30)
+    index.AddIndexEntry(["CCC"], 50)
+    index.AddIndexEntry(["BBB"], 70)
 
 
-    Var res_AAA() As Integer = index.GetRowIndexes(array("AAA"))
-    Var res_BBB() As Integer = index.GetRowIndexes(array("BBB"))
-    Var res_CCC() As Integer = index.GetRowIndexes(array("CCC"))
-    Var res_DDD() As Integer = index.GetRowIndexes(array("DDD"))
+    Var res_AAA() As Integer = index.GetRowIndexes(["AAA"])
+    Var res_BBB() As Integer = index.GetRowIndexes(["BBB"])
+    Var res_CCC() As Integer = index.GetRowIndexes(["CCC"])
+    Var res_DDD() As Integer = index.GetRowIndexes(["DDD"])
 
     Var exp_AAA() As Integer = [1, 10]
     Var exp_BBB() As Integer = [3, 30, 70]
     Var exp_CCC() As Integer = [5, 50]
     Var exp_DDD() As Integer
 
-    assert.equal(2, res_AAA.Count)
-    assert.equal(3, res_BBB.Count)
-    assert.equal(2, res_CCC.Count)
-    assert.equal(0, res_DDD.Count)
+    assert.equal(2, res_AAA.Count, "AA Count")
+    assert.equal(3, res_BBB.Count, "BB Count")
+    assert.equal(2, res_CCC.Count, "CC Count")
+    assert.equal(0, res_DDD.Count, "DD Count")
+
+    assert.equal(exp_AAA, res_AAA)
+    assert.equal(exp_BBB, res_BBB)
+    assert.equal(exp_CCC, res_CCC)
+    assert.equal(exp_DDD, res_DDD)
+
+    End Sub
+    Public Sub Test_001_DoubleKey_GetRowIndexes()
+
+
+    Var index As New clIndexStore(2)
+
+    index.AddIndexEntry(["AAA", "BBB"], 1)
+    index.AddIndexEntry(["CCC", "DDD"], 3)
+    index.AddIndexEntry(["EEE", "DDD"], 5)
+    index.AddIndexEntry(["BBB", "GGG"], 7)
+    index.AddIndexEntry(["AAA", "CCC"], 10)
+    index.AddIndexEntry(["BBB"], 30)
+    index.AddIndexEntry(["CCC"], 50)
+    index.AddIndexEntry(["BBB"], 70)
+
+
+    Var res_AAA() As Integer = index.GetRowIndexes(["AAA"])
+    Var res_BBB() As Integer = index.GetRowIndexes(["BBB"])
+    Var res_CCC() As Integer = index.GetRowIndexes(["CCC"])
+    Var res_DDD() As Integer = index.GetRowIndexes(["DDD"])
+
+    Var exp_AAA() As Integer = []
+    Var exp_BBB() As Integer = [30, 70]
+    Var exp_CCC() As Integer = [50]
+    Var exp_DDD() As Integer
+
+    assert.equal(0, res_AAA.Count, "Count res_AAA")
+    assert.equal(2, res_BBB.Count, "Count res_BBB")
+    assert.equal(1, res_CCC.Count, "Count res_CCC")
+    assert.equal(0, res_DDD.Count, "Count res_DDD")
+
+    assert.equal(exp_AAA, res_AAA)
+    assert.equal(exp_BBB, res_BBB)
+    assert.equal(exp_CCC, res_CCC)
+    assert.equal(exp_DDD, res_DDD)
+
+    End Sub
+    Public Sub Test_002_MultipleKey()
+
+
+    Var index2 As New clIndexStore(2)
+
+    index2.AddIndexEntry(["AAA", "BBB"], 1)
+
+    index2.AddIndexEntry(["AAA", "CCC"], 2)
+
+    index2.AddIndexEntry(["AAA", "BBB", "DDD"], 4)
+
+    index2.AddIndexEntry(["AAA"], 3)
+
+
+
+    Var res_All() As Integer = index2.getAllRowIndexes()
+    Var res_AAA() As Integer = index2.GetRowIndexes(["AAA"])
+    Var res_CCC() As Integer = index2.GetRowIndexes(["CCC"])
+
+    Var exp_All() As Integer = [1, 4, 2, 3]
+    Var exp_AAA() As Integer = [3]
+    Var exp_CCC() As Integer = []
+
+    assert.equal(4, res_All.Count, "res_All count")
+    assert.equal(1, res_AAA.Count, "res_AAA count")
+    assert.equal(0, res_CCC.Count, "res_CCC count")
+
+    assert.equal(exp_All, res_All)
+    assert.equal(exp_AAA, res_AAA)
+    assert.equal(exp_CCC, res_CCC)
+
+    End Sub
+    Public Sub Test_003_MultiKeys()
+
+    Var index2 As New clIndexStore(2)
+
+    index2.AddIndexEntry(["AAA", "BBB"], 1)
+
+    index2.AddIndexEntry(["AAA", "CCC"], 2)
+
+    index2.AddIndexEntry(["ZZZ", "YYY"], 3)
+
+    index2.AddIndexEntry(["AAA"], 4)
+
+    index2.AddIndexEntry(["AAA", "BBB", "DDD"], 5)
+
+    index2.AddIndexEntry(["ZZZ"], 6)
+
+    index2.AddIndexEntry(["AAA"], 4) # This is a duplicate record id for AAA
+
+    index2.AddIndexEntry(["AAA"], 7)
+
+    Var res1() As Integer = index2.getAllRowIndexes()
+
+    Var res2() As Integer = index2.GetRowIndexes(["AAA"])
+
+    Var res3() As Integer = index2.GetAllRowIndexesStartingWith(["AAA"])
+    Var res4() As Integer = index2.GetAllRowIndexesStartingWith(["ZZZ"])
+
+    Var exp1() As Integer = [1, 5, 2, 4, 7, 3, 6]
+    Var exp2() As Integer = [4, 7]
+    Var exp3() As Integer = [1, 5, 2, 4, 7]
+    Var exp4() As Integer = [3, 6]
+
+    assert.equal(7, res1.Count, "count res1")
+    assert.equal(2, res2.Count, "count res2")
+    assert.equal(5, res3.Count, "count res3")
+    assert.equal(2, res4.Count, "count res4")
+
+    assert.equal(exp1, res1, "res1")
+    assert.equal(exp2, res2, "res2")
+    assert.equal(exp3, res3, "res3")
+    assert.equal(exp4, res4, "res4")
+
+
+    End Sub
+    Public Sub Test_001_DoubleKey_GetRowIndexesStarting()
+
+
+    Var index As New clIndexStore(2)
+
+    index.AddIndexEntry(["AAA", "BBB"], 1)
+    index.AddIndexEntry(["CCC", "DDD"], 3)
+    index.AddIndexEntry(["EEE", "DDD"], 5)
+    index.AddIndexEntry(["BBB", "GGG"], 7)
+    index.AddIndexEntry(["AAA", "CCC"], 10)
+    index.AddIndexEntry(["BBB"], 30)
+    index.AddIndexEntry(["CCC"], 50)
+    index.AddIndexEntry(["BBB"], 70)
+
+
+    Var res_AAA() As Integer = index.GetAllRowIndexesStartingWith(["AAA"])
+    Var res_BBB() As Integer = index.GetAllRowIndexesStartingWith(["BBB"])
+    Var res_CCC() As Integer = index.GetAllRowIndexesStartingWith(["CCC"])
+    Var res_DDD() As Integer = index.GetAllRowIndexesStartingWith(["DDD"])
+
+    Var exp_AAA() As Integer = [1, 10]
+    Var exp_BBB() As Integer = [7, 30, 70]
+    Var exp_CCC() As Integer = [3, 50]
+    Var exp_DDD() As Integer
+
+    assert.equal(2, res_AAA.Count, "Count res_AAA")
+    assert.equal(3, res_BBB.Count, "Count res_BBB")
+    assert.equal(2, res_CCC.Count, "Count res_CCC")
+    assert.equal(0, res_DDD.Count, "Count res_DDD")
 
     assert.equal(exp_AAA, res_AAA)
     assert.equal(exp_BBB, res_BBB)
