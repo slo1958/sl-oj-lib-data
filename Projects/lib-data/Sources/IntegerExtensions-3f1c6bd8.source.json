@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "IntegerExtensions",
+  "Id": "3f1c6bd8-e40c-4e17-b18c-9d2f87883fc4",
+  "Kind": "Module",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series/Extensions",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "IntegerExtensions-3f1c6bd8.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "DoubleExtensions",
+  "Id": "d357ddc3-b16b-4898-a8f7-4d20312fb2cb",
+  "Kind": "Module",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series/Extensions",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "DoubleExtensions-d357ddc3.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -1,0 +1,63 @@
+Public Class clRangeIntegerTransformation Inherits clAbstractIntegerTransformation
+
+    Public Sub SetBoundaries(prmLowBoundary As integer, prmHighBoundary As integer)
+    Self.LowBoundary = prmLowBoundary
+    Self.HighBoundary = prmHighBoundary
+
+    Return
+
+    End Sub
+    Protected Property HighBoundary As integer = 0
+    Protected Override Function TransformElement(prmElementIndex As integer, prmElementValue As integer) As Integer
+
+    Var tempLowBoundary As Integer = Self.getBoundary(prmElementIndex, Self.LowBoundary, Self.LowBoundarySerie)
+    Var tempHighBoundary As Integer = Self.getBoundary(prmElementIndex, Self.HighBoundary, Self.HighBoundarySerie)
+
+    If prmElementValue > tempHighBoundary Then Return tempHighBoundary
+    If prmElementValue < tempLowBoundary Then Return tempLowBoundary
+
+    Return prmElementValue
+
+
+
+
+    End Function
+    Public Constructor(prmSourceDataSerie As clIntegerDataSerie, prmBuildChangeMask As Boolean)
+
+    Super.Constructor(prmSourceDataSerie, prmBuildChangeMask)
+
+    Self.Name = "Range"
+
+    Self.LowBoundary = Integer.MinValue
+
+    Self.HighBoundary = Integer.MaxValue
+
+    Return
+
+
+    End Constructor
+    Protected Property LowBoundary As integer = 0
+    Protected Property LowBoundarySerie As clIntegerDataSerie = Nothing
+    Protected Property HighBoundarySerie As clIntegerDataSerie = Nothing
+    Public Sub SetBoundaries(prmLowBoundary As clIntegerDataSerie, prmHighBoundary As clIntegerDataSerie)
+    Self.LowBoundarySerie = prmLowBoundary
+    Self.HighBoundarySerie = prmHighBoundary
+
+    Return
+
+    End Sub
+    Private Function getBoundary(prmElementIndex As integer, prmFixed As integer, prmSerie As clIntegerDataSerie) As integer
+
+
+    If prmSerie = Nothing Then
+      Return prmFixed
+
+    ElseIf prmElementIndex > prmSerie.LastIndex() Then
+      Return prmFixed
+
+    Else
+      Return Integer(prmSerie.Element(prmElementIndex))
+
+    End If
+    End Function
+End Class

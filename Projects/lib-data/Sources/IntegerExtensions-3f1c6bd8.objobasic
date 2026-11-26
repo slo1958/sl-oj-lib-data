@@ -1,0 +1,115 @@
+Public Module IntegerExtensions
+
+  Public Function Minimum(Extends s As clIntegerDataSerie) As Integer
+
+  Var results As Integer
+
+  If s.Count() = 0 Then Return 0
+  If s.Count() = 1 Then Return Integer(s.Element(0))
+
+  results = Integer(s.Element(0))
+  For i As Integer = 1 To s.LastIndex()
+    Var v As Integer = Integer(s.Element(i))
+    If results > v Then results = v
+
+  Next
+
+  Return results
+  End Function
+  Public Function Maximum(Extends s As clIntegerDataSerie) As Integer
+
+  Var results As Integer
+
+  If s.Count() = 0 Then Return 0
+  If s.Count() = 1 Then Return Integer(s.Element(0))
+
+  results = Integer(s.Element(0))
+  For i As Integer = 1 To s.LastIndex()
+    Var v As Integer = Integer(s.Element(i))
+    If results < v Then results = v
+
+  Next
+
+  Return results
+  End Function
+  Public Function MinimumNonZero(Extends s As clIntegerDataSerie) As Integer
+
+  Var results As Integer = Integer.MaxValue
+
+  If s.Count() = 0 Then Return 0
+
+  For i As Integer = 0 To s.LastIndex()
+    Var v As Integer = Integer(s.Element(i))
+    If (results > v) And (v <> 0) Then results = v
+
+  Next
+
+  Return results
+  End Function
+  Public Function Average(Extends s As clIntegerDataSerie) As Double
+
+  Var results As Double = 0
+  Var count As Double = 0
+
+  If s.Count() = 0 Then Return 0
+
+  For i As Integer = 0 To s.LastIndex()
+    Var v As Integer = Integer(s.Element(i))
+    results = results + v
+    count = count + 1
+  Next
+
+  Return results / count
+
+  End Function
+  Public Function AverageNonZero(Extends s As clIntegerDataSerie) As Double
+
+  Var results As Double = 0
+  Var count As Double = 0
+
+  If s.Count() = 0 Then Return 0
+
+  For i As Integer = 0 To s.LastIndex()
+    Var v As Integer = Integer(s.Element(i))
+    If (v <> 0) Then
+      results = results + v
+      count = count + 1
+    End If
+  Next
+
+  If count = 0 Then Return 0
+
+  Return results / count
+
+
+  End Function
+  Public Function CountNonZero(Extends s As clIntegerDataSerie) As integer
+
+  Var results As Integer = 0
+
+  If s.Count() = 0 Then Return 0
+
+  For i As Integer = 0 To s.LastIndex()
+    Var v As Integer = Integer(s.Element(i))
+    If (v <> 0) Then results += 1
+
+  Next
+
+  Return results
+
+  End Function
+  Public Function CountDistinct(Extends s As clIntegerDataSerie) As integer
+  Var temp() As Integer
+
+  If s.Count() = 0 Then Return 0
+
+  For i As Integer = 0 To s.LastIndex()
+    Var v As Integer = Integer(s.Element(i))
+    If temp.IndexOf(v) < 0 Then temp.Append(v)
+
+  Next
+
+  Return temp.Count
+
+  End Function
+End Module

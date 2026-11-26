@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clAbstractStringTransformation",
+  "Id": "c60e0316-90fc-4007-8b1d-4185911934cd",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series-transformations",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clAbstractStringTransformation-c60e0316.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

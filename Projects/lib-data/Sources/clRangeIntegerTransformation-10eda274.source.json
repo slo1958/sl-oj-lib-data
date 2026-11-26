@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clRangeIntegerTransformation",
+  "Id": "10eda274-7d3e-41a4-97cb-35093ada108e",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series-transformations/Implementations",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clRangeIntegerTransformation-10eda274.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

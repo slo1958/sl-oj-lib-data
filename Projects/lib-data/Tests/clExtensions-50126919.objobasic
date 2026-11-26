@@ -1,0 +1,134 @@
+Public Class clExtensions
+
+    Public Sub Test_001_DoubleExtension()
+    Var ds As New clDoubleDataSerie("Something")
+
+    Var mi As Double = ds.Minimum()
+    Var mx As Double = ds.Maximum()
+
+    assert.equal(0, mi)
+    assert.equal(0, mx)
+
+
+    End Sub
+    Public Sub Test_002_DoubleExtension()
+    Var ds As New clDoubleDataSerie("Something")
+
+    ds.AppendItem(123.45)
+
+    Var mi As Double = ds.Minimum()
+    Var mx As Double = ds.Maximum()
+
+    assert.equal(123.45, mi)
+    assert.equal(123.45, mx)
+
+
+    End Sub
+    Public Sub Test_003_DoubleExtension()
+    Var ds As New clDoubleDataSerie("Something")
+
+    ds.AppendItem(123.45)
+    ds.AppendItem(654.32)
+    ds.AppendItem(345.67)
+
+    Var mi As Double = ds.Minimum()
+    Var mx As Double = ds.Maximum()
+
+    assert.equal(123.45, mi)
+    assert.equal(654.32, mx)
+
+
+    End Sub
+    Public Sub Test_004_DoubleExtension()
+    Var ds As New clDoubleDataSerie("Something")
+
+    ds.AppendItem(123.45)
+    ds.AppendItem(0)
+    ds.AppendItem(345.67)
+
+    Var cnt1 As Integer = ds.Count()
+    Var cnt2 As Integer = ds.CountNonZero()
+
+    assert.equal(3, cnt1)
+    assert.equal(2, cnt2)
+
+
+    End Sub
+    Public Sub Test_101_IntegerExtension()
+    Var ds As New clIntegerDataSerie("Something")
+
+    Var mi As Double = ds.Minimum()
+    Var mx As Double = ds.Maximum()
+    Var cd As Integer = ds.CountDistinct()
+
+    assert.equal(0, mi)
+    assert.equal(0, mx)
+    assert.equal(0, cd)
+
+
+    End Sub
+    Public Sub Test_102_IntegerExtension()
+    Var ds As New clIntegerDataSerie("Something")
+
+    ds.AppendItem(123)
+
+    Var mi As Integer = ds.Minimum()
+    Var mx As Integer = ds.Maximum()
+    Var cd As Integer = ds.CountDistinct()
+
+    assert.equal(123, mi)
+    assert.equal(123, mx)
+    assert.equal(1, cd)
+
+
+    End Sub
+    Public Sub Test_103_IntegerExtension()
+    Var ds As New clIntegerDataSerie("Something")
+
+    ds.AppendItem(123)
+    ds.AppendItem(654)
+    ds.AppendItem(123)
+    ds.AppendItem(345)
+
+    Var mi As Integer = ds.Minimum()
+    Var mx As Integer = ds.Maximum()
+    Var cd As Integer = ds.CountDistinct()
+    Var ct As Integer = ds.Count()
+
+    assert.equal(123, mi)
+    assert.equal(654, mx)
+    assert.equal(3, cd)
+    assert.equal(4, ct)
+
+
+    End Sub
+    Public Sub Test_104_IntegerExtension()
+    Var ds As New clIntegerDataSerie("Something")
+
+    ds.AppendItem(123)
+    ds.AppendItem(654)
+    ds.AppendItem(0)
+    ds.AppendItem(123)
+    ds.AppendItem(0)
+    ds.AppendItem(345)
+
+    Var mi1 As Integer = ds.Minimum()
+    Var mi2 As Integer = ds.MinimumNonZero()
+
+    Var mx As Integer = ds.Maximum()
+
+    Var cd1 As Integer = ds.CountDistinct()
+    Var cd2 As Integer = ds.CountNonZero()
+    Var cd3 As Integer = ds.Count()
+
+    assert.equal(0, mi1)
+    assert.equal(123, mi2)
+
+    assert.equal(654, mx)
+
+    assert.equal(4, cd1)
+    assert.equal(4, cd2)
+    assert.equal(6, cd3)
+
+    End Sub
+End Class

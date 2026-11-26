@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clAbstractIntegerTransformation",
+  "Id": "19247de3-f1ab-450f-a544-1a7a7ca24190",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-series-transformations",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clAbstractIntegerTransformation-19247de3.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

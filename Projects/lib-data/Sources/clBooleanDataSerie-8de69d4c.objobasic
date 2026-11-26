@@ -85,4 +85,15 @@ Public Class clBooleanDataSerie Inherits clAbstractDataSerie
     Return
 
     End Sub
+    Public Function PopulationCount() As integer
+    Var results As Integer
+
+    For i As Integer = 0 To Self.DataStore.LastIndex()
+      If Self.DataStore.GetItem(i) Then results += 1
+
+    Next
+
+    Return results
+
+    End Function
 End Class
