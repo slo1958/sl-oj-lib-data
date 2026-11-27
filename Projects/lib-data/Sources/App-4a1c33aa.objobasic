@@ -2,6 +2,7 @@ Class App Inherits DesktopApplication
 
     Event Opening(args() As String)
 
+    CheckGroupBy()
 
     End Event
     Public Function DoSum(p() As Double) As Double
@@ -54,8 +55,28 @@ Class App Inherits DesktopApplication
     t.AppendDataRow("France", "Paris", 234)
     t.AppendDataRow("Belgium", "Brussels", 123)
 
-    Var z As clDataTable = t.GetDistinct("Country", "Something", "City")
+    Var z As clDataTable = t.GetDistinct(["Country", "Something", "City"])
     print(z.CountRows())
+
+    Return
+    End Sub
+    Public Sub CheckGroupBy()
+    Var t As New clDataTable("MyTable")
+
+    t.AppendDataSerie(New clStringDataSerie("Country"))
+    t.AppendDataSerie(New clStringDataSerie("City"))
+    t.AppendDataSerie(New clDoubleDataSerie("Sales"))
+
+    t.AppendDataRow("Belgium", "Brussels", 100)
+    t.AppendDataRow("France", "Paris", 200)
+    t.AppendDataRow("Belgium", "Brussels", 110)
+    t.AppendDataRow("Belgium", "Brussels", 120)
+    t.AppendDataRow("France", "Paris", 230)
+    t.AppendDataRow("Belgium", "Brussels", 130)
+
+    Var z As clDataTable = t.GetGroupBy(["Country", "Something"], ["sum:Sales", "Minimum:Sales", "Top=Maximum:Sales"])
+
+    z.Dump()
 
     Return
     End Sub

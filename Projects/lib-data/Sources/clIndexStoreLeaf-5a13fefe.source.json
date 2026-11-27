@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clIndexStoreLeaf",
+  "Id": "5a13fefe-3776-4139-90eb-b37cad186b59",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Indexes-and-grouping",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clIndexStoreLeaf-5a13fefe.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

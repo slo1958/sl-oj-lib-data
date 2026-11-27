@@ -36,9 +36,20 @@ Public Class clIndexOutputRow
     Return
 
     End Sub
-    Public Property Accumulators() As Array(Of Double)
+    Private Property Accumulators() As Array(Of Double)
     Public Function GetKey(prmIndex As integer) As string
     Return Self.Keys[prmIndex]
+
+
+    End Function
+    Public Sub AppendAccumulator(v() As double)
+
+    Self.Accumulators.Append(v)
+
+    End Sub
+    Public Function GetAccumulator(prmAccumulatorIndex As integer) As double()
+
+    Return Self.Accumulators[prmAccumulatorIndex]
 
 
     End Function

@@ -2,78 +2,14 @@ Public Class clIndexStore
 
     Public Property MasterIndex As Dictionary
     ## prmIndexDepth is the number of keys/dimensions expected for one row
-    Public Constructor(prmIndexDepth As integer, Optional prmNbrAggregators As integer = 0)
+    Public Constructor(prmIndexDepth As integer, prmNbrAggregators As integer)
 
     Self.MasterIndex = New Dictionary
     Self.currentDepth = prmIndexDepth
-
-    Self.Accumulators.Clear()
-
-    For i As Integer = 1 To prmNbrAggregators
-      Var vv() As Double
-
-      Self.Accumulators.Append(vv)
-
-    Next
-
+    Self.NbrAccu = prmNbrAggregators
 
     Return
     End Constructor
-    Public Sub AddIndexEntry(prmKeys As array(of string), prmRowIndex As integer)
-
-    If currentDepth = 1 Then # we are inserting in the row indexes
-      If prmKeys.Count > 1 Then # this is wrong
-        mdHelpers.DataLibLogs().WriteWarning( _
-          currentMethodName() _
-          , cstWngCannotInsertKey _
-          , prmKeys.Join(" ") _
-          )
-
-        InsertAsRowIndex(prmKeys[0], prmRowIndex)
-
-        Return
-
-      End If
-
-      If prmKeys.Count = 0 Then
-        InsertAsRowIndex("", prmRowIndex)
-
-      Else
-        InsertAsRowIndex(prmKeys[0], prmRowIndex)
-
-      End If
-
-      Return
-
-    End If
-
-    Var workKey As String
-    Var remKeys() As String
-
-    Var childList As clIndexStore
-
-    If prmKeys.Count = 0 Then # no more keys for insertion
-      workKey = ""
-
-
-    Else
-      For i As Integer = 0 To prmkeys.LastIndex
-        If i = 0 Then
-          workKey = prmKeys[i]
-
-        Else
-          remKeys.Append(prmkeys[i])
-        End If
-      Next
-
-    End If
-
-    childList = InsertAsNodeEntry(workKey)
-
-    childList.AddIndexEntry(remKeys, prmRowIndex)
-
-    Return
-    End Sub
     Public Function GetRowIndexes(prmKeys() As string) As Integer()
     #
     # get all rows indexes matching the provided key field values
@@ -114,24 +50,6 @@ Public Class clIndexStore
 
     Return results
     End Function
-    Protected Sub InsertAsRowIndex(prmKey As string, prmRowIndex As integer)
-    Var localIndexList() As Integer
-
-    If Self.MasterIndex.HasKey(prmKey) Then
-      localIndexList = Self.MasterIndex.Value(prmKey)
-    Else
-
-    End If
-
-    If localIndexList.IndexOf(prmRowIndex) < 0 Then
-      localIndexList.Append(prmRowIndex)
-
-    End If
-
-    Self.MasterIndex.Value(prmKey) = localIndexList
-
-    Return
-    End Sub
     Public Function getAllRowIndexes() As integer()
     #
     # Returns all indexes in the subtree
@@ -182,17 +100,25 @@ Public Class clIndexStore
     Var results() As clIndexOutputRow
 
     If Self.currentDepth <= 1 Then
-      # The object stored in the dictionary is an array of integer with the matching row indexes
+      # The object stored in the dictionary is an clIndexStoreLeaf 
 
       For Each k As String In Self.MasterIndex.Keys
-        Var x() As Integer = Self.MasterIndex.Value(k)
+        Var leaf As clIndexStoreLeaf = Self.MasterIndex.Value(k)
+
         Var r As New clIndexOutputRow
         r.AppendKeys(prmPreviousKeys)
         r.AppendKey(k)
-        r.AppendIndexes(x)
+        r.AppendIndexes(leaf.RowIndexes)
+
+        # add accumulators...
+        For Each v As Array(Of Double) In leaf.Accumulators
+          r.AppendAccumulator(v)
+        Next
+
         results.Append(r)
 
       Next
+
 
       Return results
 
@@ -219,7 +145,6 @@ Public Class clIndexStore
 
 
     End Function
-    Property indexList() As Integer
     Protected Function InsertAsNodeEntry(prmCurrentKey As string) As clIndexStore
 
     Var Key As String = prmCurrentKey
@@ -230,7 +155,7 @@ Public Class clIndexStore
       childList = Self.MasterIndex.Value(Key)
 
     Else
-      childList = New clIndexStore(currentDepth - 1)
+      childList = New clIndexStore(currentDepth - 1, Self.NbrAccu)
       Self.MasterIndex.Value(Key) = childList
 
     End If
@@ -308,7 +233,6 @@ Public Class clIndexStore
     Return results
     End Function
   Public Const cstWngCannotInsertKey As String = "cannot insert key(s) ending with %0, extra elements ignored."
-    Public Property Accumulators() As Array(Of Double)
     Public Sub AddIndexEntry(prmKeys As array(of string), prmRowIndex As integer, prmValuesToAccumulate() As double)
 
     If currentDepth = 1 Then # we are inserting in the row indexes
@@ -365,35 +289,25 @@ Public Class clIndexStore
     Return
     End Sub
     Protected Sub InsertAsRowIndex(prmKey As string, prmRowIndex As integer, prmValuesToAccumulate() As double)
-    Var localIndexList() As Integer
+    Var LeafNode As clIndexStoreLeaf
 
     If Self.MasterIndex.HasKey(prmKey) Then
-      localIndexList = Self.MasterIndex.Value(prmKey)
+      LeafNode = Self.MasterIndex.Value(prmKey)
+
     Else
+      LeafNode = New clIndexStoreLeaf(prmValuesToAccumulate.Count)
 
     End If
 
-    If localIndexList.IndexOf(prmRowIndex) < 0 Then
-      localIndexList.Append(prmRowIndex)
+    LeafNode.Append(prmRowIndex, prmValuesToAccumulate)
 
-    End If
-
-    Self.MasterIndex.Value(prmKey) = localIndexList
-
-    #
-    # update accumulators
-    #
-    If Self.Accumulators.Count = 0 Then Return
-    If prmValuesToAccumulate.Count = 0 Then Return
-
-    For i As Integer = 0 To Self.Accumulators.LastIndex
-      If i <= prmValuesToAccumulate.LastIndex Then
-        Self.Accumulators[i].Append(prmValuesToAccumulate[i])
-
-      End If
-
-    Next
+    Self.MasterIndex.Value(prmKey) = LeafNode
 
     Return
     End Sub
+    Public Sub AddIndexEntry(prmKeys As array(of string), prmRowIndex As integer)
+    Self.AddIndexEntry(prmKeys, prmRowIndex, [])
+
+    End Sub
+    Public Property NbrAccu As integer
 End Class

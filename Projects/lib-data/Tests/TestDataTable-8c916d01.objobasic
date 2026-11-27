@@ -17,7 +17,7 @@ Public Class TestDataTable Inherits TestCase
     t.AppendDataRow("France", "Paris", 234)
     t.AppendDataRow("Belgium", "Brussels", 123)
 
-    Var z As clDataTable = t.GetDistinct("Country", "City")
+    Var z As clDataTable = t.GetDistinct(["Country", "City"])
 
     Var exp As New clDataTable("Exp Mytable")
     exp.AppendDataSerie(New clStringDataSerie("Country"))
@@ -53,7 +53,7 @@ Public Class TestDataTable Inherits TestCase
     Var act As clDataTable
     Var exp As clDataTable
 
-    act = t.GetDistinct("Country")
+    act = t.GetDistinct(["Country"])
     exp = New clDataTable("Exp Mytable")
 
     exp.AppendDataSerie(New clStringDataSerie("Country"))
@@ -64,7 +64,7 @@ Public Class TestDataTable Inherits TestCase
 
     TestHelpers.CheckTable(exp, act, "002A")
 
-    act = t.GetDistinct("Country", "City")
+    act = t.GetDistinct(["Country", "City"])
 
     exp = New clDataTable("Exp Mytable")
     exp.AppendDataSerie(New clStringDataSerie("Country"))
@@ -105,7 +105,7 @@ Public Class TestDataTable Inherits TestCase
     Var act As clDataTable
     Var exp As clDataTable
 
-    act = t.GetDistinct("Country", "SomethingElse")
+    act = t.GetDistinct(["Country", "SomethingElse"])
     exp = New clDataTable("Exp Mytable")
 
     exp.AppendDataSerie(New clStringDataSerie("Country"))
@@ -117,7 +117,7 @@ Public Class TestDataTable Inherits TestCase
 
     TestHelpers.CheckTable(exp, act, "003A")
 
-    act = t.GetDistinct("Country", "Something", "City")
+    act = t.GetDistinct(["Country", "Something", "City"])
 
     exp = New clDataTable("Exp Mytable")
     exp.AppendDataSerie(New clStringDataSerie("Country"))
@@ -136,5 +136,37 @@ Public Class TestDataTable Inherits TestCase
 
 
     Return
+    End Sub
+    Public Sub TestGroupBy_004()
+
+    Var t As New clDataTable("MyTable")
+
+    t.AppendDataSerie(New clStringDataSerie("Country"))
+    t.AppendDataSerie(New clStringDataSerie("City"))
+    t.AppendDataSerie(New clDoubleDataSerie("Sales"))
+
+    t.AppendDataRow("Belgium", "Brussels", 100)
+    t.AppendDataRow("France", "Paris", 200)
+    t.AppendDataRow("Belgium", "Brussels", 110)
+    t.AppendDataRow("Belgium", "Brussels", 120)
+    t.AppendDataRow("France", "Paris", 230)
+    t.AppendDataRow("Belgium", "Brussels", 130)
+
+    Var act As clDataTable = t.GetGroupBy(["Country", "Something"], ["sum:Sales", "Minimum:Sales", "Top=Maximum:Sales"])
+
+    Var exp As New clDataTable("expected")
+    exp.AppendDataSerie(New clStringDataSerie("Country"))
+    exp.AppendDataSerie(New clStringDataSerie("Something"))
+    exp.AppendDataSerie(New clIntegerDataSerie("SYS$Count"))
+    exp.AppendDataSerie(New clDoubleDataSerie("SumOfSales"))
+    exp.AppendDataSerie(New clDoubleDataSerie("MinimumOfSales"))
+    exp.AppendDataSerie(New clDoubleDataSerie("Top"))
+
+    exp.AppendDataRow("Belgium", "", 4, 460.0, 100.0, 130.0)
+    exp.AppendDataRow("France", "", 2, 430.0, 200.0, 230.0)
+
+    TestHelpers.CheckTable(exp, act, "004")
+
+
     End Sub
 End Class

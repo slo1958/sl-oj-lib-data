@@ -2,7 +2,7 @@ Public Class clIndexStoreTests Inherits TestCase
     Public Sub Test_001_SingleKey()
 
 
-    Var index As New clIndexStore(1)
+    Var index As New clIndexStore(1, 0)
 
     index.AddIndexEntry(["AAA"], 1)
     index.AddIndexEntry(["BBB"], 3)
@@ -38,7 +38,7 @@ Public Class clIndexStoreTests Inherits TestCase
     Public Sub Test_004_DoubleKey_GetRowIndexes()
 
 
-    Var index As New clIndexStore(2)
+    Var index As New clIndexStore(2, 0)
 
     index.AddIndexEntry(["AAA", "BBB"], 1)
     index.AddIndexEntry(["CCC", "DDD"], 3)
@@ -74,7 +74,7 @@ Public Class clIndexStoreTests Inherits TestCase
     Public Sub Test_002_MultipleKey()
 
 
-    Var index2 As New clIndexStore(2)
+    Var index2 As New clIndexStore(2, 0)
 
     index2.AddIndexEntry(["AAA", "BBB"], 1)
 
@@ -105,7 +105,7 @@ Public Class clIndexStoreTests Inherits TestCase
     End Sub
     Public Sub Test_003_MultiKeys()
 
-    Var index2 As New clIndexStore(2)
+    Var index2 As New clIndexStore(2, 0)
 
     index2.AddIndexEntry(["AAA", "BBB"], 1)
 
@@ -150,7 +150,7 @@ Public Class clIndexStoreTests Inherits TestCase
     Public Sub Test_005_DoubleKey_GetRowIndexesStarting()
 
 
-    Var index As New clIndexStore(2)
+    Var index As New clIndexStore(2, 0)
 
     index.AddIndexEntry(["AAA", "BBB"], 1)
     index.AddIndexEntry(["CCC", "DDD"], 3)
@@ -186,7 +186,7 @@ Public Class clIndexStoreTests Inherits TestCase
     Public Sub Test_006_TripleKey_GetRowIndexesStarting()
 
 
-    Var index As New clIndexStore(3)
+    Var index As New clIndexStore(3, 0)
 
     index.AddIndexEntry(["AAA", "BBB"], 1)
     index.AddIndexEntry(["CCC", "DDD"], 3)
@@ -241,7 +241,7 @@ Public Class clIndexStoreTests Inherits TestCase
     Public Sub Test_000_Basic()
 
 
-    Var index As New clIndexStore(1)
+    Var index As New clIndexStore(1, 0)
 
     Var res_AAA1() As Integer = index.GetRowIndexes([])
     Var res_AAA2() As Integer = index.GetRowIndexes(["AAA"])

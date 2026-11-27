@@ -1,75 +1,39 @@
 Public Module BaseTableExtensions
 
   ## Return the list of distinct combinations of selected fields
-  Public Function GetDistinct(Extends s As clDataTable, ParamArray Field As string) As clDataTable
+  Public Function GetDistinct(Extends s As clDataTable, prmKeyFields() As string) As clDataTable
 
   #
   # Create output data table
   #
-
   Var results As New clDataTable("Distincts from " + s.Name)
 
-  Var serieIndexes() As Integer
-
-  If field.Count = 0 Then
+  If prmKeyFields.Count = 0 Then
     Var cntSerie As New clIntegerDataSerie(cstRowCountFieldName)
     results.AppendDataSerie(cntSerie)
     results.AppendDataRow(s.CountRows())
 
-    # TODO should return a table with one cell with total row count
     Return results
 
   End If
 
 
-  For Each f As String In field
-    serieIndexes.Append(s.SerieIndex(f))
-
-  Next
-
-  # Allocate index mgr with enough space for the fields
-  Var tempIndex As New clIndexStore(serieIndexes.Count)
-  Var localRowCounter As Integer = 0
-
-
-  For Each r As clDataRow In New clByRowWithIndex(s)
-    Var indexkeys() As String
-
-
-    # Using iterator prodiving internal row index, do not forget to offset field index by one
-    For Each x As Integer In serieIndexes
-      If x < 0 Then
-        indexkeys.Append("")
-
-      Else
-        indexkeys.Append(r.GetField(x + 1).ToString())
-
-      End If
-
-    Next
-    tempIndex.AddIndexEntry(indexkeys, Integer(r.GetField(0)))
-
-    localRowCounter += 1
-
-  Next
-
+  # 
+  # Create the index store
+  #
+  Var tempIndex As clIndexStore = BuildIndexStore(s, prmKeyFields, [])
 
   #
   # Add data series matching key fields
   #
-  For Each f As String In field
-    results.AppendDataSerie(New clStringDataSerie(f))
+  AddKeyFields(results, prmKeyFields)
 
-  Next
 
   #
   # Add a field to hold the row counter
   #
-  Var cntFieldName As String = results.GetUniqueFieldName(cstRowCountFieldName)
+  Var cntFieldName As String = AddCounterField(results)
 
-  Var cntSerie As New clIntegerDataSerie(cntFieldName)
-
-  results.AppendDataSerie(cntSerie)
 
   Var outrow As New clDataRow(results.TableStructure())
 
@@ -77,7 +41,7 @@ Public Module BaseTableExtensions
     outrow.ResetFields()
 
     # All key fields are available in the index output row
-    For x As Integer = 0 To field.LastIndex
+    For x As Integer = 0 To prmKeyFields.LastIndex
       # For Each x As Integer In serieIndexes
       If x >= 0 Then
         outrow.SetField(x, indexRow.GetKey(x))
@@ -100,4 +64,226 @@ Public Module BaseTableExtensions
 
   End Function
 Public Const cstRowCountFieldName As string = "SYS$Count"
+  Public Function GetGroupBy(Extends s As clDataTable, prmKeyFields() As string, prmAggregExpressions() As string) As clDataTable
+
+  #
+  # Create output data table
+  #
+  Var results As New clDataTable("Groupby using " + s.Name)
+
+
+  If prmKeyFields.Count = 0 Then
+    Var cntSerie As New clIntegerDataSerie(cstRowCountFieldName)
+    results.AppendDataSerie(cntSerie)
+    results.AppendDataRow(s.CountRows())
+
+    Return results
+
+  End If
+
+  # !! those two arrays will have different sizes
+  Var tempAggrExpr() As Array(Of String)
+  Var tempAggrFields() As String
+
+  For Each f As String In prmAggregExpressions
+    #
+    # parts[0] is output field name
+    # parts[1] is the type of aggregation, as string
+    # parts[2] is the name of source field
+    # we add parst[3] the index of the source field in the list of requested fields
+    #
+    Var parts() As String = mdAggregate.ExtractInfoFromAggrExpression(f)
+
+    If tempAggrFields.IndexOf(parts[2]) < 0 Then tempAggrFields.Append(parts[2])
+
+    parts.Append(tempAggrFields.IndexOf(parts[2]).ToString())
+
+    tempAggrExpr.Append(parts)
+
+  Next
+
+  # 
+  # Create the index store
+  #
+  Var tempIndex As clIndexStore = BuildIndexStore(s, prmKeyFields, tempAggrFields)
+
+  #
+  # Build Output table
+  # 
+
+
+  #
+  # Add data series matching key fields
+  #
+  AddKeyFields(results, prmKeyFields)
+  #
+  # Add a field to hold the row counter
+  #
+  Var cntFieldName As String = AddCounterField(results)
+  #
+  # Add data field for each aggregation
+  #
+  For Each v As Array(Of String) In tempAggrExpr
+    # v[0] is output field name
+    Var tempFieldName As String = results.GetUniqueFieldName(v[0])
+    results.AppendDataSerie(New clDoubleDataSerie(tempFieldName))
+
+  Next
+
+
+  Var outrow As New clDataRow(results.TableStructure())
+
+  For Each indexRow As clIndexOutputRow In tempIndex.GetFlattenedIndex()
+
+    outrow.ResetFields()
+    #
+    # Extract the key fields
+    #
+    For x As Integer = 0 To prmKeyFields.LastIndex
+      If x >= 0 Then
+        outrow.SetField(x, indexRow.GetKey(x))
+
+      End If
+
+    Next
+
+    #
+    # update number of rows in input table
+    #
+    Var nbSourceRows As Integer = indexRow.GetAllIndexes().Count
+
+    outrow.SetField(cntFieldName, nbSourceRows)
+
+    #
+    # Extract measure arrays
+    #
+    If tempAggrFields.Count > 0 Then
+      For x As Integer = 0 To tempAggrExpr.LastIndex
+
+        # get the aggrgation information
+        Var s() As String = tempAggrExpr[x]
+
+        # get the index of the field to aggregate in the indexstore output
+        Var y As Integer = Integer.Parse(s[3])
+
+        # get the mode of aggregration
+        Var m As mdAggregate.AggrMode = mdAggregate.GetAggrMode(s[1])
+
+        # get the values to aggregate
+        Var a() As Double = indexRow.GetAccumulator(y)
+
+        # aggregate the values
+        Var res As Double = mdAggregate.Aggregate(m, a)
+
+        # index of the field in the output row
+        Var z As Integer = prmKeyFields.Count + x + 1
+
+        # put the results in the output row
+        outrow.SetField(z, res)
+
+      Next
+
+    End If
+
+    results.AppendDataRow(outrow)
+
+  Next
+
+  Return results
+  End Function
+  Private Function BuildIndexStore(prmTbl As clDataTable, prmKeyFields() As string, prmAggregFields() As string) As clIndexStore
+
+  Var keySerieIndexes() As Integer
+  Var valueSerieIndexes() As Integer
+
+  For Each f As String In prmKeyFields
+    keySerieIndexes.Append(prmTbl.SerieIndex(f))
+
+  Next
+
+  For Each f As String In prmAggregFields
+    valueSerieIndexes.Append(prmTbl.SerieIndex(f))
+
+  Next
+
+  # Allocate index mgr with enough space for the fields
+  Var tempIndex As New clIndexStore(keySerieIndexes.Count, valueSerieIndexes.Count)
+
+  For Each r As clDataRow In New clByRowWithIndex(prmTbl)
+    Var indexkeys() As String
+    Var values() As Double
+
+    # Using iterator prodiving internal row index, do not forget to offset field index by one
+    For Each x As Integer In keySerieIndexes
+      If x < 0 Then
+        indexkeys.Append("")
+
+      Else
+        indexkeys.Append(r.GetField(x + 1).ToString())
+
+      End If
+
+    Next
+
+    For Each x As Integer In valueSerieIndexes
+      If x < 0 Then
+        values.Append(0)
+
+      Else
+        values.Append(Double(r.GetField(x + 1)))
+
+      End If
+
+    Next
+
+    tempIndex.AddIndexEntry(indexkeys, Integer(r.GetField(0)), values)
+
+  Next
+
+  Return tempIndex
+
+  End Function
+  Public Sub AddKeyFields(prmTable As clDataTable, prmKeyFields() As string)
+
+  #
+  # Add data series matching key fields
+  #
+  For Each f As String In prmKeyFields
+    prmTable.AppendDataSerie(New clStringDataSerie(f))
+
+  Next
+
+  Return
+
+  End Sub
+  Public Function AddCounterField(prmTable As clDataTable) As string
+  # Add a field to hold the row counter
+  #
+  Var cntFieldName As String = prmTable.GetUniqueFieldName(cstRowCountFieldName)
+
+  Var cntSerie As New clIntegerDataSerie(cntFieldName)
+
+  prmTable.AppendDataSerie(cntSerie)
+
+  Return cntFieldName
+
+  End Function
+  Public Sub Dump(Extends s As clDataTable)
+
+  For rowindex As Integer = 0 To s.CountRows() - 1
+
+    Var res() As String
+    res.Append(rowindex.ToString())
+
+    For colindex As Integer = 0 To s.CountDataSeries() - 1
+      res.Append(s.GetDataSerie(colindex).Name() + "=" + s.GetDataSerie(colindex).Element(rowindex).ToString())
+
+
+    Next
+    print(res.Join("   "))
+
+  Next
+
+  Return
+  End Sub
 End Module
