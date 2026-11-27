@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "Aggregations",
+  "Id": "0b629e2e-6ceb-4983-9add-5ece69ebe59e",
+  "Kind": "Class",
+  "BuildScope": "Test",
+  "Namespace": "",
+  "Folder": "",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "Aggregations-0b629e2e.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

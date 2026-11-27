@@ -1,4 +1,4 @@
-Public Class clIndexRow
+Public Class clIndexOutputRow
 
     Constructor()
     End Constructor
@@ -36,4 +36,5 @@ Public Class clIndexRow
     Return
 
     End Sub
+    Public Property Accumulators() As Array(Of Double)
 End Class

@@ -1,0 +1,114 @@
+Public Class Aggregations Inherits TestCase
+    Public Sub Test_Sum_001()
+
+    Var a() As Double
+    Var res As Double
+    Var exp As Double
+
+    a.AppendAll([10.2, 11, 0, 12.3])
+
+    res = mdAggregate.CalcSum(a)
+    exp = 33.5
+
+    assert.AlmostEqual(exp, res, 0.000001, "SUM")
+
+    End Sub
+    Public Sub Test_Average_001()
+
+    Var a() As Double
+    Var res As Double
+    Var exp As Double
+
+    a.AppendAll([10.2, 11, 0, 12.3])
+
+    res = mdAggregate.CalcAverage(a)
+    exp = 8.375
+
+    assert.AlmostEqual(exp, res, 0.000001, "AVG")
+
+    End Sub
+    Public Sub Test_Average_NonZero_001()
+
+    Var a() As Double
+    Var res As Double
+    Var exp As Double
+
+    a.AppendAll([10.2, 11.1, 0, 12.3])
+
+    res = mdAggregate.CalcAverageNonZero(a)
+    exp = 11.2
+
+    assert.AlmostEqual(exp, res, 0.000001, "AVG-NZ")
+
+    End Sub
+    Public Sub Test_Maximum_001()
+
+    Var a() As Double
+    Var res As Double
+    Var exp As Double
+
+    a.AppendAll([10.2, 11, 0, 12.3])
+
+    res = mdAggregate.CalcMaximum(a)
+    exp = 12.3
+
+    assert.AlmostEqual(exp, res, 0.000001, "MAX")
+
+    End Sub
+    Public Sub Test_Maximum_NonZero_001()
+
+    Var a() As Double
+    Var res As Double
+    Var exp As Double
+
+    a.AppendAll([10.2, 11, 0, 12.3])
+
+    res = mdAggregate.CalcMaximumNonZero(a)
+    exp = 12.3
+
+    assert.AlmostEqual(exp, res, 0.000001, "MAX-NZ")
+
+    End Sub
+    Public Sub Test_Maximum_NonZero_002()
+
+    Var a() As Double
+    Var res As Double
+    Var exp As Double
+
+    a.AppendAll([-10.2, -11, 0, -12.3])
+
+    res = mdAggregate.CalcMaximumNonZero(a)
+    exp = -10.2
+
+    assert.AlmostEqual(exp, res, 0.000001, "MAX-NZ")
+
+    End Sub
+    Public Sub Test_Minimum_001()
+
+    Var a() As Double
+    Var res As Double
+    Var exp As Double
+
+    a.AppendAll([10.2, 11, 0, 12.3])
+
+    res = mdAggregate.CalcMinimum(a)
+    exp = 0
+
+    assert.AlmostEqual(exp, res,0.000001,  "MIN")
+
+    End Sub
+    Public Sub Test_Minimum_NonZero_001()
+
+    Var a() As Double
+    Var res As Double
+    Var exp As Double
+
+    a.AppendAll([10.2, 11, 0, 12.3])
+
+    res = mdAggregate.CalcMinimumNonZero(a)
+    exp = 10.2
+
+    assert.AlmostEqual(exp, res, 0.000001, "MIN-NZ")
+
+    End Sub
+End Class

@@ -363,4 +363,9 @@ Public Class clIntegerDataSerie Inherits clAbstractDataSerie
     End Function
 
 
+    Public Function Elements() As integer()
+
+    Return Self.DataStore.Items()
+
+    End Function
 End Class

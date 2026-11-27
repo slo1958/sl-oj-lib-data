@@ -2,18 +2,33 @@ Public Class clIndexStore
 
     Public Property MasterIndex As Dictionary
     ## prmIndexDepth is the number of keys/dimensions expected for one row
-    Public Constructor(prmIndexDepth As integer)
+    Public Constructor(prmIndexDepth As integer, Optional prmNbrAggregators As integer = 0)
 
     Self.MasterIndex = New Dictionary
     Self.currentDepth = prmIndexDepth
 
+    Self.Accumulators.Clear()
 
+    For i As Integer = 1 To prmNbrAggregators
+      Var vv() As Double
+
+      Self.Accumulators.Append(vv)
+
+    Next
+
+
+    Return
     End Constructor
     Public Sub AddIndexEntry(prmKeys As array(of string), prmRowIndex As integer)
 
     If currentDepth = 1 Then # we are inserting in the row indexes
       If prmKeys.Count > 1 Then # this is wrong
-        print("WARNING: cannot insert key(s) ending with " + prmKeys.Join(" ") + ", extra elements ignored.")
+        mdHelpers.DataLibLogs().WriteWarning( _
+          currentMethodName() _
+          , cstWngCannotInsertKey _
+          , prmKeys.Join(" ") _
+          )
+
         InsertAsRowIndex(prmKeys[0], prmRowIndex)
 
         Return
@@ -148,7 +163,7 @@ Public Class clIndexStore
 
     End Function
     Public Property currentDepth As integer
-    Public Function GetFlattenedIndex() As clIndexRow()
+    Public Function GetFlattenedIndex() As clIndexOutputRow()
     #
     # returns selected key values and row indexes
     #
@@ -159,19 +174,19 @@ Public Class clIndexStore
 
 
     End Function
-    Protected Function GetFlattenedIndex_Internal(prmPreviousKeys() As string) As clIndexRow()
+    Protected Function GetFlattenedIndex_Internal(prmPreviousKeys() As string) As clIndexOutputRow()
     #
     # This method processes the current level
     # prmPreviousKeys is used to populate the keys in the clIndexRow 
     #
-    Var results() As clIndexRow
+    Var results() As clIndexOutputRow
 
     If Self.currentDepth <= 1 Then
       # The object stored in the dictionary is an array of integer with the matching row indexes
 
       For Each k As String In Self.MasterIndex.Keys
         Var x() As Integer = Self.MasterIndex.Value(k)
-        Var r As New clIndexRow
+        Var r As New clIndexOutputRow
         r.AppendKeys(prmPreviousKeys)
         r.AppendKey(k)
         r.AppendIndexes(x)
@@ -186,7 +201,7 @@ Public Class clIndexStore
 
       For Each k As String In Self.MasterIndex.Keys
         Var currentKeys() As String
-        Var tempRes() As clIndexRow
+        Var tempRes() As clIndexOutputRow
         Var Nextlevel As clIndexStore = clIndexStore(Self.MasterIndex.Value(k))
 
         currentKeys.AppendAll(prmPreviousKeys)
@@ -292,4 +307,93 @@ Public Class clIndexStore
 
     Return results
     End Function
+  Public Const cstWngCannotInsertKey As String = "cannot insert key(s) ending with %0, extra elements ignored."
+    Public Property Accumulators() As Array(Of Double)
+    Public Sub AddIndexEntry(prmKeys As array(of string), prmRowIndex As integer, prmValuesToAccumulate() As double)
+
+    If currentDepth = 1 Then # we are inserting in the row indexes
+      If prmKeys.Count > 1 Then # this is wrong
+        mdHelpers.DataLibLogs().WriteWarning( _
+          currentMethodName() _
+          , cstWngCannotInsertKey _
+          , prmKeys.Join(" ") _
+          )
+
+        InsertAsRowIndex(prmKeys[0], prmRowIndex, prmValuesToAccumulate)
+
+        Return
+
+      End If
+
+      If prmKeys.Count = 0 Then
+        InsertAsRowIndex("", prmRowIndex, prmValuesToAccumulate)
+
+      Else
+        InsertAsRowIndex(prmKeys[0], prmRowIndex, prmValuesToAccumulate)
+
+      End If
+
+      Return
+
+    End If
+
+    Var workKey As String
+    Var remKeys() As String
+
+    Var childList As clIndexStore
+
+    If prmKeys.Count = 0 Then # no more keys for insertion
+      workKey = ""
+
+
+    Else
+      For i As Integer = 0 To prmkeys.LastIndex
+        If i = 0 Then
+          workKey = prmKeys[i]
+
+        Else
+          remKeys.Append(prmkeys[i])
+        End If
+      Next
+
+    End If
+
+    childList = InsertAsNodeEntry(workKey)
+
+    childList.AddIndexEntry(remKeys, prmRowIndex, prmValuesToAccumulate)
+
+    Return
+    End Sub
+    Protected Sub InsertAsRowIndex(prmKey As string, prmRowIndex As integer, prmValuesToAccumulate() As double)
+    Var localIndexList() As Integer
+
+    If Self.MasterIndex.HasKey(prmKey) Then
+      localIndexList = Self.MasterIndex.Value(prmKey)
+    Else
+
+    End If
+
+    If localIndexList.IndexOf(prmRowIndex) < 0 Then
+      localIndexList.Append(prmRowIndex)
+
+    End If
+
+    Self.MasterIndex.Value(prmKey) = localIndexList
+
+    #
+    # update accumulators
+    #
+    If Self.Accumulators.Count = 0 Then Return
+    If prmValuesToAccumulate.Count = 0 Then Return
+
+    For i As Integer = 0 To Self.Accumulators.LastIndex
+      If i <= prmValuesToAccumulate.LastIndex Then
+        Self.Accumulators[i].Append(prmValuesToAccumulate[i])
+
+      End If
+
+    Next
+
+    Return
+    End Sub
 End Class

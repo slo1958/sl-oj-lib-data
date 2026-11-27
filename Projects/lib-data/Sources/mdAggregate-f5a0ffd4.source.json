@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "mdAggregate",
+  "Id": "f5a0ffd4-eaed-470e-be6c-35807fcfcda0",
+  "Kind": "Module",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Misc",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "mdAggregate-f5a0ffd4.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clIndexOutputRow",
+  "Id": "4f728769-be75-44d2-8c87-05884660a0df",
+  "Kind": "Class",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/Indexes-and-grouping",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clIndexOutputRow-4f728769.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

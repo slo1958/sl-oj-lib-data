@@ -1,5 +1,38 @@
 Class App Inherits DesktopApplication
 
     Event Opening(args() As String)
+
+
+    Var top() As Array(Of Double)
+
+    For i As Integer = 0 To 2
+      Var vv() As Double
+      top.Append(vv)
+
+    Next
+
+    top[0].AppendAll([123.45, 234.56, 345.67])
+    top[1].AppendAll([234.56, 345.67, 456.78])
+    top[2].AppendAll([345.67, 456.78, 567.89])
+
+
+    For Each a As Array(Of Double) In top
+      print(DoSum(a))
+
+    Next
+
+    Return
     End Event
+    Public Function DoSum(p() As Double) As Double
+
+    Var s As Double = 0
+
+    For Each v As Double In p
+      s += v
+
+    Next
+
+    Return s
+
+    End Function
 End Class

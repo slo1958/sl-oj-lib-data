@@ -2,100 +2,31 @@ Public Module DoubleExtensions
 
   Public Function Minimum(Extends s As clDoubleDataSerie) As double
 
-  Var results As Double
-
-  If s.Count() = 0 Then Return 0
-  If s.Count() = 1 Then Return Double(s.Element(0))
-
-  results = Double(s.Element(0))
-  For i As Integer = 1 To s.LastIndex()
-    Var v As Double = Double(s.Element(i))
-    If results > v Then results = v
-
-  Next
-
-  Return results
+  Return mdAggregate.CalcMinimum(s.Elements())
   End Function
   Public Function Maximum(Extends s As clDoubleDataSerie) As double
 
-  Var results As Double
-
-  If s.Count() = 0 Then Return 0
-  If s.Count() = 1 Then Return Double(s.Element(0))
-
-  results = Double(s.Element(0))
-  For i As Integer = 1 To s.LastIndex()
-    Var v As Double = Double(s.Element(i))
-    If results < v Then results = v
-
-  Next
-
-  Return results
+  Return mdAggregate.CalcMaximum(s.Elements())
   End Function
   Public Function MinimumNonZero(Extends s As clDoubleDataSerie) As double
 
-  Var results As Double = Double.MaxValue
-
-  If s.Count() = 0 Then Return 0
-
-  For i As Integer = 0 To s.LastIndex()
-    Var v As Double = Double(s.Element(i))
-    If (results > v) And (v <> 0) Then results = v
-
-  Next
-
-  Return results
+  Return mdAggregate.CalcMinimumNonZero(s.Elements())
   End Function
   Public Function Average(Extends s As clDoubleDataSerie) As double
 
-  Var results As Double = 0
-  Var count As Double = 0
-
-  If s.Count() = 0 Then Return 0
-
-  For i As Integer = 0 To s.LastIndex()
-    Var v As Double = Double(s.Element(i))
-    results = results + v
-    count = count + 1
-  Next
-
-  Return results / count
+  Return mdAggregate.CalcAverage(s.Elements())
 
   End Function
   Public Function AverageNonZero(Extends s As clDoubleDataSerie) As double
-
-  Var results As Double = 0
-  Var count As Double = 0
-
-  If s.Count() = 0 Then Return 0
-
-  For i As Integer = 0 To s.LastIndex()
-    Var v As Double = Double(s.Element(i))
-    If (v <> 0) Then
-      results = results + v
-      count = count + 1
-    End If
-  Next
-
-  If count = 0 Then Return 0
-
-  Return results / count
-
-
+  Return mdAggregate.CalcAverageNonZero(s.Elements())
   End Function
   Public Function CountNonZero(Extends s As clDoubleDataSerie) As integer
 
-  Var results As Integer = 0
+  Return mdAggregate.CalcCountNonZero(s.Elements())
 
-  If s.Count() = 0 Then Return 0
+  End Function
+  Public Function MaximumNonZero(Extends s As clDoubleDataSerie) As double
 
-  For i As Integer = 0 To s.LastIndex()
-    Var v As Double = Double(s.Element(i))
-    If (v <> 0) Then results += 1
-
-  Next
-
-  Return results
-
+  Return mdAggregate.CalcMaximumNonZero(s.Elements())
   End Function
 End Module

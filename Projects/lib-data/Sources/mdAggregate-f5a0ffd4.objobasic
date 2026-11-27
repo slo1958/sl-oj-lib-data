@@ -1,0 +1,336 @@
+Public Module mdAggregate
+
+  Public Function CalcSum(a() As Double) As Double
+
+  Var r As Double = 0
+
+  For Each v As Double In a
+    r += v
+
+  Next
+
+  Return r
+
+  End Function
+  Public Function CalcMinimum(a() As Double) As double
+
+  Var r As Double
+
+  If a.Count = 0 Then Return 0
+  If a.Count = 1 Then Return a[0]
+
+  r = a[0]
+  For Each v As Double In a
+    If v < r Then r = v
+
+  Next
+
+  Return r
+  End Function
+  Public Function CalcMaximum(a() As Double) As double
+
+  Var r As Double
+
+  If a.Count = 0 Then Return 0
+  If a.Count = 1 Then Return a[0]
+
+  r = a[0]
+  For Each v As Double In a
+    If v > r Then r = v
+
+  Next
+
+  Return r
+  End Function
+  Public Function CalcMinimumNonZero(a() As Double) As double
+
+  Var r As Double
+
+  If a.Count = 0 Then Return 0
+  If a.Count = 1 Then Return a[0]
+
+  r = a[0]
+  For Each v As Double In a
+    If V < r and v <> 0 Then r = v
+
+  Next
+
+  Return r
+  End Function
+  Public Function CalcAverage(a() As double) As double
+
+  If a.Count = 0 Then Return 0
+
+  Var s As Double = CalcSum(a)
+  Var c As Double = a.Count
+
+  Return s / c
+
+
+  End Function
+  Public Function CalcAverageNonZero(a() As Double) As double
+
+  Var r As Double = 0
+  Var c As Double = 0
+
+  For Each v As Double In a
+    If (v <> 0) Then
+      r = r + v
+      c = c + 1
+    End If
+  Next
+
+  If c = 0 Then Return 0
+
+  Return r / c
+
+
+  End Function
+  Public Function CalcCountNonZero(a() As Double) As integer
+
+  Var r As Integer = 0
+
+  If a.Count = 0 Then Return 0
+
+  For Each v As Double In a
+    If (v <> 0) Then r += 1
+
+  Next
+
+  Return r
+
+  End Function
+  Public Function CalcMaximumNonZero(a() As Double) As double
+
+  Var r As Double
+
+  If a.Count = 0 Then Return 0
+  If a.Count = 1 Then Return a[0]
+
+  r = a[0]
+  For Each v As Double In a
+    If v > r and v <> 0 Then r = v
+
+  Next
+
+  Return r
+  End Function
+  Public Function CalcAverage(a() As integer) As double
+
+  If a.Count = 0 Then Return 0
+
+  Var s As Double = CalcSum(a)
+  Var c As Double = a.Count
+
+  Return s / c
+
+
+  End Function
+  Public Function CalcAverageNonZero(a() As integer) As double
+
+  Var r As Double = 0
+  Var c As Double = 0
+
+  For Each v As Integer In a
+    If (v <> 0) Then
+      r = r + v
+      c = c + 1
+    End If
+  Next
+
+  If c = 0 Then Return 0
+
+  Return r / c
+
+
+  End Function
+  Public Function CalcCountNonZero(a() As integer) As integer
+
+  Var r As Integer = 0
+
+  If a.Count = 0 Then Return 0
+
+  For Each v As integer In a
+    If (v <> 0) Then r += 1
+
+  Next
+
+  Return r
+
+  End Function
+  Public Function CalcSum(a() As integer) As integer
+
+  Var r As Integer = 0
+
+  For Each v As Integer In a
+    r += v
+
+  Next
+
+  Return r
+
+  End Function
+  Public Function CalcMinimum(a() As integer) As integer
+
+  Var r As Integer
+
+  If a.Count = 0 Then Return 0
+  If a.Count = 1 Then Return a[0]
+
+  r = a[0]
+  For Each v As integer In a
+    If v < r Then r = v
+
+  Next
+
+  Return r
+  End Function
+  Public Function CalcMaximum(a() As integer) As integer
+
+  Var r As Integer
+
+  If a.Count = 0 Then Return 0
+  If a.Count = 1 Then Return a[0]
+
+  r = a[0]
+  For Each v As integer In a
+    If v > r Then r = v
+
+  Next
+
+  Return r
+  End Function
+  Public Function CalcMinimumNonZero(a() As integer) As integer
+
+  Var r As Integer
+
+  If a.Count = 0 Then Return 0
+  If a.Count = 1 Then Return a[0]
+
+  r = a[0]
+  For Each v As integer In a
+    If V < r and v <> 0 Then r = v
+
+  Next
+
+  Return r
+  End Function
+  Public Function CalcMaximumNonZero(a() As integer) As integer
+
+  Var r As Integer
+
+  If a.Count = 0 Then Return 0
+  If a.Count = 1 Then Return a[0]
+
+  r = a[0]
+  For Each v As integer In a
+    If v > r and v <> 0 Then r = v
+
+  Next
+
+  Return r
+  End Function
+  Public Function CalcStdDev(a() As double) As double
+  If a.Count = 0 Then Return 0
+
+  Var s As Double = CalcSumSquared(a)
+  Var m As Double = CalcAverage(a)
+  Var c As Double = a.Count
+
+  Return(s - (m * m)) / c
+
+
+
+  End Function
+  Public Function CalcStdDev(a() As integer) As double
+  If a.Count = 0 Then Return 0
+
+  Var s As Double = CalcSumSquared(a)
+  Var m As Double = CalcAverage(a)
+  Var c As Double = a.Count
+
+  Return(s - (m * m)) / c
+
+  End Function
+  Public Function CalcSumSquared(a() As Double) As Double
+
+  Var r As Double = 0
+
+  For Each v As Double In a
+    r += v*v
+
+  Next
+
+  Return r
+
+  End Function
+  Public Function CalcSumSquared(a() As integer) As integer
+
+  Var r As Integer = 0
+
+  For Each v As Integer In a
+    r += v * v
+
+  Next
+
+  Return r
+
+  End Function
+  Public Function Aggregate(mode As AggrMode, a() As double) As Double
+
+  Var results As Double
+
+  Select Case mode
+
+    Case .Average
+      results = CalcAverage(a)
+
+    Case .AverageNonZero
+      results = CalcAverageNonZero(a)
+
+    Case .Count
+      results = a.Count
+
+    Case .CountNonZero
+      results = CalcCountNonZero(a)
+
+    Case .Maximum
+      results = CalcMaximum(a)
+
+    Case .MaximumNonZero
+      results = CalcMaximumNonZero(a)
+
+    Case .Minimum
+      results = CalcMinimum(a)
+
+    Case .MinimumNonZero
+      results = CalcMinimumNonZero(a)
+
+    Case .StdDev
+      results = CalcStdDev(a)
+
+    Case .Sum
+      results = CalcSum(a)
+
+    Else
+      results = 0
+
+  End Select
+
+  Return results
+
+
+  End Function
+  Public Enum AggrMode
+      Average
+      AverageNonZero
+      Count
+      CountNonZero
+      Maximum
+      MaximumNonZero
+      Minimum
+      MinimumNonZero
+      StdDev
+      Sum
+  End Enum
+End Module

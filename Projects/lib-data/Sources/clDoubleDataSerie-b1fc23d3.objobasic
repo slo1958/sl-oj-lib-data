@@ -358,4 +358,9 @@ Public Class clDoubleDataSerie Inherits clAbstractDataSerie
 
     End Function
 
+    Public Function Elements() As double()
+
+    Return Self.DataStore.Items()
+
+    End Function
 End Class
