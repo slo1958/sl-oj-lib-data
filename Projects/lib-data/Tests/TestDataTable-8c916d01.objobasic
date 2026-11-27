@@ -57,12 +57,14 @@ Public Class TestDataTable Inherits TestCase
     exp = New clDataTable("Exp Mytable")
 
     exp.AppendDataSerie(New clStringDataSerie("Country"))
-
     exp.AppendDataSerie(New clIntegerDataSerie("SYS$Count"))
 
+    exp.AppendDataRow("Belgium", 7)
+    exp.AppendDataRow("France", 3)
 
+    TestHelpers.CheckTable(exp, act, "002A")
 
-    act = t.GetDistinct("Country","City")
+    act = t.GetDistinct("Country", "City")
 
     exp = New clDataTable("Exp Mytable")
     exp.AppendDataSerie(New clStringDataSerie("Country"))
@@ -75,7 +77,61 @@ Public Class TestDataTable Inherits TestCase
     exp.AppendDataRow("France", "Paris", 2)
     exp.AppendDataRow("France", "Lyon", 1)
 
-    TestHelpers.CheckTable(exp, z, "002B")
+    TestHelpers.CheckTable(exp, act, "002B")
+
+
+
+    Return
+    End Sub
+    Public Sub TestGroupBy_003()
+
+    Var t As New clDataTable("MyTable")
+
+    t.AppendDataSerie(New clStringDataSerie("Country"))
+    t.AppendDataSerie(New clStringDataSerie("City"))
+    t.AppendDataSerie(New clDoubleDataSerie("Sales"))
+
+    t.AppendDataRow("Belgium", "Brussels", 123)
+    t.AppendDataRow("Belgium", "Liege", 123)
+    t.AppendDataRow("France", "Paris", 234)
+    t.AppendDataRow("Belgium", "Brussels", 123)
+    t.AppendDataRow("Belgium", "Nivelles", 123)
+    t.AppendDataRow("Belgium", "Brussels", 123)
+    t.AppendDataRow("France", "Paris", 234)
+    t.AppendDataRow("Belgium", "Nivelles", 123)
+    t.AppendDataRow("France", "Lyon", 234)
+    t.AppendDataRow("Belgium", "Brussels", 123)
+
+    Var act As clDataTable
+    Var exp As clDataTable
+
+    act = t.GetDistinct("Country", "SomethingElse")
+    exp = New clDataTable("Exp Mytable")
+
+    exp.AppendDataSerie(New clStringDataSerie("Country"))
+    exp.AppendDataSerie(New clStringDataSerie("SomethingElse"))
+    exp.AppendDataSerie(New clIntegerDataSerie("SYS$Count"))
+
+    exp.AppendDataRow("Belgium", "", 7)
+    exp.AppendDataRow("France", "", 3)
+
+    TestHelpers.CheckTable(exp, act, "003A")
+
+    act = t.GetDistinct("Country", "Something", "City")
+
+    exp = New clDataTable("Exp Mytable")
+    exp.AppendDataSerie(New clStringDataSerie("Country"))
+    exp.AppendDataSerie(New clStringDataSerie("Something"))
+    exp.AppendDataSerie(New clStringDataSerie("City"))
+    exp.AppendDataSerie(New clIntegerDataSerie("SYS$Count"))
+
+    exp.AppendDataRow("Belgium", "", "Brussels", 4)
+    exp.AppendDataRow("Belgium", "", "Liege", 1)
+    exp.AppendDataRow("Belgium", "", "Nivelles", 2)
+    exp.AppendDataRow("France", "", "Paris", 2)
+    exp.AppendDataRow("France", "", "Lyon", 1)
+
+    TestHelpers.CheckTable(exp, act, "003B")
 
 
 

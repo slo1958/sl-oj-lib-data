@@ -111,4 +111,38 @@ Public Class Aggregations Inherits TestCase
     assert.AlmostEqual(exp, res, 0.000001, "MIN-NZ")
 
     End Sub
+    Public Sub Test_Aggr_Expression()
+    Var intext() As String
+
+
+    intext.Append("sumOfSales=:Sales")
+    intext.Append("sumOfSales=sum:Sales")
+    intext.Append("sumOfSales = sum:Sales ")
+    intext.Append(" sumOfSales = sum: Sales ")
+    intext.Append(" sumOfSales= sum:Sales ")
+    intext.Append("sum:Sales ")
+    intext.Append("=sum:Sales ")
+    intext.Append("sumOfSales = sum :Sales ")
+    intext.Append(" sumOfSales = sum: Sales ")
+    intext.Append(" sumOfSales = sum:Sales ")
+    intext.Append(" sum:Sales ")
+    intext.Append(" = sum : Sales ")
+    intext.Append(" : Sales ")
+    intext.Append("  Sales ")
+    intext.Append(" sumOfSales = Sales")
+
+    Var t() As String
+
+
+    For Each s As String In intext
+      t = mdAggregate.ExtractInfoFromAggrExpression(s)
+
+      assert.Equal("SumOfSales", t[0], "AggrExpression " + s)
+      assert.Equal("Sum", t[1], "AggrExpression " + s)
+      assert.Equal("Sales", t[2], "AggrExpression " + s)
+
+      print(s + " [" + t[0] + "][" + t[1] + "][" + t[2] + "]")
+
+    Next
+    End Sub
 End Class

@@ -3,7 +3,23 @@ Public Module BaseTableExtensions
   ## Return the list of distinct combinations of selected fields
   Public Function GetDistinct(Extends s As clDataTable, ParamArray Field As string) As clDataTable
 
+  #
+  # Create output data table
+  #
+
+  Var results As New clDataTable("Distincts from " + s.Name)
+
   Var serieIndexes() As Integer
+
+  If field.Count = 0 Then
+    Var cntSerie As New clIntegerDataSerie(cstRowCountFieldName)
+    results.AppendDataSerie(cntSerie)
+    results.AppendDataRow(s.CountRows())
+
+    # TODO should return a table with one cell with total row count
+    Return results
+
+  End If
 
 
   For Each f As String In field
@@ -37,10 +53,6 @@ Public Module BaseTableExtensions
 
   Next
 
-  #
-  # Create output data table
-  #
-  Var results As New clDataTable("Distincts from " + s.Name)
 
   #
   # Add data series matching key fields
@@ -64,7 +76,9 @@ Public Module BaseTableExtensions
   For Each indexRow As clIndexOutputRow In tempIndex.GetFlattenedIndex()
     outrow.ResetFields()
 
-    For Each x As Integer In serieIndexes
+    # All key fields are available in the index output row
+    For x As Integer = 0 To field.LastIndex
+      # For Each x As Integer In serieIndexes
       If x >= 0 Then
         outrow.SetField(x, indexRow.GetKey(x))
 

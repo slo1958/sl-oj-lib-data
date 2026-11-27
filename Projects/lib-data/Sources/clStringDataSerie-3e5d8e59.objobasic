@@ -4,7 +4,7 @@ Public Class clStringDataSerie Inherits clAbstractDataSerie
 
     Super.Constructor(prmSerieName)
 
-    Self.SetupFieldDefinition(0.0)
+    Self.SetupFieldDefinition("")
 
     Self.ClearDataStore()
 

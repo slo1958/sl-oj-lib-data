@@ -1,7 +1,8 @@
 Class App Inherits DesktopApplication
 
     Event Opening(args() As String)
-    CheckTableOps()
+
+
     End Event
     Public Function DoSum(p() As Double) As Double
 
@@ -53,7 +54,8 @@ Class App Inherits DesktopApplication
     t.AppendDataRow("France", "Paris", 234)
     t.AppendDataRow("Belgium", "Brussels", 123)
 
-    Var z As clDataTable = t.GetDistinct("Country", "City")
+    Var z As clDataTable = t.GetDistinct("Country", "Something", "City")
+    print(z.CountRows())
 
     Return
     End Sub

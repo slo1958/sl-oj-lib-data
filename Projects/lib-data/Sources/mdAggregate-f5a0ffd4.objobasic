@@ -314,6 +314,7 @@ Public Module mdAggregate
 
   End Function
   Public Enum AggrMode
+      Undefined
       Average
       AverageNonZero
       Count
@@ -337,6 +338,79 @@ Public Module mdAggregate
   Next
 
   Return temp.Count
+
+  End Function
+  Public Function AggrModeStrings() As string()
+
+  Var res() As String
+
+  res.resize(99) # to improve
+
+  res[Integer(aggrMode.Average)] = "Average"
+  res[Integer(aggrMode.AverageNonZero)] = "AverageNonZero"
+  res[Integer(aggrMode.Count)] = "Count"
+  res[Integer(aggrMode.CountNonZero)] = "CountNonZero"
+  res[Integer(aggrMode.Maximum)] = "Maximum"
+  res[Integer(aggrMode.MaximumNonZero)] = "MaximumNonZero"
+  res[Integer(aggrMode.Minimum)] = "Minimum"
+  res[Integer(aggrMode.MinimumNonZero)] = "MinimumNonZero"
+  res[Integer(aggrMode.StdDev)] = "StdDev"
+  res[Integer(aggrMode.Sum)] = "Sum"
+
+  Return res
+
+  End Function
+  ## AggrExpression is output=aggrMode:input, for example. TotalSales=sum:Sales
+  Public Function ExtractInfoFromAggrExpression(prmExpression As string) As string()
+  Var results() As String
+  Var temp As String = prmExpression.Trim()
+
+  results.Resize(3)
+
+  #
+  # 1 is output field name
+  # 2 is aggregation mode as string
+  # 3 is input field name
+  #
+
+  Var index As Integer
+
+  # Search for output field name
+  index = temp.IndexOf("=")
+
+  If index >= 0 Then
+
+    Var s As String = temp.left(index).Trim()
+    temp = temp.Middle(index + 1, temp.Length - index - 1).Trim()
+    results[0] = s
+
+  End If
+
+  index = temp.IndexOf(":")
+
+  If index >= 0 Then
+    Var s As String = temp.left(index).Trim()
+    temp = temp.Middle(index + 1, temp.Length - index - 1).Trim()
+    results[1] = s
+
+  End If
+
+  results[2] = temp
+
+
+  If results[1] = "" Then results[1] = "Sum"
+  If results[0] = "" Then results[0] = results[1] + "Of" + results[2]
+
+  Return results
+
+  End Function
+  Public Function GetAggrMode(prmAggrText As string) As aggrmode
+
+  Var x As Integer = AggrModeStrings().IndexOf(prmaggrtext)
+
+  If x < 0 Then Return aggrMode.Undefined
+
+  Return aggrMode(x)
 
   End Function
 End Module
