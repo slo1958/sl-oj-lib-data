@@ -2,6 +2,14 @@ Module TestHelpers
 
     Public Sub CheckTable(Expected As clDataTable, Actual As clDataTable, message As string)
 
+    CheckTableGeometryAndStructure(Expected, Actual, Message)
+
+    CheckTableContent(Expected, Actual, message)
+
+
+    End Sub
+    Public Sub CheckTableGeometryAndStructure(Expected As clDataTable, Actual As clDataTable, message As string)
+
     # checking geometry
     Var exp_rows As Integer
     Var act_rows As Integer
@@ -35,6 +43,42 @@ Module TestHelpers
 
 
     Return
+
+
+    End Sub
+    Public Sub CheckTableContent(Expected As clDataTable, Actual As clDataTable, message As string)
+    Var exp_rows As Integer
+    Var act_rows As Integer
+
+    Var exp_cols As Integer
+    Var act_cols As Integer
+
+    exp_rows = Expected.CountRows()
+    exp_cols = expected.CountDataSeries()
+
+    act_rows = Actual.CountRows()
+    act_cols = Actual.CountDataSeries()
+
+    # just in case we arrive here with invalid geometry
+    If (exp_rows <> act_rows) Or (exp_cols <> act_cols) Then Return
+
+    For rowIndex As Integer = 0 To exp_rows - 1
+      Var exp_row As clDataRow = Expected.DataRow(rowIndex, False)
+      Var act_row As clDataRow = Actual.DataRow(rowIndex, False)
+      Var row_msg As String = "Row " + exp_row.ToString()
+
+      For colIndex As Integer = 0 To exp_cols - 1
+        Var col_msg As String = "Col" + colIndex.ToString()
+
+        assert.Equal(exp_row.GetField(colIndex), act_row.GetField(colIndex), row_msg + " " + col_msg + " " + message)
+
+
+      Next # columns
+
+
+    Next # rows
+
+
 
 
     End Sub

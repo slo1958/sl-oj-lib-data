@@ -1,6 +1,8 @@
-Public Class clTestDataTable Inherits TestCase
-
-    Sub MyMethod()
+Public Class TestDataTable Inherits TestCase
+      Sub TestExample()
+    Assert.True(True)
+      End Sub
+    Public Sub TestGroupBy_001()
 
     Var t As New clDataTable("MyTable")
 
@@ -21,6 +23,9 @@ Public Class clTestDataTable Inherits TestCase
     exp.AppendDataSerie(New clStringDataSerie("Country"))
     exp.AppendDataSerie(New clStringDataSerie("City"))
     exp.AppendDataSerie(New clIntegerDataSerie("SYS$Count"))
+
+    exp.AppendDataRow("Belgium", "Brussels", 4)
+    exp.AppendDataRow("France", "Paris", 2)
 
     TestHelpers.CheckTable(exp, z, "-")
 
