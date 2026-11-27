@@ -126,6 +126,7 @@
     "lib-data-core/data-series/Iterations",
     "lib-data-core/data-structure",
     "lib-data-core/data-table",
+    "lib-data-core/data-table/Extensions",
     "lib-data-core/data-table/Iterations",
     "lib-data-core/Indexes-and-grouping",
     "lib-data-core/Misc",

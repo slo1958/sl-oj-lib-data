@@ -187,4 +187,28 @@ Public Class clDataRow
     Return
 
     End Sub
+    Public Sub ResetFields()
+    For i As Integer = 0 To DataStructure.LastIndex()
+      FieldsValue[i] = Self.DataStructure.GetFieldDefinition(i).DefaultValue()
+
+    Next
+
+    Return
+
+    End Sub
+    Public Override Function ToString() As string
+
+
+    If Self.FieldsValue.Count = 0 Then Return "<empty>"
+
+    Var results() As String
+
+    For i As Integer = 0 To Self.FieldsValue.LastIndex
+      results.Append(Self.DataStructure.GetFieldDefinition(i).Name() + " = " + Self.FieldsValue[i].ToString())
+
+    Next
+
+    Return results.Join(" - ")
+
+    End Function
 End Class

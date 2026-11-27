@@ -3,6 +3,8 @@ Public Class clByRow Implements Iterable
     Public Constructor(prmTable As clDataTable)
     Self.DataTable = prmTable
 
+    Return
+
     End Constructor
     Public Property DataTable As clDataTable
     Public Function GetIterator() As clIteratorByRows

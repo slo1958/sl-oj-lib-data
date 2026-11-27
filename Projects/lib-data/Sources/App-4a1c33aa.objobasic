@@ -1,6 +1,21 @@
 Class App Inherits DesktopApplication
 
     Event Opening(args() As String)
+    CheckTableOps()
+    End Event
+    Public Function DoSum(p() As Double) As Double
+
+    Var s As Double = 0
+
+    For Each v As Double In p
+      s += v
+
+    Next
+
+    Return s
+
+    End Function
+    Public Sub TestAggreg()
 
 
     Var top() As Array(Of Double)
@@ -22,17 +37,24 @@ Class App Inherits DesktopApplication
     Next
 
     Return
-    End Event
-    Public Function DoSum(p() As Double) As Double
+    End Sub
+    Public Sub CheckTableOps()
 
-    Var s As Double = 0
+    Var t As New clDataTable("MyTable")
 
-    For Each v As Double In p
-      s += v
+    t.AppendDataSerie(New clStringDataSerie("Country"))
+    t.AppendDataSerie(New clStringDataSerie("City"))
+    t.AppendDataSerie(New clDoubleDataSerie("Sales"))
 
-    Next
+    t.AppendDataRow("Belgium", "Brussels", 123)
+    t.AppendDataRow("France", "Paris", 234)
+    t.AppendDataRow("Belgium", "Brussels", 123)
+    t.AppendDataRow("Belgium", "Brussels", 123)
+    t.AppendDataRow("France", "Paris", 234)
+    t.AppendDataRow("Belgium", "Brussels", 123)
 
-    Return s
+    Var z As clDataTable = t.GetDistinct("Country", "City")
 
-    End Function
+    Return
+    End Sub
 End Class

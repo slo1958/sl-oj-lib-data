@@ -20,7 +20,6 @@ Public Class clDataField
 
     Select Case prmFieldValue.GetType()
 
-
       Case "Boolean"
         tempType = cstTypeBoolean
 

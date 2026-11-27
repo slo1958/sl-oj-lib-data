@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "clTestDataTable",
+  "Id": "68edd1d9-9301-453b-ac38-12f13983cf59",
+  "Kind": "Class",
+  "BuildScope": "Test",
+  "Namespace": "",
+  "Folder": "",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "clTestDataTable-68edd1d9.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

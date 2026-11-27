@@ -1,0 +1,41 @@
+Module TestHelpers
+
+    Public Sub CheckTable(Expected As clDataTable, Actual As clDataTable, message As string)
+
+    # checking geometry
+    Var exp_rows As Integer
+    Var act_rows As Integer
+
+    Var exp_cols As Integer
+    Var act_cols As Integer
+
+    exp_rows = Expected.CountRows()
+    exp_cols = expected.CountDataSeries()
+
+    act_rows = Actual.CountRows()
+    act_cols = Actual.CountDataSeries()
+
+    assert.Equal(exp_rows, act_rows, "Row count " + message)
+    assert.Equal(exp_cols, act_cols, "Column count " + message)
+
+    # structure
+    For i As Integer = 0 To act_cols - 1
+
+      Var exp_name As String = Expected.GetDataSerie(i).Name()
+      Var act_name As String = Actual.GetDataSerie(i).Name()
+
+      Var exp_type As String = Expected.GetDataSerie(i).GetDataType()
+      Var act_type As String = Actual.GetDataSerie(i).GetDataType()
+
+      assert.Equal(exp_name, act_name, "Column [" + i.ToString() + "] Name")
+      assert.Equal(exp_type, act_type, "Column [" + i.ToString() + "] Type")
+
+    Next
+
+
+
+    Return
+
+
+    End Sub
+End Module

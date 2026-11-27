@@ -8,7 +8,7 @@ Public Class clDataStructure
     End Constructor
     Public Function AppendFieldDefinition(prmFieldDefinition As clDataField) As Boolean
 
-    If Self.GetFieldDefinition(prmFieldDefinition.Name()) = Nothing Then
+    If Self.GetFieldDefinition(prmFieldDefinition.Name(), false) = Nothing Then
 
       Self.FieldsDefinition.Append(prmFieldDefinition)
 
@@ -65,7 +65,7 @@ Public Class clDataStructure
 
     End Function
     ## Return the field definition object of the field matching the name passed as parameter
-    Public Function GetFieldDefinition(prmFieldName As String) As clDataField
+    Public Function GetFieldDefinition(prmFieldName As String, WarningIfMissing As Boolean) As clDataField
 
     If FieldsDefinition.Count > 0 Then
 
@@ -76,11 +76,13 @@ Public Class clDataStructure
 
     End If
 
+    If WarningIfMissing Then
+      mdHelpers.DataLibLogs().WriteWarning(CurrentMethodName() _
+        , cstWngCannotFindFieldDefinition _
+        , prmFieldName _
+        )
 
-    mdHelpers.DataLibLogs().WriteWarning(CurrentMethodName() _
-      , cstWngCannotFindFieldDefinition _
-      , prmFieldName _
-      )
+    End If
 
     Return Nothing
 
@@ -90,7 +92,7 @@ Public Class clDataStructure
   Public Const cstWngCannotFindFieldDefinition As String = "Cannot find definition of field [%0]"
     Public Function InsertFieldDefinition(prmIndex As integer, prmFieldDefinition As clDataField) As Boolean
 
-    If Self.GetFieldDefinition(prmFieldDefinition.Name()) = Nothing Then
+    If Self.GetFieldDefinition(prmFieldDefinition.Name(), False) = Nothing Then
 
       Self.FieldsDefinition.Insert(prmIndex, prmFieldDefinition)
 

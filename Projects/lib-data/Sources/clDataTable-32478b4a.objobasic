@@ -136,32 +136,6 @@ Public Class clDataTable
 
     Return DataSeries[prmSerieIndex]
     End Function
-    Public Function DataRow(prmRowIndex As integer, withIndex As Boolean) As clDataRow
-
-    # Create a datarow, keep datastructure unlocked
-    Var results As New clDataRow(Self.TableStructure(), True)
-
-    Var fieldIndexOffset As Integer = 0
-
-    If WithIndex Then
-      results.InsertFieldDefinition(0, Self.IndexDataSerie.GetFieldDefinition())
-      fieldIndexOffset = 1
-      results.SetField(0, Self.IndexDataSerie.Element(prmRowIndex))
-
-    End If
-
-    results.LockStructure()
-
-    For i As Integer = 0 To DataSeries.LastIndex
-      Var fieldValue As Object = Self.DataSeries[i].Element(prmRowIndex)
-      results.SetField(fieldIndexOffset + i, fieldValue)
-
-    Next
-
-    Return results
-
-
-    End Function
     Public Function TableStructure() As clDataStructure
 
     If Self.cachedStructure = Nothing Then
@@ -375,4 +349,58 @@ Public Class clDataTable
     Return
 
     End Sub
+    Public Function DataRow(prmRowIndex As integer, prmWithIndex As Boolean) As clDataRow
+
+
+    Var results As clDataRow
+
+
+    Var fieldIndexOffset As Integer = 0
+
+    If prmWithIndex Then
+      # Create a datarow, keep datastructure unlocked, copy the structure, since we will change it
+      results = New clDataRow(New clDataStructure(Self.TableStructure()), True)
+
+      results.InsertFieldDefinition(0, Self.IndexDataSerie.GetFieldDefinition())
+      fieldIndexOffset = 1
+      results.SetField(0, Self.IndexDataSerie.Element(prmRowIndex))
+
+
+      results.LockStructure()
+
+    Else
+      # no intention to update the structure, use as is and lock
+      results = New clDataRow(Self.TableStructure(), False)
+
+    End If
+
+
+    For i As Integer = 0 To DataSeries.LastIndex
+      Var fieldValue As Object = Self.DataSeries[i].Element(prmRowIndex)
+
+      results.SetField(fieldIndexOffset + i, fieldValue)
+
+    Next
+
+    Return results
+
+
+    End Function
+    Public Function GetUniqueFieldName(prmBaseFieldName As string) As string
+
+    Var FieldName As String = prmBaseFieldName
+    Var cntFieldCount As Integer = 1
+    #
+    # Make unique
+    #
+    While Self.SerieIndex(FieldName) >= 0
+      FieldName = prmBaseFieldName + "_" + cntFieldCount.ToString()
+      cntFieldCount += 1
+
+    Wend
+
+    Return FieldName
+
+
+    End Function
 End Class

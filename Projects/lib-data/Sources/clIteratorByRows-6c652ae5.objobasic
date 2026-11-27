@@ -3,8 +3,10 @@ Public Class clIteratorByRows Implements Iterator
 
     Public Constructor(prmTable As clDataTable, prmIncludeIndex As Boolean)
     Self.DataTable = prmTable
-    self.WithIndex = prmIncludeIndex
-    self.CurrentRow = 0
+    Self.WithIndex = prmIncludeIndex
+
+    Self.CurrentRow = 0
+
     End Constructor
     Private Property DataTable As clDataTable
     Public Function MoveNext() As Boolean

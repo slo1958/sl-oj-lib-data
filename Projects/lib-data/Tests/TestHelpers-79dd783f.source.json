@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "TestHelpers",
+  "Id": "79dd783f-1958-45ce-848a-e7a4c032ebab",
+  "Kind": "Module",
+  "BuildScope": "Test",
+  "Namespace": "",
+  "Folder": "",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "TestHelpers-79dd783f.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

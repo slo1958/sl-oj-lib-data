@@ -1,0 +1,89 @@
+Public Module BaseTableExtensions
+
+  ## Return the list of distinct combinations of selected fields
+  Public Function GetDistinct(Extends s As clDataTable, ParamArray Field As string) As clDataTable
+
+  Var serieIndexes() As Integer
+
+
+  For Each f As String In field
+    serieIndexes.Append(s.SerieIndex(f))
+
+  Next
+
+  # Allocate index mgr with enough space for the fields
+  Var tempIndex As New clIndexStore(serieIndexes.Count)
+  Var localRowCounter As Integer = 0
+
+
+  For Each r As clDataRow In New clByRowWithIndex(s)
+    Var indexkeys() As String
+
+
+    # Using iterator prodiving internal row index, do not forget to offset field index by one
+    For Each x As Integer In serieIndexes
+      If x < 0 Then
+        indexkeys.Append("")
+
+      Else
+        indexkeys.Append(r.GetField(x + 1).ToString())
+
+      End If
+
+    Next
+    tempIndex.AddIndexEntry(indexkeys, Integer(r.GetField(0)))
+
+    localRowCounter += 1
+
+  Next
+
+  #
+  # Create output data table
+  #
+  Var results As New clDataTable("Distincts from " + s.Name)
+
+  #
+  # Add data series matching key fields
+  #
+  For Each f As String In field
+    results.AppendDataSerie(New clStringDataSerie(f))
+
+  Next
+
+  #
+  # Add a field to hold the row counter
+  #
+  Var cntFieldName As String = results.GetUniqueFieldName(cstRowCountFieldName)
+
+  Var cntSerie As New clIntegerDataSerie(cntFieldName)
+
+  results.AppendDataSerie(cntSerie)
+
+  Var outrow As New clDataRow(results.TableStructure())
+
+  For Each indexRow As clIndexOutputRow In tempIndex.GetFlattenedIndex()
+    outrow.ResetFields()
+
+    For Each x As Integer In serieIndexes
+      If x >= 0 Then
+        outrow.SetField(x, indexRow.GetKey(x))
+
+      End If
+
+    Next
+
+    Var nbSourceRows As Integer = indexRow.GetAllIndexes().Count
+
+    outrow.SetField(cntFieldName, nbSourceRows)
+
+    results.AppendDataRow(outrow)
+
+
+  Next
+
+  Return results
+
+
+  End Function
+Public Const cstRowCountFieldName As string = "SYS$Count"
+End Module

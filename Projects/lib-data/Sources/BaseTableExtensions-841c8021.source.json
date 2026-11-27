@@ -1,0 +1,16 @@
+{
+  "Version": 8,
+  "Name": "BaseTableExtensions",
+  "Id": "841c8021-3fb8-48b8-9eba-9346fdb21530",
+  "Kind": "Module",
+  "BuildScope": "Application",
+  "Namespace": "",
+  "Folder": "lib-data-core/data-table/Extensions",
+  "ParentModule": "",
+  "ParentModuleId": "",
+  "AvailableInDesigner": false,
+  "CodeFile": "BaseTableExtensions-841c8021.objobasic",
+  "LayoutFile": "",
+  "Notes": [],
+  "InspectorBehaviour": []
+}

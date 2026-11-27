@@ -1,0 +1,29 @@
+Public Class clTestDataTable Inherits TestCase
+
+    Sub MyMethod()
+
+    Var t As New clDataTable("MyTable")
+
+    t.AppendDataSerie(New clStringDataSerie("Country"))
+    t.AppendDataSerie(New clStringDataSerie("City"))
+    t.AppendDataSerie(New clDoubleDataSerie("Sales"))
+
+    t.AppendDataRow("Belgium", "Brussels", 123)
+    t.AppendDataRow("France", "Paris", 234)
+    t.AppendDataRow("Belgium", "Brussels", 123)
+    t.AppendDataRow("Belgium", "Brussels", 123)
+    t.AppendDataRow("France", "Paris", 234)
+    t.AppendDataRow("Belgium", "Brussels", 123)
+
+    Var z As clDataTable = t.GetDistinct("Country", "City")
+
+    Var exp As New clDataTable("Exp Mytable")
+    exp.AppendDataSerie(New clStringDataSerie("Country"))
+    exp.AppendDataSerie(New clStringDataSerie("City"))
+    exp.AppendDataSerie(New clIntegerDataSerie("SYS$Count"))
+
+    TestHelpers.CheckTable(exp, z, "-")
+
+    Return
+    End Sub
+End Class

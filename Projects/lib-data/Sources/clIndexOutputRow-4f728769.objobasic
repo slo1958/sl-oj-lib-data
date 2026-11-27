@@ -37,4 +37,9 @@ Public Class clIndexOutputRow
 
     End Sub
     Public Property Accumulators() As Array(Of Double)
+    Public Function GetKey(prmIndex As integer) As string
+    Return Self.Keys[prmIndex]
+
+
+    End Function
 End Class

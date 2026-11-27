@@ -14,12 +14,11 @@ Public Module mdAggregate
   End Function
   Public Function CalcMinimum(a() As Double) As double
 
-  Var r As Double
+  Var r As Double = Double.MaxValue
 
   If a.Count = 0 Then Return 0
   If a.Count = 1 Then Return a[0]
 
-  r = a[0]
   For Each v As Double In a
     If v < r Then r = v
 
@@ -29,12 +28,11 @@ Public Module mdAggregate
   End Function
   Public Function CalcMaximum(a() As Double) As double
 
-  Var r As Double
+  Var r As Double = Double.MinValue
 
   If a.Count = 0 Then Return 0
   If a.Count = 1 Then Return a[0]
 
-  r = a[0]
   For Each v As Double In a
     If v > r Then r = v
 
@@ -44,14 +42,13 @@ Public Module mdAggregate
   End Function
   Public Function CalcMinimumNonZero(a() As Double) As double
 
-  Var r As Double
+  Var r As Double = Double.MaxValue
 
   If a.Count = 0 Then Return 0
   If a.Count = 1 Then Return a[0]
 
-  r = a[0]
   For Each v As Double In a
-    If V < r and v <> 0 Then r = v
+    If v < r and v <> 0 Then r = v
 
   Next
 
@@ -102,12 +99,11 @@ Public Module mdAggregate
   End Function
   Public Function CalcMaximumNonZero(a() As Double) As double
 
-  Var r As Double
+  Var r As Double = Double.MinValue
 
   If a.Count = 0 Then Return 0
   If a.Count = 1 Then Return a[0]
 
-  r = a[0]
   For Each v As Double In a
     If v > r and v <> 0 Then r = v
 
@@ -172,13 +168,12 @@ Public Module mdAggregate
   End Function
   Public Function CalcMinimum(a() As integer) As integer
 
-  Var r As Integer
+  Var r As Integer = Integer.MaxValue
 
   If a.Count = 0 Then Return 0
   If a.Count = 1 Then Return a[0]
 
-  r = a[0]
-  For Each v As integer In a
+  For Each v As Integer In a
     If v < r Then r = v
 
   Next
@@ -187,13 +182,12 @@ Public Module mdAggregate
   End Function
   Public Function CalcMaximum(a() As integer) As integer
 
-  Var r As Integer
+  Var r As Integer = Integer.MinValue
 
   If a.Count = 0 Then Return 0
   If a.Count = 1 Then Return a[0]
 
-  r = a[0]
-  For Each v As integer In a
+  For Each v As Integer In a
     If v > r Then r = v
 
   Next
@@ -202,14 +196,13 @@ Public Module mdAggregate
   End Function
   Public Function CalcMinimumNonZero(a() As integer) As integer
 
-  Var r As Integer
+  Var r As Integer = Integer.MaxValue
 
   If a.Count = 0 Then Return 0
   If a.Count = 1 Then Return a[0]
 
-  r = a[0]
-  For Each v As integer In a
-    If V < r and v <> 0 Then r = v
+  For Each v As Integer In a
+    If v < r And v <> 0 Then r = v
 
   Next
 
@@ -217,13 +210,12 @@ Public Module mdAggregate
   End Function
   Public Function CalcMaximumNonZero(a() As integer) As integer
 
-  Var r As Integer
+  Var r As Integer = Integer.MinValue
 
   If a.Count = 0 Then Return 0
   If a.Count = 1 Then Return a[0]
 
-  r = a[0]
-  For Each v As integer In a
+  For Each v As Integer In a
     If v > r and v <> 0 Then r = v
 
   Next
@@ -333,4 +325,18 @@ Public Module mdAggregate
       StdDev
       Sum
   End Enum
+  Public Function CalcCountDistinct(a() As integer) As integer
+
+  Var temp() As Integer
+
+  If a.Count = 0 Then Return 0
+
+  For Each v As Integer In a
+    If temp.IndexOf(v) < 0 Then temp.Append(v)
+
+  Next
+
+  Return temp.Count
+
+  End Function
 End Module

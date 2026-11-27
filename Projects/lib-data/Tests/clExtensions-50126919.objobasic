@@ -73,7 +73,7 @@ Public Class clExtensions
     ds.AppendItem(123)
 
     Var mi As Integer = ds.Minimum()
-    Var mx As Integer = ds.Maximum()
+    Var mx As integer = ds.Maximum()
     Var cd As Integer = ds.CountDistinct()
 
     assert.equal(123, mi)
